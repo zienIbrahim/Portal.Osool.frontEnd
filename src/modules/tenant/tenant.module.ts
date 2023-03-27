@@ -34,7 +34,7 @@ import { EditTenantGroupTypeComponent } from './components/TenantGroupType/edit-
         MainLayoutModule,
     ],
     providers: [...tenantServices.services, ...tenantGuards.guards],
-    declarations: [...tenantContainers.containers, ...tenantComponents.components, TenantGroupTypeListComponent, AddTenantGroupTypeComponent, EditTenantGroupTypeComponent],
+    declarations: [...tenantContainers.containers, ...tenantComponents.components],
     exports: [...tenantContainers.containers, ...tenantComponents.components],
 })
 export class TenantModule {}
