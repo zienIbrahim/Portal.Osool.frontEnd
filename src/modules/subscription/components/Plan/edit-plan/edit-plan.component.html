@@ -1,0 +1,92 @@
+<mat-card>
+    <mat-card-header class="p-0-card-header">
+        <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="fill-remaining-space">Add New Plan</span>
+            <button #btnClose matDialogClose mat-icon-button  >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-toolbar>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="Planform" (ngSubmit)="onSubmit(btnClose)"
+         fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%"
+         style="padding: 16px;">
+
+         <mat-form-field appearance="outline" [fxFlex]="49" >
+            <mat-label>plan Name</mat-label>
+            <input matInput  placeholder="software Name" formControlName="planName">
+            <mat-error *ngIf="!f['planName'].errors && f['planName'].touched">
+                Invalid plan Name Input
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" [fxFlex]="49">
+            <mat-label>software</mat-label>
+            <mat-select matNativeControl required formControlName="softwareId">
+              <mat-option *ngFor="let software of SoftwareList" [value]="software.softwareId" >{{software.softwareName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" [fxFlex]="49">
+            <mat-label>Tenant Group Type</mat-label>
+            <mat-select matNativeControl required formControlName="userGroupTypeId">
+              <mat-option *ngFor="let Type of TenantGroupTypeList" [value]="Type.id" >{{Type.typeName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [fxFlex]="49" >
+            <mat-label>plan Price</mat-label>
+            <input matInput  placeholder="plan Price" formControlName="planPrice" type="number">
+            <mat-error *ngIf="!f['planPrice'].errors && f['planPrice'].touched">
+                Invalid plan Price Input
+              </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" [fxFlex]="100" >
+            <mat-label>Options</mat-label>
+            <mat-select matNativeControl required formControlName="options" multiple>
+              <mat-option *ngFor="let option of OtionList" [value]="option.id" >{{option.optionName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [fxFlex]="100/4-1" >
+            <mat-label>max Users</mat-label>
+            <input matInput  placeholder="max Users" formControlName="maxUsers" type="number">
+            <mat-error *ngIf="!f['maxUsers'].errors && f['maxUsers'].touched">
+                Invalid max Users Input
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [fxFlex]="100/4-1" >
+            <mat-label>max Branches</mat-label>
+            <input matInput  placeholder="max Branches" formControlName="maxBranches" type="number">
+            <mat-error *ngIf="!f['maxBranches'].errors && f['maxBranches'].touched">
+                Invalid max Branches Input
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [fxFlex]="100/4-1" >
+            <mat-label>include Users</mat-label>
+            <input matInput  placeholder="include Users" formControlName="includeUsers" type="number">
+            <mat-error *ngIf="!f['includeUsers'].errors && f['includeUsers'].touched">
+                Invalid include Users Input
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [fxFlex]="100/4-1" >
+            <mat-label>include Branches </mat-label>
+            <input matInput  placeholder="include Branches" formControlName="includeBranches" type="number">
+            <mat-error *ngIf="!f['includeBranches'].errors && f['includeBranches'].touched">
+                Invalid include Branches Input
+              </mat-error>
+          </mat-form-field>
+
+          <div [fxFlex]="100/4-1" >
+            <mat-slide-toggle  formControlName="isActive"> is Active</mat-slide-toggle>
+          </div>
+
+          <mat-dialog-actions fxLayout="row" [fxFlex]="100">
+            <button [fxFlex]="12" mat-raised-button color="primary" type="submit" class="button">Save</button>
+       </mat-dialog-actions>
+    </form>
+    </mat-card-content>
+</mat-card>

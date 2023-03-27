@@ -1,0 +1,33 @@
+<mat-card>
+    <mat-card-header class="p-0-card-header">
+        <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="fill-remaining-space">Edit Option</span>
+            <button #btnClose matDialogClose mat-icon-button  >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-toolbar>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="Optionform" (ngSubmit)="onSubmit(btnClose)" 
+        fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%"
+         style="padding: 16px;">
+         <mat-form-field appearance="outline" fxFlex="100%" >
+            <mat-label>Option Id</mat-label>
+            <input matInput  placeholder="Option Name" formControlName="id" [readonly]="true">
+            <mat-error *ngIf="!f['id'].errors && f['id'].touched">
+                Invalid Option Id Input
+              </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="100%" >
+            <mat-label>Option Name</mat-label>
+            <input matInput  placeholder="Option Name" formControlName="optionName" >
+            <mat-error *ngIf="!f['optionName'].errors && f['optionName'].touched">
+                Invalid Option Name Input
+              </mat-error>
+          </mat-form-field>
+          <mat-dialog-actions>
+            <button fxFlex mat-raised-button color="primary" type="submit" class="button">Save</button>
+       </mat-dialog-actions>
+        </form>
+    </mat-card-content>
+</mat-card>

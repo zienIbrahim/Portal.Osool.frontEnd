@@ -19,6 +19,7 @@ import * as mainLayoutGuards from './guards';
 /* Services */
 import * as mainLayoutServices from './services';
 import { LayoutComponent } from './containers/layout/layout.component';
+import { SideNavItemComponent } from './components/side-nav-item/side-nav-item.component';
 
 
 @NgModule({

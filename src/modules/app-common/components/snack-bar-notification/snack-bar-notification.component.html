@@ -1,0 +1,11 @@
+<mat-card>
+	<button mat-button (click)="openSnackBar('Hello', 'Close', 'blue-snackbar')">Primary</button>
+
+	<button mat-button (click)="notificationService.error('error')">Error</button>
+
+  <button mat-button (click)="notificationService.success('success')">Success</button>
+
+  <button mat-button (click)="showConfirm()">Confirm</button>
+
+  <button mat-button (click)="showAlert()">Alert</button>
+</mat-card>

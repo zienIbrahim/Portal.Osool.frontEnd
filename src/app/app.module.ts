@@ -51,6 +51,11 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import {CdkMenuModule} from '@angular/cdk/menu';
 import {DialogModule} from '@angular/cdk/dialog';
 import { LayoutModule } from '@angular/cdk/layout';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from 'src/helpers/interceptors/JwtInterceptor';
+import { CommonModule } from '@angular/common';
+ import { FlexLayoutModule } from '@angular/flex-layout';
+import { AppCommonModule } from 'src/modules/app-common/app-common.module';
 @NgModule({
   exports: [
     A11yModule,
@@ -105,10 +110,12 @@ import { LayoutModule } from '@angular/cdk/layout';
 
   imports: [
     MatGridListModule,
+    FlexLayoutModule,
     MatCardModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    HttpClientModule,
     LayoutModule
   ],
  
@@ -122,9 +129,13 @@ export class MaterialExampleModule {}
     AppRoutingModule,
     MatSlideToggleModule,
     BrowserAnimationsModule,
-    MaterialExampleModule
+    AppCommonModule.forRoot()
+    ,MaterialExampleModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -31,6 +31,13 @@ export const ROUTES: Routes = [
                 
                 path: 'List',
                 component: tenantComponent.TenantTenantListComponent,
+                
+            },
+             {
+                
+                path: 'GroupType',
+                component: tenantComponent.TenantGroupTypeListComponent,
+                
             }
           
            

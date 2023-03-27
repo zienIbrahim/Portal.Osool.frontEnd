@@ -25,7 +25,7 @@ export const ROUTES: Routes = [
     },
    
     {
-        path: 'forgot-password',
+        path: 'forgotpassword',
         canActivate: [],
         component: authContainers.ForgotPasswordComponent,
     },

@@ -59,6 +59,7 @@ const modules = [IconsModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    FlexLayoutModule,
     LayoutModule
 
 ];
@@ -76,6 +77,8 @@ import * as appCommonDirectives from './directives';
 import * as appCommonGuards from './guards';
 
 /* Services */
+import * as authServices from '../../modules/auth/services';
+
 /* Services */
 import * as appCommonServices from './services';
 import { A11yModule } from '@angular/cdk/a11y';
@@ -126,6 +129,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { LayoutModule } from '@angular/cdk/layout';
+import { SnackBarNotificationComponent } from './components/snack-bar-notification/snack-bar-notification.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     imports: [
@@ -137,6 +142,7 @@ import { LayoutModule } from '@angular/cdk/layout';
         ...appCommonContainers.containers,
         ...appCommonComponents.components,
         ...appCommonDirectives.directives,
+        SnackBarNotificationComponent,
 
     ],
     exports: [
@@ -152,6 +158,7 @@ export class AppCommonModule {
             ngModule: AppCommonModule,
             providers: [
                 ...appCommonServices.services,
+                ...authServices.services,
                 ...appCommonGuards.guards,
                 { provide: 'window', useValue: window },
             ],

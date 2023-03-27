@@ -7,8 +7,13 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
     styleUrls: ['forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
+    fieldTextType: boolean =false;
+
     ngOnInit(): void {
         throw new Error('Method not implemented.');
     }
+    toggleFieldTextType(): void {
+        this.fieldTextType = !this.fieldTextType;
+     }
  
 }

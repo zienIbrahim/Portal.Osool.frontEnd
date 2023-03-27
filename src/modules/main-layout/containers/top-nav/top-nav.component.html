@@ -1,4 +1,6 @@
 <mat-toolbar color="primary" class="example-toolbar">
-	<button mat-icon-button (click)="Expand()"><mat-icon>menu</mat-icon></button>
-	<h1 class="example-app-name">Nested Menus</h1>
+	<mat-icon (click)="Expand()">
+		{{ isExpanded ? "keyboard_backspace" : "dehaze" }}
+	  </mat-icon>
+	<h1 class="example-app-name m-0">Osool Portal</h1>
 </mat-toolbar>

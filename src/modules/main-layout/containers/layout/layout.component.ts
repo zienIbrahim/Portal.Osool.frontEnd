@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { sideNavItems, sideNavSections } from '../../Data/SideNaveData';
 
 @Component({
   selector: 'app-layout',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent {
+
+  sideNavItems = sideNavItems;
+  sideNavSections = sideNavSections;
 
 }

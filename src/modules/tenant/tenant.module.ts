@@ -20,6 +20,9 @@ import * as tenantGuards from './guards';
 
 /* Services */
 import * as tenantServices from './services';
+import { TenantGroupTypeListComponent } from './components/TenantGroupType/tenant-group-type-list/tenant-group-type-list.component';
+import { AddTenantGroupTypeComponent } from './components/TenantGroupType/add-tenant-group-type/add-tenant-group-type.component';
+import { EditTenantGroupTypeComponent } from './components/TenantGroupType/edit-tenant-group-type/edit-tenant-group-type.component';
 
 @NgModule({
     imports: [
@@ -31,7 +34,7 @@ import * as tenantServices from './services';
         MainLayoutModule,
     ],
     providers: [...tenantServices.services, ...tenantGuards.guards],
-    declarations: [...tenantContainers.containers, ...tenantComponents.components],
+    declarations: [...tenantContainers.containers, ...tenantComponents.components, TenantGroupTypeListComponent, AddTenantGroupTypeComponent, EditTenantGroupTypeComponent],
     exports: [...tenantContainers.containers, ...tenantComponents.components],
 })
 export class TenantModule {}

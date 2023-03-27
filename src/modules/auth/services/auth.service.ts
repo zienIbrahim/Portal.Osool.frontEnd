@@ -1,11 +1,85 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { AccessToken } from '../data/AccessToken';
+import { AuthenticateResponse } from '../data/login';
+import { Login } from '../data/login';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
-    constructor() {}
+  isLoggedIn = new BehaviorSubject<boolean>(this.isTokenAvailable());
+  private apiUrl = environment.apiUrl;
+  jwtHelper = new JwtHelperService();
+  constructor(
+    public http: HttpClient,
+    private router: Router,
+    public userService: UserService
+  ) {
+    this.isLoggedIn = new BehaviorSubject<boolean>(this.isTokenAvailable());
+  }
+  private isTokenAvailable(): boolean {
+    return !!localStorage.getItem('token:jwt');
+  }
+  Login(Login :Login) {
+    return this.http.post(this.apiUrl + "Authenticate/Login",Login).pipe(
+        tap((res: any) => 
+        {
+          if (res.accessToken) {
+            let userInfo:AuthenticateResponse=res
+            // btoa(JSON.stringify(userInfo))
+            //this.UserInfo.next(userInfo)
+           
+            const json = { "a": 1, "b": 2 }
+            const string = JSON.stringify(json) // convert Object to a String
+            const encodedString = btoa(string) // Base64 encode the String
+               console.log("userInfo -> ",userInfo);
+            localStorage.setItem('token:jwt', res.accessToken);
+            // localStorage.setItem('app:userInfo' ,btoa(JSON.stringify(userInfo)));
+            localStorage.setItem('token:refreshToken', res.refreshToken);
+           const jwtData= this.getDecodedToken()
+            this.setIsLoggedIn(true);
 
-    getAuth$(): Observable<{}> {
-        return of({});
+           this.router.navigate([Login.returnUrl]);
+
+          }
+        })
+      );
+      
+}
+setIsLoggedIn(isLoggedIn: boolean): void {
+    this.isLoggedIn.next(isLoggedIn);
+}
+
+public getDecodedToken()  {
+    const token = String(localStorage.getItem('token:jwt'));
+    return this.jwtHelper.decodeToken(token);
+}
+isTokenExpired(): boolean {
+    const token = String(localStorage.getItem('token:jwt'));
+
+    const expiryTime : number= Number(this.getExpiryTime());
+    if (expiryTime) {
+      return ((1000 * expiryTime) - (new Date()).getTime()) < 5000;
+    } else {
+      return false;
     }
+}
+getExpiryTime() {
+    return this.isTokenAvailable()? this.getDecodedToken().exp : null;
+}
+getIsLoggedIn(): BehaviorSubject<boolean> {
+  if (this.isLoggedIn && this.isTokenAvailable()){
+   return new BehaviorSubject<boolean>(true) 
+  }else{
+    
+   return new BehaviorSubject<boolean>(false) 
+  }
+
+   
+}
+
 }
