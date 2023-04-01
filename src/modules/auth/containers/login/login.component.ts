@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Login } from '../../data/login';
@@ -14,18 +14,15 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router,         
+    private cdRef: ChangeDetectorRef,
     private authService: AuthService
   ) {}
   loginForm: FormGroup = new FormGroup({});
-
   public loginInvalid: boolean = false;
   isLoading: boolean = false;
-
   private formSubmitAttempt: boolean = false;
-
   private returnUrl: string = <string>{};
-  title = 'Tic Tac Toe';
   public isAuthenticated = false;
 
   ngOnInit(): void {
@@ -58,13 +55,17 @@ export class LoginComponent implements OnInit {
       console.log("value --> res",res)
       this.formSubmitAttempt = false;
       this.loginInvalid = false;
-      this.isLoading = false;    
+      this.isLoading = false;  
+      this.cdRef.detectChanges()
+  
     },
     (error:any)=>{
       console.log("value --> error",error)
       this.formSubmitAttempt = false;
       this.loginInvalid = true;
-      this.isLoading = false;    
+      this.isLoading = false; 
+      this.cdRef.detectChanges()
+   
     },
     ()=>{
 

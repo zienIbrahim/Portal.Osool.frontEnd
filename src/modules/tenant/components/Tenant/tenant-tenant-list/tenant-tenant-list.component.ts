@@ -52,7 +52,8 @@ export class TenantTenantListComponent implements AfterViewInit,OnInit {
   }
   OpenAddDialog(templateRef: any) {
     this.dialog.open(templateRef, {
-      width: '400px',
+      width: '700px',
+      minHeight:'400px'
     });
   }
   selectRow(row :any,index:any){

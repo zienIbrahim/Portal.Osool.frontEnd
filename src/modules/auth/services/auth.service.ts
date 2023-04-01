@@ -30,21 +30,10 @@ export class AuthService {
         {
           if (res.accessToken) {
             let userInfo:AuthenticateResponse=res
-            // btoa(JSON.stringify(userInfo))
-            //this.UserInfo.next(userInfo)
-           
-            const json = { "a": 1, "b": 2 }
-            const string = JSON.stringify(json) // convert Object to a String
-            const encodedString = btoa(string) // Base64 encode the String
-               console.log("userInfo -> ",userInfo);
             localStorage.setItem('token:jwt', res.accessToken);
-            // localStorage.setItem('app:userInfo' ,btoa(JSON.stringify(userInfo)));
             localStorage.setItem('token:refreshToken', res.refreshToken);
-           const jwtData= this.getDecodedToken()
             this.setIsLoggedIn(true);
-
-           this.router.navigate([Login.returnUrl]);
-
+            this.router.navigate([Login.returnUrl]);
           }
         })
       );

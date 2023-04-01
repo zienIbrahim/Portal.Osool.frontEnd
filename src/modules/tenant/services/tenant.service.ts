@@ -27,6 +27,10 @@ export class TenantService {
     EditTenantGroupType(data:TenantGroupType ){
         return this.http.put(this.apiUrl + "TenantGroupType/EditTenantGroupType",data)
     }
+    AddTenant(data:any){
+        return this.http.post(this.apiUrl + "Tenant/AddTenant",data)
+    }
+
     
 
 }

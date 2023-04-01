@@ -15,14 +15,10 @@ export class AuthGuard implements CanActivate {
 
    canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
       if (this.authService.getIsLoggedIn().value ) {
-         
+         if(this.authService.isTokenExpired()){
+            //tryRefreshingTokens 
+         }  
          return true; 
-      
-      }
-      if (this.authService.getDecodedToken().exp ) {
-         
-         return true; 
-      
       }
       this.router.navigate(['auth/login']);
       return false;
