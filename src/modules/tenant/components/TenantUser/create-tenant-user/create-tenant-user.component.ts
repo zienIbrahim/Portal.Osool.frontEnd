@@ -1,50 +1,47 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
-import { SubscriptionService } from 'src/modules/subscription/services';
-import { AddTenant } from 'src/modules/tenant/data/Tenant';
-import { TenantGroupType } from 'src/modules/tenant/data/TenantGroupType';
-import { TenantService } from 'src/modules/tenant/services/tenant.service';
+import { TenantList } from 'src/modules/tenant/data/Tenant';
+import { AddTenantUser } from 'src/modules/tenant/data/TenantUser';
+import { TenantUserService } from 'src/modules/tenant/services/tenant-user.service';
 
 @Component({
-  selector: 'app-create-tenant',
-  templateUrl: './create-tenant.component.html',
-  styleUrls: ['./create-tenant.component.scss']
+  selector: 'app-create-tenant-user',
+  templateUrl: './create-tenant-user.component.html',
+  styleUrls: ['./create-tenant-user.component.scss']
 })
-export class CreateTenantComponent implements OnInit {
-  Tenantform: FormGroup=<FormGroup>{};
+export class CreateTenantUserComponent implements OnInit {
+  TenantUserform: FormGroup=<FormGroup>{};
+  TenantList:TenantList[]=[]
 
   constructor(private formBuilder: FormBuilder,
-    public tenantService: TenantService,
+    public tenantUserService: TenantUserService,
     public notificationService: NotificationService,
-    private _snackBar: MatSnackBar    ) { }
-    TenantGroupTypeList: TenantGroupType[] = [];
+    private _snackBar: MatSnackBar) { }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
       this.intiForm()  
       this._getMAsterData()  
-    }
+  }
 
   intiForm(){
-    this.Tenantform = this.formBuilder.group({
-      name: [null, Validators.required],
-      databaseName: [null, [Validators.required]],
-      tenantGroupTypeId: [null, [Validators.required]],
+    this.TenantUserform = this.formBuilder.group({
       userName: [null, [Validators.required]],
       email: [null, [Validators.required]],
       phoneNumber: [null, [Validators.required]],
       password: [null, [Validators.required]],
       ConfiremPassword: [null, [Validators.required]],
+      tenantList: [null, [Validators.required]],
     })
   }
 
   _getMAsterData(){
-    this.tenantService.GetAllTenantGroupType().subscribe({
+    this.tenantUserService.GetAllTenant().subscribe({
       next:(value:any)=> {
         console.log(value)
-        this.TenantGroupTypeList=value.data
+        this.TenantList=value.data
       },
       complete:()=> {
           
@@ -55,15 +52,16 @@ export class CreateTenantComponent implements OnInit {
     }
     ) 
   }
-  
+
   onSubmit(addTemplateClose:MatIconButton){
-    if(this.Tenantform.invalid){
+    if(this.TenantUserform.invalid){
       return
     }
-   let Data:AddTenant=this.Tenantform.value;
-   console.log("this.Tenantform",Data)
+   let Data:AddTenantUser=this.TenantUserform.value;
 
-   this.tenantService.AddTenant(Data).subscribe({
+   console.log("this.Tenantform",Data)
+   
+   this.tenantUserService.AddTenantUser(Data).subscribe({
     next: (value: any) => {
     this.notificationService.success("Software added Successfully")
     addTemplateClose._elementRef.nativeElement.click()
@@ -73,11 +71,10 @@ export class CreateTenantComponent implements OnInit {
       this.notificationService.error(value.error.ErrorMessage)
     },
   });
+
   }
 
   get f() {
-    return this.Tenantform.controls
+    return this.TenantUserform.controls
   }
-
-
 }

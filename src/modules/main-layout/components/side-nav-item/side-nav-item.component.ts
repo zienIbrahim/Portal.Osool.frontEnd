@@ -16,6 +16,7 @@ export class SideNavItemComponent {
     { link: "/Plan/Option", name: "Option", icon: "dns" },
     { link: "/Plan/Software", name: "Software", icon: "bookmark" },
     { link: "/Plan/Plan", name: "Plan", icon: "view_in_ar" },
+    { link: "/Tenant/TenantUser/List", name: "Tenant User", icon: "account_box" },
   ];
 
 

@@ -28,19 +28,29 @@ export const ROUTES: Routes = [
         component:tenantContainers.TenantLayoutComponent ,
         children: [
             {
-                
                 path: 'List',
                 component: tenantComponent.TenantTenantListComponent,
-                
             },
              {
-                
                 path: 'GroupType',
                 component: tenantComponent.TenantGroupTypeListComponent,
                 
             }
-          
-           
+        ],
+    },
+    {
+        path: 'TenantUser',
+        canActivate : [],
+        component:tenantContainers.TenantLayoutComponent ,
+        children: [
+            {
+                path: 'List',
+                component: tenantComponent.TenantUserListComponent,
+            },
+             {
+                path: 'Create',
+                component: tenantComponent.CreateTenantUserComponent,
+            }
         ],
     }
 ];

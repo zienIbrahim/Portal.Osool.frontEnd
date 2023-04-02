@@ -36,7 +36,6 @@ export class TenantTenantListComponent implements AfterViewInit,OnInit {
 
   GetAllTenant(){
     this.tenantService.GetAllTenant().subscribe({
-      
       next:(value:any)=> {
         this.Tenants=value.data
         this.dataSource=value.data
