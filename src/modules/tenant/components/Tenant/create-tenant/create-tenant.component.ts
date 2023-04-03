@@ -1,10 +1,12 @@
-import { Component,OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component,OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
-import { SubscriptionService } from 'src/modules/subscription/services';
-import { AddTenant } from 'src/modules/tenant/data/Tenant';
+import { AddTenant, TenantUserList } from 'src/modules/tenant/data/Tenant';
 import { TenantGroupType } from 'src/modules/tenant/data/TenantGroupType';
 import { TenantService } from 'src/modules/tenant/services/tenant.service';
 
@@ -15,11 +17,14 @@ import { TenantService } from 'src/modules/tenant/services/tenant.service';
 })
 export class CreateTenantComponent implements OnInit {
   Tenantform: FormGroup=<FormGroup>{};
+  public UsersList: FormArray=<FormArray>{};
 
   constructor(private formBuilder: FormBuilder,
     public tenantService: TenantService,
     public notificationService: NotificationService,
-    private _snackBar: MatSnackBar    ) { }
+    private _snackBar: MatSnackBar  ,
+    public dialog: MatDialog
+    ) { }
     TenantGroupTypeList: TenantGroupType[] = [];
 
     ngOnInit(): void {
@@ -32,14 +37,28 @@ export class CreateTenantComponent implements OnInit {
       name: [null, Validators.required],
       databaseName: [null, [Validators.required]],
       tenantGroupTypeId: [null, [Validators.required]],
+      Users: this.formBuilder.array([this.createUsers()]) 
+    })
+  }
+  createUsers(): FormGroup{
+     return this.formBuilder.group({
       userName: [null, [Validators.required]],
       email: [null, [Validators.required]],
       phoneNumber: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      ConfiremPassword: [null, [Validators.required]],
-    })
+      ConfiremPassword: [null, [Validators.required]],  
+      admin: [null, [Validators.required]],  
+     });
   }
-
+  addUser() {
+    this.UsersList = this.Users;
+    this.UsersList.push(this.createUsers());
+   }
+   // remove User from group
+  removeUser(index:number) {
+    const add = this.Users;
+    if (add.length > 1) add.removeAt(index);
+    }
   _getMAsterData(){
     this.tenantService.GetAllTenantGroupType().subscribe({
       next:(value:any)=> {
@@ -57,6 +76,7 @@ export class CreateTenantComponent implements OnInit {
   }
   
   onSubmit(addTemplateClose:MatIconButton){
+    console.log("this.Tenantform",this.Tenantform.value)
     if(this.Tenantform.invalid){
       return
     }
@@ -74,10 +94,27 @@ export class CreateTenantComponent implements OnInit {
     },
   });
   }
+  setAdmin(index:number){
 
+  }
+  OpenAddDialog(templateRef: any) {
+    this.dialog.open(templateRef, {
+      width: '1000px',
+      minHeight:'400px',
+      disableClose: false,
+
+    });
+  }
   get f() {
     return this.Tenantform.controls
   }
+  get Users() :FormArray {
+    return   this.Tenantform.get('Users') as FormArray; 
+   }
+   get getUsersControls() {
+    return (this.Tenantform.get('Users') as FormArray).controls;
+  }
+
 
 
 }
