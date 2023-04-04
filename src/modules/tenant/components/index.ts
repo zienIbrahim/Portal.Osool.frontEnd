@@ -25,3 +25,4 @@ export const components = [
  export * from './TenantUser/create-tenant-user/create-tenant-user.component';
  export *  from './TenantUser/edit-tenant-user/edit-tenant-user.component';
  export *  from './TenantUser/tenant-user-list/tenant-user-list.component';
+ export *  from './Tenant/create-tenant/create-tenant.component';

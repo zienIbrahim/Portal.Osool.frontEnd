@@ -36,6 +36,12 @@ export const ROUTES: Routes = [
                 component: tenantComponent.TenantGroupTypeListComponent,
                 
             }
+            ,
+             {
+                path: 'Create',
+                component: tenantComponent.CreateTenantComponent,
+                
+            }
         ],
     },
     {

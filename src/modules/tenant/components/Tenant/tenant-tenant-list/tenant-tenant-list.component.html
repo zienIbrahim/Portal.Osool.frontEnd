@@ -5,7 +5,7 @@
       <!-- <button mat-icon-button style="margin-right: 24px;"><mat-icon>arrow_back</mat-icon></button> -->
       <span> Tenant </span>
       <!-- (click)="OpenAddDialog(addTemplate)" -->
-      <button mat-raised-button (click)="OpenAddDialog(addTemplate)">Add</button>
+      <button mat-raised-button routerLink="/Tenant/Create">Add</button>
     </mat-toolbar>
   </mat-card-header>
   <mat-card-content card>
@@ -52,9 +52,7 @@
   </mat-card-footer>
 </mat-card>
 
-<ng-template #addTemplate>
-  <app-create-tenant></app-create-tenant>
-</ng-template>
+
 <ng-template #editTemplate>
   <!-- <app-edit-option [OptionData]="SelectedRow"></app-edit-option> -->
 </ng-template>

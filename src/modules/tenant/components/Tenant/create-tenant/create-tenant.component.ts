@@ -46,8 +46,8 @@ export class CreateTenantComponent implements OnInit {
       email: [null, [Validators.required]],
       phoneNumber: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      ConfiremPassword: [null, [Validators.required]],  
-      admin: [null, [Validators.required]],  
+      tenantUserId: [null, [Validators.required]],
+      admin: [null],  
      });
   }
   addUser() {
@@ -75,7 +75,7 @@ export class CreateTenantComponent implements OnInit {
     ) 
   }
   
-  onSubmit(addTemplateClose:MatIconButton){
+  onSubmit(){
     console.log("this.Tenantform",this.Tenantform.value)
     if(this.Tenantform.invalid){
       return
@@ -86,7 +86,6 @@ export class CreateTenantComponent implements OnInit {
    this.tenantService.AddTenant(Data).subscribe({
     next: (value: any) => {
     this.notificationService.success("Software added Successfully")
-    addTemplateClose._elementRef.nativeElement.click()
     },
     complete: () => {},
     error: (value) => {

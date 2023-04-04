@@ -1,14 +1,11 @@
 <mat-card>
     <mat-card-header class="p-0-card-header">
-        <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-toolbar  fxLayout="row" fxLayoutAlign="space-between center">
             <span class="fill-remaining-space">Add New Tenant</span>
-            <button #btnClose matDialogClose mat-icon-button>
-                <mat-icon>close</mat-icon>
-            </button>
         </mat-toolbar>
     </mat-card-header>
     <mat-card-content>
-        <form [formGroup]="Tenantform" (ngSubmit)="onSubmit(btnClose)" style="padding: 16px;">
+        <form [formGroup]="Tenantform" (ngSubmit)="onSubmit()" style="padding: 16px;">
             <mat-stepper [linear]="true" #stepper>
                 <mat-step>
                     <ng-template matStepLabel>Fill out Tenant</ng-template>
@@ -72,6 +69,7 @@
                                 <th>Phone Number</th>
                                 <th>email</th>
                                 <th>Password</th>
+                                <th>Tenant User Id</th>
                                 <th>Admin</th>
                                 <th>Action</th>
                             </tr>
@@ -115,10 +113,19 @@
                                 </mat-form-field>
                             </td>
                             <td>
-                                    <mat-checkbox matInput formControlName="admin"  color="primary"(change)="setAdmin(i)">Is Admin</mat-checkbox>
+                                <mat-form-field appearance="outline" [ngStyle]="{'width': '8rem'}">
+                                    <mat-label>Tenant User Id</mat-label>
+                                    <input matInput placeholder="enter Password" formControlName="tenantUserId" type="number">
+                                    <mat-error *ngIf="!getUsersControls[i].get('phoneNumber')?.errors && getUsersControls[i].get('phoneNumber')?.touched">
+                                        Invalid Tenant User Id Input
+                                    </mat-error>
+                                </mat-form-field>
                             </td>
                             <td>
-                                <button mat-raised-button (click)="removeUser(i)"><mat-icon>delete</mat-icon></button>
+                                    <mat-checkbox matInput formControlName="admin"  color="primary"(change)="setAdmin(i)"></mat-checkbox>
+                            </td>
+                            <td>
+                                <mat-icon (click)="removeUser(i)" [ngStyle]="{'color': 'red'}">delete</mat-icon>
                             </td>
                             </tr>
                         </tbody>
