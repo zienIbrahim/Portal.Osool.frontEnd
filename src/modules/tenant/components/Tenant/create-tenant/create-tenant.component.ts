@@ -37,7 +37,7 @@ export class CreateTenantComponent implements OnInit {
       name: [null, Validators.required],
       databaseName: [null, [Validators.required]],
       tenantGroupTypeId: [null, [Validators.required]],
-      Users: this.formBuilder.array([this.createUsers()]) 
+      users: this.formBuilder.array([this.createUsers()]) 
     })
   }
   createUsers(): FormGroup{
@@ -47,7 +47,7 @@ export class CreateTenantComponent implements OnInit {
       phoneNumber: [null, [Validators.required]],
       password: [null, [Validators.required]],
       tenantUserId: [null, [Validators.required]],
-      admin: [null],  
+      admin: [false],  
      });
   }
   addUser() {
@@ -93,8 +93,15 @@ export class CreateTenantComponent implements OnInit {
     },
   });
   }
-  setAdmin(index:number){
-
+  setAdmin(Rowindex:number){
+    if (this.Users.controls.length > 1) {
+      this.Users.controls.forEach((item: any,index:number) => {
+          item.patchValue({
+            admin: index==Rowindex,
+          });
+      });
+     
+  }
   }
   OpenAddDialog(templateRef: any) {
     this.dialog.open(templateRef, {
@@ -108,10 +115,10 @@ export class CreateTenantComponent implements OnInit {
     return this.Tenantform.controls
   }
   get Users() :FormArray {
-    return   this.Tenantform.get('Users') as FormArray; 
+    return   this.Tenantform.get('users') as FormArray; 
    }
    get getUsersControls() {
-    return (this.Tenantform.get('Users') as FormArray).controls;
+    return (this.Tenantform.get('users') as FormArray).controls;
   }
 
 

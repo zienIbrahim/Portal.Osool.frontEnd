@@ -3,4 +3,10 @@
 		{{ isExpanded ? "keyboard_backspace" : "dehaze" }}
 	  </mat-icon>
 	<h1 class="example-app-name m-0">Osool Portal</h1>
+<div class="example-button-container">
+	<button mat-fab color="primary"  (click)="ChangeTheme()" aria-label="Example icon button with a delete icon">
+	  <mat-icon>{{isDark?'brightness_3':'wb_sunny'}}</mat-icon>
+	</button>
+  </div>
+	
 </mat-toolbar>
