@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/dashboard',
+    redirectTo: '/Tenant',
 },
 {
   path: 'auth',
@@ -25,6 +25,12 @@ const routes: Routes = [
   loadChildren: () =>
       import('../modules/subscription/subscription-routing.module').then((m) => m.SubscriptionRoutingModule),
 },
+{
+  path: 'error',
+  canActivate: [AuthGuard],
+  loadChildren: () =>
+      import('../modules/error/error-routing.module').then((m) => m.ErrorRoutingModule),
+},
 //  {
 //   path: 'dashboard',
 //   canActivate: [],
@@ -32,7 +38,7 @@ const routes: Routes = [
 //       import('modules/dashboard/dashboard-routing.module').then(
 //           (m) => m.DashboardRoutingModule
 //       ),
-// },
+//  },
 ];
 
 @NgModule({

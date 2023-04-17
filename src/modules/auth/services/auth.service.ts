@@ -24,6 +24,7 @@ export class AuthService {
   private isTokenAvailable(): boolean {
     return !!localStorage.getItem('token:jwt');
   }
+
   Login(Login :Login) {
     return this.http.post(this.apiUrl + "Authenticate/Login",Login).pipe(
         tap((res: any) => 
@@ -39,6 +40,7 @@ export class AuthService {
       );
       
 }
+
 setIsLoggedIn(isLoggedIn: boolean): void {
     this.isLoggedIn.next(isLoggedIn);
 }
@@ -47,6 +49,7 @@ public getDecodedToken()  {
     const token = String(localStorage.getItem('token:jwt'));
     return this.jwtHelper.decodeToken(token);
 }
+
 isTokenExpired(): boolean {
     const token = String(localStorage.getItem('token:jwt'));
 
@@ -57,9 +60,11 @@ isTokenExpired(): boolean {
       return false;
     }
 }
+
 getExpiryTime() {
     return this.isTokenAvailable()? this.getDecodedToken().exp : null;
 }
+
 getIsLoggedIn(): BehaviorSubject<boolean> {
   if (this.isLoggedIn && this.isTokenAvailable()){
    return new BehaviorSubject<boolean>(true) 
@@ -70,5 +75,16 @@ getIsLoggedIn(): BehaviorSubject<boolean> {
 
    
 }
-
+async logout(): Promise<any> {
+  // Clear JWT from localstorage
+  await localStorage.removeItem('token:refreshToken');
+  await localStorage.removeItem('token:jwt');
+  // Update logged in status
+  this.setIsLoggedIn(false);
+  // Navigate user back to login page
+  await this.router.navigate(['auth/login']);
+}
+refreshToken(tokenModel:any):Observable<any>{
+  return this.http.post(this.apiUrl + "Authenticate/RefreshToken", tokenModel);
+}
 }

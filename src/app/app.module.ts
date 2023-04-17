@@ -56,6 +56,8 @@ import { JwtInterceptor } from 'src/helpers/interceptors/JwtInterceptor';
 import { CommonModule } from '@angular/common';
  import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppCommonModule } from 'src/modules/app-common/app-common.module';
+import { Error401Interceptor } from 'src/helpers/interceptors/Error401Interceptor';
+import { ErrorInterceptor } from 'src/helpers/interceptors/ErrorInterceptor';
 @NgModule({
   exports: [
     A11yModule,
@@ -133,8 +135,9 @@ export class MaterialExampleModule {}
     ,MaterialExampleModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-
+    { provide: HTTP_INTERCEPTORS, useClass: Error401Interceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

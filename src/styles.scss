@@ -6,16 +6,13 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
 body { 
   font-family: Roboto, Arial, sans-serif;
   margin: 0;
 }
-
 .basic-container {
   padding: 30px;
 }
-
 .version-info {
   font-size: 8pt;
   float: right;
@@ -27,9 +24,6 @@ mat-sidenav[style] {
 .mat-drawer {
   transform: none !important;
 }
-
-
-
 
 .sidenav {
   width: 250px;
@@ -48,122 +42,96 @@ mat-sidenav[style] {
   }
 }
 
-.nav {
-  .active-link {
-    background-color: #d9d9d9;
-    border-left: solid 3px #1976d2;
-  }
-
- 
-
-  mat-list-item,
-  a {
-    border-left: solid 3px transparent;
-    box-sizing: border-box;
-    text-decoration: none;
-    &:hover {
-      cursor: pointer;
-    background-color: #d9d9d9;
-    border-left: solid 3px #1976d2;
-    mat-icon {
-      color: #0d7ae7;
-    }
-    }
-  }
-  mat-icon {
-    color: #1976d2;
-  }
-}
 
 .mat-drawer[style*="visibility: hidden"] {
   display: unset !important ;
-}
-.mat-toolbar.mat-primary {
-  background: #1976d2;
-  color: #fff;
 }
 // override material inline style to allow mini nav state
 mat-sidenav[style] {
   visibility: visible !important;
 }
+
 .mat-drawer {
   transform: none !important;
 }
+
 .scroll-overflow{
   height: calc(100vh - 64px);
   display: block;
   overflow-y: auto;
 }
+
 .p-0-card-header {
   padding: unset !important;
 }
 
 
 $achieve-primary: (
-  50: #bac6ff,
-  100: #6f82e4,
-  200: #6478d9,
-  300: #4254ad,
-  400: #36479c,
-  500: #24327b,
-  600: #212e74,
-  700: #1b2769,
-  800: #111b55,
-  900: #0c1447,
-  A100: #716fe4,
-  A200: #6664d9,
-  A400: #3d369c,
-  A700: #2d1b69,
+  50 : #e0e9ef,
+  100 : #b3c9d6,
+  200 : #80a5bb,
+  300 : #4d80a0,
+  400 : #26658b,
+  500 : #004a77,
+  600 : #00436f,
+  700 : #003a64,
+  800 : #00325a,
+  900 : #002247,
+  A100 : #7baeff,
+  A200 : #488eff,
+  A400 : #156eff,
+  A700 : #0060fb,
   contrast: (
-    50: $dark-primary-text,
-    100: $dark-primary-text,
-    200: $dark-primary-text,
-    300: $light-primary-text,
-    400: $light-primary-text,
-    500: $light-primary-text,
-    600: $light-primary-text,
-    700: $light-primary-text,
-    800: $light-primary-text,
-    900: $light-primary-text,
-    A100: $dark-primary-text,
-    A200: $light-primary-text,
-    A400: $light-primary-text,
-    A700: $light-primary-text,
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #ffffff,
+      400 : #ffffff,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #ffffff,
+      A700 : #ffffff,
   )
+);
+/* For use in src/lib/core/theming/_palette.scss */
+$md-mcgpalette: (
+    50 : #e8e9e7,
+    100 : #c5c9c3,
+    200 : #9fa59b,
+    300 : #788072,
+    400 : #5b6554,
+    500 : #3e4a36,
+    600 : #384330,
+    700 : #303a29,
+    800 : #283222,
+    900 : #1b2216,
+    A100 : #a4ff68,
+    A200 : #86ff35,
+    A400 : #67ff02,
+    A700 : #5ce700,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
 );
 
-$achieve-red: (
-  50: #ff7396,
-  100: #eb5278,
-  200: #d43f64,
-  300: #c33357,
-  400: #b1274a,
-  500: #a12041,
-  600: #951d3b,
-  700: #881935,
-  800: #7c152f,
-  900: #6e1028,
-  A100: #eb5299,
-  A200: #d43f84,
-  A400: #b1275c,
-  A700: #881944,
-  contrast: (
-    50: $dark-primary-text,
-    100: $dark-primary-text,
-    200: $dark-primary-text,
-    300: $dark-primary-text,
-    400: $dark-primary-text,
-    500: $light-primary-text,
-    600: $light-primary-text,
-    700: $light-primary-text,
-    800: $light-primary-text,
-    900: $light-primary-text,
-    A100: $dark-primary-text,
-    A200: $light-primary-text,
-    A400: $light-primary-text,
-    A700: $light-primary-text,
-  )
-);
 
 $primary: mat-color(mat-palette($achieve-primary));
 $accent: mat-color(mat-palette($achieve-primary, A200, A100, A400));
@@ -230,6 +198,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 .mat-mdc-card-footer{
   padding: 0 16px;
 }
@@ -238,9 +207,13 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.container-m{
+margin: 1rem;
+}
 // Define a light theme
-$light-primary: mat.define-palette(mat.$indigo-palette);
-$light-accent: mat.define-palette(mat.$pink-palette);
+$light-primary: mat.define-palette(mat-palette($achieve-primary));
+$light-accent: mat.define-palette(mat-palette($achieve-primary, A200, A100, A400));
 $light-theme: mat.define-light-theme(
   (
     color: (
@@ -251,8 +224,8 @@ $light-theme: mat.define-light-theme(
 );
 
 // Define a dark theme
-$dark-primary: mat.define-palette(mat.$pink-palette);
-$dark-accent: mat.define-palette(mat.$blue-gray-palette);
+$dark-primary: mat.define-palette(mat-palette($md-mcgpalette));
+$dark-accent: mat.define-palette(mat-palette($md-mcgpalette, A200, A100, A400));
 $dark-theme: mat.define-dark-theme(
   (
     color: (
@@ -263,31 +236,77 @@ $dark-theme: mat.define-dark-theme(
 );
 
 .color-scheme-dark {
-  @include mat.core-color($dark-theme);
-  @include mat.button-color($dark-theme);
-  @include mat.icon-color($dark-theme);
-  @include mat.list-color($dark-theme);
-  @include mat.sidenav-color($dark-theme);
-  @include mat.toolbar-color($dark-theme);
-  @include mat.card-color($dark-theme);
-  // Example how you can easy add own custom styles
-  .card-wrapper {
-    color: #d0d0d0;
+
+  @include mat.all-component-themes($dark-theme);
+  .Login-warper{
+    background: #3e4a36;
+    height: 100vh;
   }
+  
+.nav {
+  .active-link {
+    background-color: #3e4a36;
+    border-left: solid 3px #d9d9d9;
+  }
+
+ 
+
+  mat-list-item,
+  a {
+    border-left: solid 3px transparent;
+    box-sizing: border-box;
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
+    background-color: #3e4a36;
+    border-left: solid 3px #d9d9d9;
+   
+    }
+  }
+  
+}
+  // Example how you can easy add own custom styles
+ 
+ 
 }
 
 .color-scheme-light {
-  @include mat.core-color($light-theme);
-  @include mat.button-color($light-theme);
-  @include mat.icon-color($light-theme);
-  @include mat.list-color($light-theme);
-  @include mat.sidenav-color($light-theme);
-  @include mat.toolbar-color($light-theme);
-  @include mat.card-color($light-theme);
-  // Example how you can easy add own custom styles
-  .card-wrapper {
-    color: #2d2d2d;
+  @include mat.all-component-themes($light-theme);
+
+  // // Example how you can easy add own custom styles
+  // .card-wrapper {
+  //   color: #d0d0d0;
+  // }
+  .Login-warper{
+    background: #004a77;
+    height: 100vh;
   }
+.nav {
+  .active-link {
+    background-color: #d9d9d9;
+    border-left: solid 3px #004a77;
+  }
+
+ 
+
+  mat-list-item,
+  a {
+    mat-icon{
+      color: #004a77;
+
+    }
+    border-left: solid 3px transparent;
+    box-sizing: border-box;
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
+      background-color: #d9d9d9;
+      border-left: solid 3px #004a77;
+   
+    }
+  }
+  
+}
 }
 
 

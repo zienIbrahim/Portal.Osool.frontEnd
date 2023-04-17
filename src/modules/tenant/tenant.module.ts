@@ -20,6 +20,7 @@ import * as tenantGuards from './guards';
 
 /* Services */
 import * as tenantServices from './services';
+import { EditTenantComponent } from './components/Tenant/edit-tenant/edit-tenant.component';
 
 @NgModule({
     imports: [
@@ -31,7 +32,7 @@ import * as tenantServices from './services';
         MainLayoutModule,
     ],
     providers: [...tenantServices.services, ...tenantGuards.guards],
-    declarations: [...tenantContainers.containers, ...tenantComponents.components],
+    declarations: [...tenantContainers.containers, ...tenantComponents.components, ],
     exports: [...tenantContainers.containers, ...tenantComponents.components],
 })
 export class TenantModule {}

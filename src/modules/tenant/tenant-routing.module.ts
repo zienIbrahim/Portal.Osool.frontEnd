@@ -56,7 +56,11 @@ export const ROUTES: Routes = [
              {
                 path: 'Create',
                 component: tenantComponent.CreateTenantUserComponent,
-            }
+            },
+            {
+               path: 'Edit',
+               component: tenantComponent.EditTenantUserComponent,
+           }
         ],
     }
 ];
