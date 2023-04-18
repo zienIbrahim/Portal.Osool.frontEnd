@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -14,6 +14,7 @@ import { TenantUserService } from 'src/modules/tenant/services/tenant-user.servi
 export class EditTenantUserComponent implements OnInit{
   TenantUserform: FormGroup=<FormGroup>{};
   TenantList:TenantList[]=[]
+  @Input()  TenantUserId: string='';
 
   constructor(private formBuilder: FormBuilder,
     public tenantUserService: TenantUserService,
@@ -21,9 +22,18 @@ export class EditTenantUserComponent implements OnInit{
     private _snackBar: MatSnackBar){}
   ngOnInit(): void {
     this.intiForm()  
+    this._GetUserTenantById()   
     this._getMAsterData()   
    }
-
+   _GetUserTenantById(){
+    if( this.TenantUserId!=''){
+      this.tenantUserService.GetUserTenantById(this.TenantUserId).subscribe({
+        next: (value: any) => {
+        console.log("value -> GetUserTenantById",value)   
+     }});
+    }
+   
+   }
 intiForm(){
     this.TenantUserform = this.formBuilder.group({
       UserId: [null, [Validators.required]],

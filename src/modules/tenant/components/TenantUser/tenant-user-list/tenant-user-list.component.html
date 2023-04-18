@@ -48,5 +48,5 @@
     <app-create-tenant-user></app-create-tenant-user>
 </ng-template>
 <ng-template #editTemplate>
-    <app-edit-tenant-user ></app-edit-tenant-user>
+    <app-edit-tenant-user [TenantUserId]="SelectedRow.id"></app-edit-tenant-user>
 </ng-template>
