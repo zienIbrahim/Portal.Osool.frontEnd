@@ -42,21 +42,9 @@
                             <th>is Active</th>
                             <th>Action</th>
                         </tr>
-                         groupAdmin:['', Validators.required],
-        isActive:['', Validators.required],
-        tenantId:['', Validators.required],
-        tenantUserId:['', Validators.required],
-        timeAdded:['', Validators.required],
-        tenantName:['', Validators.required],
-        databaseName:['', Validators.required],
-        tenantinsertTs:['', Validators.required],
-        tenantGroupType:['', Validators.required],
-        tenantGroupTypeId:['', Validators.required],
-        tenantGroupTypeName:['', Validators.required],
-        timeRemoved:['', Validators.required]
                     </thead>
-                    <tbody formArrayName="users">
-                        <tr *ngFor="let item of getUsersControls  let i = index;" [formGroupName]="i">
+                    <tbody formArrayName="userInGroups">
+                        <tr *ngFor="let item of userInGroupsList  let i = index;" [formGroupName]="i">
                         <td>
                                 <mat-form-field appearance="outline" >
                                 <mat-label>User Name</mat-label>
