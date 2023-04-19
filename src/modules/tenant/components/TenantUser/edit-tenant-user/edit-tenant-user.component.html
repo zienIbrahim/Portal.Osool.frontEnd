@@ -6,48 +6,113 @@
 </mat-toolbar>
 <form [formGroup]="TenantUserform" (ngSubmit)="onSubmit(btnClose)" style="padding: 16px;">
             <div  fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%" style="padding-top: 5px;">
-            <mat-form-field appearance="outline" fxFlex="100%">
+            <mat-form-field appearance="outline" fxFlex="50%">
                 <mat-label>User Name</mat-label>
                 <input matInput placeholder="enter User Name" formControlName="userName">
                 <mat-error *ngIf="!f['userName'].errors && f['userName'].touched">
                     Invalid User Name Input
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex="100%">
+            <mat-form-field appearance="outline" fxFlex="50%">
                 <mat-label>Email</mat-label>
                 <input matInput placeholder="enter Email" formControlName="email">
                 <mat-error *ngIf="!f['email'].errors && f['email'].touched">
                     Invalid Email Input
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex="100%">
+            <mat-form-field appearance="outline" fxFlex="50%">
                 <mat-label>Phone Number</mat-label>
                 <input matInput placeholder="enter Phone Number" formControlName="phoneNumber">
                 <mat-error *ngIf="!f['phoneNumber'].errors && f['phoneNumber'].touched">
                     Invalid Phone Number Input
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex="100%">
-                <mat-label>Password</mat-label>
-                <input matInput placeholder="enter Password" formControlName="password">
-                <mat-error *ngIf="!f['password'].errors && f['password'].touched">
-                    Invalid Password Input
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex="100%">
-                <mat-label>Confirem Password</mat-label>
-                <input matInput placeholder="enter Confirem Password" formControlName="ConfiremPassword">
-                <mat-error *ngIf="!f['ConfiremPassword'].errors && f['ConfiremPassword'].touched">
-                    Invalid Confirem Password Input
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" [fxFlex]="100" >
-                <mat-label>Tenants</mat-label>
-                <mat-select matNativeControl required formControlName="tenantList" multiple>
-                  <mat-option *ngFor="let tenant of TenantList" [value]="tenant.id" >{{tenant.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            <br>
+            <!-- <div class="tableFixHead">
+                <table>
+                    <thead>
+                        <tr class="red">
+                            <th>tenant Name</th>
+                            <th>tenant UserId</th>
+                            <th>time Added</th>
+                            <th>database Name</th>
+                            <th>tenant insert time</th>
+                            <th>Tenant User Id</th>
+                            <th>tenant Group Type</th>
+                            <th>group Admin</th>
+                            <th>is Active</th>
+                            <th>Action</th>
+                        </tr>
+                         groupAdmin:['', Validators.required],
+        isActive:['', Validators.required],
+        tenantId:['', Validators.required],
+        tenantUserId:['', Validators.required],
+        timeAdded:['', Validators.required],
+        tenantName:['', Validators.required],
+        databaseName:['', Validators.required],
+        tenantinsertTs:['', Validators.required],
+        tenantGroupType:['', Validators.required],
+        tenantGroupTypeId:['', Validators.required],
+        tenantGroupTypeName:['', Validators.required],
+        timeRemoved:['', Validators.required]
+                    </thead>
+                    <tbody formArrayName="users">
+                        <tr *ngFor="let item of getUsersControls  let i = index;" [formGroupName]="i">
+                        <td>
+                                <mat-form-field appearance="outline" >
+                                <mat-label>User Name</mat-label>
+                                <input matInput placeholder="enter User Name" formControlName="userName">
+                                <mat-error *ngIf="!getUsersControls[i].get('userName')?.errors && getUsersControls[i].get('userName')?.touched">
+                                    Invalid User Name Input
+                                </mat-error>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" >
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="enter Email" formControlName="email">
+                            <mat-error *ngIf="!getUsersControls[i].get('email')?.errors && getUsersControls[i].get('email')?.touched">
+                                Invalid Email Input
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                        <td>
+                            <mat-form-field appearance="outline" >
+                                <mat-label>Phone Number</mat-label>
+                                <input matInput placeholder="enter Phone Number" formControlName="phoneNumber">
+                                <mat-error *ngIf="!getUsersControls[i].get('phoneNumber')?.errors && getUsersControls[i].get('phoneNumber')?.touched">
+                                    Invalid Phone Number Input
+                                </mat-error>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" >
+                                <mat-label>Password</mat-label>
+                                <input matInput placeholder="enter Password" formControlName="password">
+                                <mat-error *ngIf="!getUsersControls[i].get('password')?.errors && getUsersControls[i].get('password')?.touched">
+                                    Invalid Password Input
+                                </mat-error>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" [ngStyle]="{'width': '8rem'}">
+                                <mat-label>Tenant User Id</mat-label>
+                                <input matInput placeholder="enter Password" formControlName="tenantUserId" type="number">
+                                <mat-error *ngIf="!getUsersControls[i].get('tenantUserId')?.errors && getUsersControls[i].get('tenantUserId')?.touched">
+                                    Invalid Tenant User Id Input
+                                </mat-error>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                                <mat-checkbox matInput formControlName="admin"  color="primary"(change)="setAdmin(i)"></mat-checkbox>
+                        </td>
+                        <td>
+                            <mat-icon (click)="removeUser(i)" [ngStyle]="{'color': 'red'}">delete</mat-icon>
+                        </td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </div> -->
             <button type="button" mat-raised-button color="accent" type="submit">Submit</button>
             </div>
            
