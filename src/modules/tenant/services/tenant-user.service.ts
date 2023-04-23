@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { AddTenantUser } from '../data/TenantUser';
+import { AddTenantUser, EditUserRequest } from '../data/TenantUser';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +24,8 @@ GetUserTenantById(Id :string ){
 }
 AddTenantUser(data:AddTenantUser){
   return this.http.post(this.apiUrl + "TenantUsers/AddTenantUser",data)
+}
+EditTenantUser(data:EditUserRequest){
+  return this.http.put(this.apiUrl + "TenantUsers/EditTenantUser",data)
 }
 }

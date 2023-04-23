@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { TenantUserList } from 'src/modules/tenant/data/TenantUser';
 import { TenantUserService } from 'src/modules/tenant/services/tenant-user.service';
 
@@ -19,6 +20,7 @@ export class TenantUserListComponent  implements AfterViewInit,OnInit{
 
   constructor(
     public tenantUserService: TenantUserService,
+    private router: Router,
     public dialog: MatDialog
   ) {}
 
@@ -60,11 +62,14 @@ export class TenantUserListComponent  implements AfterViewInit,OnInit{
 
   edit(element: any, templateRef: any) {
     this.SelectedRow = element;
-    const dialogRef = this.dialog.open(templateRef, {
-      width: '700px',
-      minHeight:'400px',
-      disableClose: true,
-    });
+    // const dialogRef = this.dialog.open(templateRef, {
+    //   width: '100%',
+    //   minHeight:'400px',
+    //   disableClose: true,
+    // });
+    console.log('element: %d',element);
+
+    this.router.navigate([`/Tenant/TenantUser/Edit`], { queryParams: { userId: this.SelectedRow.id } });
   }
 
   nextPage(event:any){

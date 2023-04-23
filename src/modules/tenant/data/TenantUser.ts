@@ -43,3 +43,19 @@ export interface TenantUserList {
     id: number
     typeName: string
   }
+  export interface EditUserRequest {
+    id: string
+    userName: string
+    email: string
+    phoneNumber: string
+    isActive: boolean
+    userInGroups: EditUserInGroup[]
+  }
+  
+  export interface EditUserInGroup {
+    tenantUserId: number
+    groupAdmin: boolean
+    tenantId: string
+    isActive: boolean
+  }
+  

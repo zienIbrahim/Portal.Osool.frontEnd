@@ -1,98 +1,110 @@
-<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+<mat-toolbar  fxLayout="row" fxLayoutAlign="space-between center">
     <span class="fill-remaining-space">Update User Tenant</span>
-    <button #btnClose matDialogClose mat-icon-button>
+    <!-- <button #btnClose matDialogClose mat-icon-button>
         <mat-icon>close</mat-icon>
-    </button>
+    </button> -->
 </mat-toolbar>
-<form [formGroup]="TenantUserform" (ngSubmit)="onSubmit(btnClose)" style="padding: 16px;">
+<form [formGroup]="TenantUserform" (ngSubmit)="onSubmit()" style="padding: 16px;">
             <div  fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%" style="padding-top: 5px;">
-            <mat-form-field appearance="outline" fxFlex="50%">
+            <mat-form-field appearance="outline" fxFlex="49%">
                 <mat-label>User Name</mat-label>
                 <input matInput placeholder="enter User Name" formControlName="userName">
                 <mat-error *ngIf="!f['userName'].errors && f['userName'].touched">
                     Invalid User Name Input
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex="50%">
+            <mat-form-field appearance="outline" fxFlex="49%">
                 <mat-label>Email</mat-label>
                 <input matInput placeholder="enter Email" formControlName="email">
                 <mat-error *ngIf="!f['email'].errors && f['email'].touched">
                     Invalid Email Input
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex="50%">
+            <mat-form-field appearance="outline" fxFlex="49%">
                 <mat-label>Phone Number</mat-label>
                 <input matInput placeholder="enter Phone Number" formControlName="phoneNumber">
                 <mat-error *ngIf="!f['phoneNumber'].errors && f['phoneNumber'].touched">
                     Invalid Phone Number Input
                 </mat-error>
             </mat-form-field>
-            <!-- <div class="tableFixHead">
+            <div class="tableFixHead">
                 <table>
                     <thead>
                         <tr class="red">
                             <th>tenant Name</th>
+                            <th>database Name</th>
+                            <th>tenant Group Type</th>
                             <th>tenant UserId</th>
                             <th>time Added</th>
-                            <th>database Name</th>
-                            <th>tenant insert time</th>
-                            <th>Tenant User Id</th>
-                            <th>tenant Group Type</th>
+                            <th>time Removed</th>
                             <th>group Admin</th>
                             <th>is Active</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody formArrayName="userInGroups">
-                        <tr *ngFor="let item of userInGroupsList  let i = index;" [formGroupName]="i">
+                        <tr *ngFor="let item of userInGroupsList.controls  let i = index;" [formGroupName]="i">
                         <td>
                                 <mat-form-field appearance="outline" >
-                                <mat-label>User Name</mat-label>
-                                <input matInput placeholder="enter User Name" formControlName="userName">
-                                <mat-error *ngIf="!getUsersControls[i].get('userName')?.errors && getUsersControls[i].get('userName')?.touched">
-                                    Invalid User Name Input
+                                <mat-label>Tenan Name</mat-label>
+                                <input matInput placeholder="Tenan Name" formControlName="tenantName" [readonly]="true">
+                                <mat-error *ngIf="!item.get('tenantName')?.errors && item.get('tenantName')?.touched">
+                                    Invalid Tenan Name Input
                                 </mat-error>
                             </mat-form-field>
                         </td>
                         <td>
                             <mat-form-field appearance="outline" >
-                            <mat-label>Email</mat-label>
-                            <input matInput placeholder="enter Email" formControlName="email">
-                            <mat-error *ngIf="!getUsersControls[i].get('email')?.errors && getUsersControls[i].get('email')?.touched">
-                                Invalid Email Input
+                            <mat-label>Database Name</mat-label>
+                            <input matInput placeholder="Database Name" formControlName="databaseName" [readonly]="true">
+                            <mat-error *ngIf="!item.get('databaseName')?.errors && item.get('databaseName')?.touched">
+                                Invalid Database Name Input
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="outline" [ngStyle]="{'width': '8rem'}">
+                            <mat-label>GroupType Name</mat-label>
+                            <input matInput placeholder="Tenant UserId" formControlName="userTenantGroupTypeName" [readonly]="true">
+                            <mat-error *ngIf="!item.get('userTenantGroupTypeName')?.errors && item.get('userTenantGroupTypeName')?.touched">
+                                Invalid GroupType Name Input
                             </mat-error>
                         </mat-form-field>
                     </td>
                         <td>
-                            <mat-form-field appearance="outline" >
-                                <mat-label>Phone Number</mat-label>
-                                <input matInput placeholder="enter Phone Number" formControlName="phoneNumber">
-                                <mat-error *ngIf="!getUsersControls[i].get('phoneNumber')?.errors && getUsersControls[i].get('phoneNumber')?.touched">
-                                    Invalid Phone Number Input
-                                </mat-error>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" >
-                                <mat-label>Password</mat-label>
-                                <input matInput placeholder="enter Password" formControlName="password">
-                                <mat-error *ngIf="!getUsersControls[i].get('password')?.errors && getUsersControls[i].get('password')?.touched">
-                                    Invalid Password Input
-                                </mat-error>
-                            </mat-form-field>
-                        </td>
-                        <td>
                             <mat-form-field appearance="outline" [ngStyle]="{'width': '8rem'}">
-                                <mat-label>Tenant User Id</mat-label>
-                                <input matInput placeholder="enter Password" formControlName="tenantUserId" type="number">
-                                <mat-error *ngIf="!getUsersControls[i].get('tenantUserId')?.errors && getUsersControls[i].get('tenantUserId')?.touched">
-                                    Invalid Tenant User Id Input
+                                <mat-label>Tenant UserId</mat-label>
+                                <input matInput placeholder="Tenant UserId" formControlName="tenantUserId" type="number">
+                                <mat-error *ngIf="!item.get('tenantUserId')?.errors && item.get('tenantUserId')?.touched">
+                                    Invalid Tenant UserId Input
                                 </mat-error>
                             </mat-form-field>
                         </td>
                         <td>
-                                <mat-checkbox matInput formControlName="admin"  color="primary"(change)="setAdmin(i)"></mat-checkbox>
+                            <mat-form-field appearance="outline" >
+                                <mat-label>Time Added</mat-label>
+                                <input matInput placeholder="Phone Number" formControlName="timeAdded" [readonly]="true">
+                                <mat-error *ngIf="!item.get('timeAdded')?.errors && item.get('timeAdded')?.touched">
+                                    Invalid time Added Input
+                                </mat-error>
+                            </mat-form-field>
                         </td>
+                        <td>
+                            <mat-form-field appearance="outline" >
+                                <mat-label>Time Removed</mat-label>
+                                <input matInput placeholder="Time Removed" formControlName="timeRemoved" [readonly]="true">
+                                <mat-error *ngIf="!item.get('timeRemoved')?.errors && item.get('timeRemoved')?.touched">
+                                    Invalid Time Removed Input
+                                </mat-error>
+                            </mat-form-field>
+                        </td>
+                        
+                        <td>
+                                <mat-checkbox matInput formControlName="groupAdmin"  color="primary"></mat-checkbox>
+                        </td>
+                        <td>
+                            <mat-checkbox matInput formControlName="isActive"  color="primary"></mat-checkbox>
+                    </td>
                         <td>
                             <mat-icon (click)="removeUser(i)" [ngStyle]="{'color': 'red'}">delete</mat-icon>
                         </td>
@@ -100,7 +112,7 @@
                     </tbody>
                     
                 </table>
-            </div> -->
+            </div>
             <button type="button" mat-raised-button color="accent" type="submit">Submit</button>
             </div>
            
