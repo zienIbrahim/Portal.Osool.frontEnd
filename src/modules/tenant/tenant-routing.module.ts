@@ -42,6 +42,12 @@ export const ROUTES: Routes = [
                 component: tenantComponent.CreateTenantComponent,
                 
             }
+            ,
+             {
+                path: 'Edit',
+                component: tenantComponent.EditTenantComponent,
+                
+            }
         ],
     },
     {

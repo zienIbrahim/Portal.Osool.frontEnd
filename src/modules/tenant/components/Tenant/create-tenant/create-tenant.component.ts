@@ -100,7 +100,6 @@ export class CreateTenantComponent implements OnInit {
             admin: index==Rowindex,
           });
       });
-     
   }
   }
   OpenAddDialog(templateRef: any) {

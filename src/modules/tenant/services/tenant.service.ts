@@ -6,6 +6,7 @@ import { TenantGroupType,AddTenantGroupType } from '../data/TenantGroupType';
 
 @Injectable()
 export class TenantService {
+   
     constructor(
         public http: HttpClient,
 
@@ -30,6 +31,9 @@ export class TenantService {
     AddTenant(data:any){
         return this.http.post(this.apiUrl + "Tenant/AddTenant",data)
     }
+    GetTenantById(TenantId: string) {
+        return this.http.get(this.apiUrl + "Tenant/GetTenantById?tenantId="+TenantId)
+      }
 
     
 

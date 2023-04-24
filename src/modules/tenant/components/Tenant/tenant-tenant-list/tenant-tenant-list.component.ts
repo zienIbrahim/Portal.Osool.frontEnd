@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TenantList } from '../../../data/Tenant';
 import { TenantService } from '../../../services/tenant.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tenant-tenant-list',
@@ -15,6 +16,7 @@ export class TenantTenantListComponent implements AfterViewInit,OnInit {
   SelectedRow:any;
   constructor(
     public tenantService: TenantService,
+    private router: Router,
     public dialog: MatDialog
   ) {}
   ngOnInit() {
@@ -24,10 +26,10 @@ export class TenantTenantListComponent implements AfterViewInit,OnInit {
   }
   edit(element: any, templateRef: any) {
     this.SelectedRow = element;
-    const dialogRef = this.dialog.open(templateRef, {
-      width: '700px',
-      disableClose: true,
-    });
+    
+    console.log('element: %d',element);
+
+    this.router.navigate([`/Tenant/Edit`], { queryParams: { tenatId: this.SelectedRow.id } });
   }
   nextPage(event:any){
     console.log("event nextPage",event);
