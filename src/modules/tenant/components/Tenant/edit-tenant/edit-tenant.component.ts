@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
-import { TenantDetails } from 'src/modules/tenant/data/Tenant';
+import { EditTenantRequest, TenantDetails } from 'src/modules/tenant/data/Tenant';
 import { TenantGroupType } from 'src/modules/tenant/data/TenantGroupType';
 import { TenantService } from 'src/modules/tenant/services';
 
@@ -122,10 +122,42 @@ addUser() {
    
 }
  }
- onSubmit(){
+ onSubmit() {
+  if (this.Tenantform.invalid) {
+    console.log("TenantUserform  invalid : ",this.Tenantform)
+
+    return;
+  }
+
+ let EditRequest :EditTenantRequest={
+  id:this.Tenantform.value.id,
+  name:this.Tenantform.value.name,
+  tenantGroupTypeId:this.Tenantform.value.tenantGroupTypeId,
+  databaseName:this.Tenantform.value.databaseName,
+  users: this.Tenantform.value.users.map((element:any) => { return  {
+    userId: element.userId,
+    userName: element.userName,
+    email: element.email,
+    phoneNumber: element.phoneNumber,
+    groupAdmin: element.groupAdmin,
+    tenantUserId: element.tenantUserId,
+    isActive: element.isActive,
+  }})
 
  }
 
+ console.log("Tenantform  -> : ",EditRequest)
+ console.log("this.Tenantform.value  -> : ",this.Tenantform.value)
+
+ this.tenantService.EditTenant(EditRequest).subscribe({
+  next: (value: any) => {
+  this.notificationService.success("Software added Successfully")
+  },
+  complete: () => {},
+  error: (value) => {
+    this.notificationService.error(value.error.ErrorMessage)
+  },
+});  }
  get f() {
   return this.Tenantform.controls
  }

@@ -17,7 +17,9 @@ export class OptionListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator = <MatPaginator>{};
   OtionList: Option[] = [];
   SelectedRow: any;
-
+  totalCount:number=0;
+  pageSize:number=10;
+  pageNumber:number=1;
   constructor(
     public subscriptionService: SubscriptionService,
     public dialog: MatDialog
@@ -32,11 +34,16 @@ export class OptionListComponent implements OnInit, AfterViewInit {
   }
 
   GetAllTenant() {
-    this.subscriptionService.GetAllOption().subscribe({
+    this.subscriptionService.GetAllOptionList(this.pageSize,this.pageNumber).subscribe({
       next: (value: any) => {
+        console.log('this.dataSource', this.pageSize);
+        console.log('this.pageNumber', this.pageNumber);
         console.log('this.dataSource', value.data);
         this.OtionList = value.data;
         this.dataSource = value.data;
+        this.pageNumber=value.pageNumber;
+        this.pageSize=value.pageSize;
+        this.totalCount=value.totalCount;
       },
       complete: () => {},
       error: (value) => {},
@@ -57,7 +64,11 @@ export class OptionListComponent implements OnInit, AfterViewInit {
   }
 
   nextPage(event: any) {
-    console.log('event nextPage', event);
+    this.pageNumber=(event.pageIndex > 0)?event.pageIndex:this.pageNumber;
+    this.pageSize=event.pageSize;
+    console.log('this.event', event);
+
+    this.GetAllTenant();
   }
   OpenAddDialog(templateRef: any) {
     this.dialog.open(templateRef, {

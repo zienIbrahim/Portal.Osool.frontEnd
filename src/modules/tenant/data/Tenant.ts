@@ -40,3 +40,21 @@ export interface TenantList {
     tenantId: string
     isActive: boolean
   }
+  export interface EditTenantRequest {
+    id: string;
+    name: string;
+    databaseName: string;
+    tenantGroupTypeId: number;
+    users: EditUsersTenant[];
+}
+
+
+export interface EditUsersTenant {
+    userId: string;
+    userName: string;
+    email: string;
+    phoneNumber: string;
+    admin: boolean;
+    tenantUserId: number;
+    isActive: boolean;
+}

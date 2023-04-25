@@ -13,10 +13,13 @@ export class SubscriptionService {
     constructor(public http: HttpClient) {
 
     }
+    //List MAsterData
     GetAllOption(){
         return this.http.get(this.apiUrl + "Option/GetAllOption")
     }
-
+    GetAllOptionList(_pageSize:number,_pageNumber:number){
+        return this.http.get(this.apiUrl + `Option/GetAllOption?PageNumber=${_pageNumber}&PageSize=${_pageSize}`)
+    }
     GetAllPlan(){
         return this.http.get(this.apiUrl + "Plan/GetAllPlan")
     }
