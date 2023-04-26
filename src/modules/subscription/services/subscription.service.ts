@@ -14,24 +14,8 @@ export class SubscriptionService {
 
     }
     //List MAsterData
-    GetAllOption(){
-        return this.http.get(this.apiUrl + "Option/GetAllOption")
-    }
     GetAllOptionList(_pageSize:number,_pageNumber:number){
         return this.http.get(this.apiUrl + `Option/GetAllOption?PageNumber=${_pageNumber}&PageSize=${_pageSize}`)
-    }
-    GetAllPlan(){
-        return this.http.get(this.apiUrl + "Plan/GetAllPlan")
-    }
-    GetPlanById(PlanId:number){
-        return this.http.get(this.apiUrl + "Plan/GetPlanById?PlanId="+PlanId)
-    }
-
-    GetAllSoftware(){
-        return this.http.get(this.apiUrl + "Software/GetAllSoftware")
-    }
-    AddSoftware(data:AddSoftware){
-        return this.http.post(this.apiUrl + "Software/AddSoftware", data)
     }
     AddOtion(data:AddOption){
         return this.http.post(this.apiUrl + "Option/AddOption", data)
@@ -39,14 +23,12 @@ export class SubscriptionService {
     EditOption(data:Option){
         return this.http.put(this.apiUrl + "Option/EditOption", data)
     }
-    EditSoftware(data:EditSoftware){
-        return this.http.put(this.apiUrl + "Software/EditSoftware", data)
+
+    GetAllPlan(_pageSize:number,_pageNumber:number){
+        return this.http.get(this.apiUrl + `Plan/GetAllPlan?PageNumber=${_pageNumber}&PageSize=${_pageSize}`)
     }
-    GetSoftwareById(SoftwareId:number){
-        return this.http.get(this.apiUrl + "Software/GetSoftwareById?SoftwareId="+SoftwareId)
-    }
-    GetAllTenantGroupType(){
-        return this.http.get(this.apiUrl + "TenantGroupType/GetAllTenantGroupType")
+    GetPlanById(PlanId:number){
+        return this.http.get(this.apiUrl + "Plan/GetPlanById?PlanId="+PlanId)
     }
     AddPlan(data:AddPlan){
         return this.http.post(this.apiUrl + "Plan/AddPlan", data)
@@ -54,4 +36,20 @@ export class SubscriptionService {
     EditPlan(data:Plan){
         return this.http.put(this.apiUrl + "Plan/EditPlan", data)
     }
+
+
+    GetAllSoftware(_pageSize:number,_pageNumber:number){
+        return this.http.get(this.apiUrl + `Software/GetAllSoftware?PageNumber=${_pageNumber}&PageSize=${_pageSize}`)
+    }
+    AddSoftware(data:AddSoftware){
+        return this.http.post(this.apiUrl + "Software/AddSoftware", data)
+    }
+   
+    EditSoftware(data:EditSoftware){
+        return this.http.put(this.apiUrl + "Software/EditSoftware", data)
+    }
+    GetSoftwareById(SoftwareId:number){
+        return this.http.get(this.apiUrl + "Software/GetSoftwareById?SoftwareId="+SoftwareId)
+    }
+   
 }

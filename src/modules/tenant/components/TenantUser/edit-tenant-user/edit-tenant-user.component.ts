@@ -9,6 +9,7 @@ import { NotificationService } from 'src/modules/app-common/services/notificatio
 import { TenantList } from 'src/modules/tenant/data/Tenant';
 import { EditUserRequest, UserData } from 'src/modules/tenant/data/TenantUser';
 import { TenantUserService } from 'src/modules/tenant/services/tenant-user.service';
+import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
 
 @Component({
   selector: 'app-edit-tenant-user',
@@ -24,6 +25,8 @@ export class EditTenantUserComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public tenantUserService: TenantUserService,
+    private mastarDataService: MastarDataService,
+
     public notificationService: NotificationService,
     private route: ActivatedRoute,
     private _snackBar: MatSnackBar
@@ -93,7 +96,7 @@ export class EditTenantUserComponent implements OnInit {
   });  }
 
   _getMAsterData() {
-    this.tenantUserService.GetAllTenant().subscribe({
+    this.mastarDataService.GetAllTenant().subscribe({
       next: (value: any) => {
         console.log(value);
         this.TenantList = value.data;

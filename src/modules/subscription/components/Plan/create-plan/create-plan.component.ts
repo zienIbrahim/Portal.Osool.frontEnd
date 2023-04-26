@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
 import { AddOption,Option } from 'src/modules/subscription/data/Option';
 import { AddPlan } from 'src/modules/subscription/data/Plan';
@@ -23,6 +24,7 @@ export class CreatePlanComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private subscriptionService: SubscriptionService,
+    private mastarDataService: MastarDataService,
     public notificationService: NotificationService,
     private _snackBar: MatSnackBar
   ) {}
@@ -46,15 +48,15 @@ export class CreatePlanComponent implements OnInit {
     });
   }
   _getMasterTable(){
-    this.subscriptionService.GetAllOption().subscribe({
+    this.mastarDataService.GetAllOption().subscribe({
       next: (value: any) => {
         this.OtionList = value.data;
       }});
-      this.subscriptionService.GetAllSoftware().subscribe({
+      this.mastarDataService.GetAllSoftware().subscribe({
         next: (value: any) => {
           this.SoftwareList = value.data;
         }});
-      this.subscriptionService.GetAllTenantGroupType().subscribe({
+      this.mastarDataService.GetAllTenantGroupType().subscribe({
         next: (value: any) => {
           this.TenantGroupTypeList = value.data;
         }});

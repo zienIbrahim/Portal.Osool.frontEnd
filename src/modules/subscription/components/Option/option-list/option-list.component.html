@@ -37,18 +37,13 @@
         <tr mat-row *matRowDef="let row let i=index; columns: displayedColumns;" (dblclick)="edit(row,editTemplate)">
         </tr>
       </table>
-
+    <mat-paginator class="mat-paginator-sticky"
+       [length]="totalCount"
+       [pageSizeOptions]="[5, 10, 25, 100]">
+     </mat-paginator>
     </div>
   </mat-card-content>
-  <mat-card-footer>
-    <mat-paginator class="mat-paginator-sticky"
-     [length]="totalCount"
-     [pageIndex]="pageNumber"
-     [pageSize]="pageSize"
-      [pageSizeOptions]="[5, 10, 25, 100]" 
-      (page)="nextPage($event)">
-    </mat-paginator>
-  </mat-card-footer>
+ 
 </mat-card>
 
 

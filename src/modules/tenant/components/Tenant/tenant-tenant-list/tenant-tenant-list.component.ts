@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TenantList } from '../../../data/Tenant';
 import { TenantService } from '../../../services/tenant.service';
 import { Router } from '@angular/router';
+import { startWith, switchMap, catchError, of, map } from 'rxjs';
 
 @Component({
   selector: 'app-tenant-tenant-list',
@@ -12,63 +13,67 @@ import { Router } from '@angular/router';
   styleUrls: ['./tenant-tenant-list.component.scss']
 })
 export class TenantTenantListComponent implements AfterViewInit,OnInit {
-  Tenants:any;
+  Tenants:TenantList[]=[];
+  displayedColumns: string[] = ['id', 'name', 'databaseName', 'edit'];
+  dataSource = new MatTableDataSource<TenantList>();
+  @ViewChild(MatPaginator) paginator: MatPaginator=<MatPaginator>{};
   SelectedRow:any;
+  totalCount:number=0;
+
   constructor(
     public tenantService: TenantService,
     private router: Router,
     public dialog: MatDialog
   ) {}
   ngOnInit() {
-    this.GetAllTenant()
     
    
   }
+
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.paginator.page
+    .pipe(
+      startWith({}),
+      switchMap(() => {    return this.getTableData$(
+        this.paginator.pageIndex + 1,
+        this.paginator.pageSize
+      ).pipe(catchError(() => of(null)));}),
+      map((Data :any) => {
+        if (Data == null) return [];
+        this.totalCount = Data.totalCount;
+        return Data.data;
+      })
+    )
+    .subscribe((Data) => {
+      this.Tenants = Data;
+      this.dataSource = new MatTableDataSource(this.Tenants);
+    });
+  }
+
+  getTableData$(pageNumber: number, pageSize: number) {
+    return  this.tenantService.GetAllTenant(pageSize,pageNumber);
+  }
+
   edit(element: any, templateRef: any) {
     this.SelectedRow = element;
-    
     console.log('element: %d',element);
-
     this.router.navigate([`/Tenant/Edit`], { queryParams: { tenatId: this.SelectedRow.id } });
   }
-  nextPage(event:any){
-    console.log("event nextPage",event);
-
-  }
-
-  GetAllTenant(){
-    this.tenantService.GetAllTenant().subscribe({
-      next:(value:any)=> {
-        this.Tenants=value.data
-        this.dataSource=value.data
-      },
-      complete:()=> {
-          
-      },
-      error:(value)=> {
-          
-      },
-    }
-    ) 
-  }
+ 
   OpenAddDialog(templateRef: any) {
     this.dialog.open(templateRef, {
       width: '1000px',
       minHeight:'400px'
     });
   }
+
   selectRow(row :any,index:any){
     console.log("row",row);
     console.log("index",index);
 
   }
-  displayedColumns: string[] = ['id', 'name', 'databaseName', 'edit'];
-  dataSource = new MatTableDataSource<TenantList>();
-
-  @ViewChild(MatPaginator) paginator: MatPaginator=<MatPaginator>{};
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  
 
 }

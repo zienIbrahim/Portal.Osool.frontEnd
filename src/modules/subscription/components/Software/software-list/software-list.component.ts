@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { catchError, map, startWith, switchMap, of   } from 'rxjs';
 import { SoftwareList } from 'src/modules/subscription/data/Software';
 import { SubscriptionService } from 'src/modules/subscription/services';
 import { TenantList } from 'src/modules/tenant/data/Tenant';
@@ -14,30 +15,39 @@ import { TenantList } from 'src/modules/tenant/data/Tenant';
 })
 export class SoftwareListComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['softwareId', 'softwareName', 'details', 'accessLink', 'edit'];
-  dataSource = new MatTableDataSource<TenantList>();
+  dataSource = new MatTableDataSource<SoftwareList>();
   @ViewChild(MatPaginator) paginator: MatPaginator = <MatPaginator>{};
   SoftwareList: SoftwareList[] = [];
   SelectedRow:any;
-
+  totalCount:number=0;
   constructor(private subscriptionService: SubscriptionService,public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.GetAllSoftware();
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-  }
-
-  GetAllSoftware() {
-    this.subscriptionService.GetAllSoftware().subscribe({
-      next: (value: any) => {
-        this.SoftwareList = value.data;
-        this.dataSource = value.data;
-      },
-      complete: () => {},
-      error: (value) => {},
+    this.paginator.page
+    .pipe(
+      startWith({}),
+      switchMap(() => {    return this.getTableData$(
+        this.paginator.pageIndex + 1,
+        this.paginator.pageSize
+      ).pipe(catchError(() => of(null)));}),
+      map((Data :any) => {
+        if (Data == null) return [];
+        this.totalCount = Data.totalCount;
+        return Data.data;
+      })
+    )
+    .subscribe((Data) => {
+      this.SoftwareList = Data;
+      this.dataSource = new MatTableDataSource(this.SoftwareList);
     });
   }
+  getTableData$(pageNumber: number, pageSize: number) {
+    return this.subscriptionService.GetAllSoftware(pageSize,pageNumber);
+  }
+ 
  
 
   edit(element :any,templateRef:any){
@@ -49,13 +59,7 @@ export class SoftwareListComponent implements OnInit, AfterViewInit{
   }
     );  
   }
-
-  nextPage(event:any){
-    console.log("event nextPage",event);
-
-  }
   OpenAddDialog(templateRef :any){
-    
     this.dialog.open(templateRef,{
       width: '400px'    })
   }
@@ -65,3 +69,5 @@ export class SoftwareListComponent implements OnInit, AfterViewInit{
    dialogRef.close(templateRef);
   }
 }
+
+

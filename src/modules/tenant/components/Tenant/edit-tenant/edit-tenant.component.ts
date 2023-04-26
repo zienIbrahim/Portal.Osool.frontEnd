@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
 import { EditTenantRequest, TenantDetails } from 'src/modules/tenant/data/Tenant';
 import { TenantGroupType } from 'src/modules/tenant/data/TenantGroupType';
@@ -22,6 +23,8 @@ export class EditTenantComponent implements OnInit{
   constructor(private formBuilder: FormBuilder,
     public tenantService: TenantService,
     public notificationService: NotificationService,
+    private mastarDataService: MastarDataService,
+
     private _snackBar: MatSnackBar  ,  
     private route: ActivatedRoute,
     public dialog: MatDialog
@@ -59,7 +62,7 @@ export class EditTenantComponent implements OnInit{
  }
 
  _getMAsterData(){
-  this.tenantService.GetAllTenantGroupType().subscribe({
+  this.mastarDataService.GetAllTenantGroupType().subscribe({
     next:(value:any)=> {
       console.log(value)
       this.TenantGroupTypeList=value.data

@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
 import { AddTenant, TenantUserList } from 'src/modules/tenant/data/Tenant';
 import { TenantGroupType } from 'src/modules/tenant/data/TenantGroupType';
@@ -22,6 +23,8 @@ export class CreateTenantComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     public tenantService: TenantService,
     public notificationService: NotificationService,
+    private mastarDataService: MastarDataService,
+
     private _snackBar: MatSnackBar  ,
     public dialog: MatDialog
     ) { }
@@ -60,7 +63,7 @@ export class CreateTenantComponent implements OnInit {
     if (add.length > 1) add.removeAt(index);
     }
   _getMAsterData(){
-    this.tenantService.GetAllTenantGroupType().subscribe({
+    this.mastarDataService.GetAllTenantGroupType().subscribe({
       next:(value:any)=> {
         console.log(value)
         this.TenantGroupTypeList=value.data

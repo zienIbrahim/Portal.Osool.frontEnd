@@ -13,12 +13,10 @@ export class TenantUserService {
     public http: HttpClient,
 
 ) {}
-GetAllTenantUsers(){
-  return this.http.get(this.apiUrl + "TenantUsers/GetAllTenantUsers")
+GetAllTenantUsers(_pageSize: number, _pageNumber: number){
+  return this.http.get(this.apiUrl + `TenantUsers/GetAllTenantUsers?PageNumber=${_pageNumber}&PageSize=${_pageSize}`)
 }
-GetAllTenant(){
-  return this.http.get(this.apiUrl + "Tenant/GetAllTenant")
-}
+
 GetUserTenantById(Id :string ){
   return this.http.get(this.apiUrl + "TenantUsers/GetTenantUserById?Id="+Id)
 }

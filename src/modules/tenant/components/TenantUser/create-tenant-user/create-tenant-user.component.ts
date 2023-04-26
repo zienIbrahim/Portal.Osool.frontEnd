@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
 import { TenantList } from 'src/modules/tenant/data/Tenant';
 import { AddTenantUser } from 'src/modules/tenant/data/TenantUser';
@@ -18,6 +19,8 @@ export class CreateTenantUserComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     public tenantUserService: TenantUserService,
+    private mastarDataService: MastarDataService,
+
     public notificationService: NotificationService,
     private _snackBar: MatSnackBar) { }
 
@@ -38,7 +41,7 @@ export class CreateTenantUserComponent implements OnInit {
   }
 
   _getMAsterData(){
-    this.tenantUserService.GetAllTenant().subscribe({
+    this.mastarDataService.GetAllTenant().subscribe({
       next:(value:any)=> {
         console.log(value)
         this.TenantList=value.data

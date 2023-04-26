@@ -8,6 +8,7 @@ import { SoftwareList } from 'src/modules/subscription/data/Software';
 import { Option } from 'src/modules/subscription/data/Option';
 import { TenantGroupType } from 'src/modules/subscription/data/TenantGroupType';
 import { SubscriptionService } from 'src/modules/subscription/services';
+import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
 
 @Component({
   selector: 'app-edit-plan',
@@ -24,6 +25,7 @@ export class EditPlanComponent {
   constructor(
     private formBuilder: FormBuilder,
     private subscriptionService: SubscriptionService,
+    private mastarDataService: MastarDataService,
     public notificationService: NotificationService,
     private _snackBar: MatSnackBar
   ) {}
@@ -72,15 +74,15 @@ this.Planform.patchValue({
   }
 
   _getMasterTable(){
-    this.subscriptionService.GetAllOption().subscribe({
+    this.mastarDataService.GetAllOption().subscribe({
       next: (value: any) => {
         this.OtionList = value.data;
       }});
-      this.subscriptionService.GetAllSoftware().subscribe({
+      this.mastarDataService.GetAllSoftware().subscribe({
         next: (value: any) => {
           this.SoftwareList = value.data;
         }});
-      this.subscriptionService.GetAllTenantGroupType().subscribe({
+      this.mastarDataService.GetAllTenantGroupType().subscribe({
         next: (value: any) => {
           this.TenantGroupTypeList = value.data;
         }});

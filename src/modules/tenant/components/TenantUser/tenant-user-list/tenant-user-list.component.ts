@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { startWith, switchMap, catchError, of, map } from 'rxjs';
 import { TenantUserList } from 'src/modules/tenant/data/TenantUser';
 import { TenantUserService } from 'src/modules/tenant/services/tenant-user.service';
 
@@ -12,9 +13,12 @@ import { TenantUserService } from 'src/modules/tenant/services/tenant-user.servi
   styleUrls: ['./tenant-user-list.component.scss']
 })
 export class TenantUserListComponent  implements AfterViewInit,OnInit{
-  tenantUser:any;
+  tenantUser:TenantUserList[]=[];
   SelectedRow:any;
   dataSource = new MatTableDataSource<TenantUserList>();
+  totalCount:number=0;
+
+
   displayedColumns: string[] = ['id', 'userName', 'email', 'phoneNumber', 'edit'];
   @ViewChild(MatPaginator) paginator: MatPaginator=<MatPaginator>{};
 
@@ -25,26 +29,33 @@ export class TenantUserListComponent  implements AfterViewInit,OnInit{
   ) {}
 
   ngAfterViewInit(): void {
-  }
-  ngOnInit(): void {
-    this.GetAllTenantUsers();
+    this.dataSource.paginator = this.paginator;
+    this.paginator.page
+    .pipe(
+      startWith({}),
+      switchMap(() => {    return this.getTableData$(
+        this.paginator.pageIndex + 1,
+        this.paginator.pageSize
+      ).pipe(catchError(() => of(null)));}),
+      map((Data :any) => {
+        if (Data == null) return [];
+        this.totalCount = Data.totalCount;
+        return Data.data;
+      })
+    )
+    .subscribe((Data) => {
+      this.tenantUser = Data;
+      this.dataSource = new MatTableDataSource(this.tenantUser);
+    });
   }
 
-  GetAllTenantUsers(){
-    this.tenantUserService.GetAllTenantUsers().subscribe({
-      next:(value:any)=> {
-        this.tenantUser=value.data
-        this.dataSource=value.data
-      },
-      complete:()=> {
-          
-      },
-      error:(value)=> {
-          
-      },
-    }
-    ) 
+  getTableData$(pageNumber: number, pageSize: number) {
+    return  this.tenantUserService.GetAllTenantUsers(pageSize,pageNumber);
   }
+  ngOnInit(): void {
+  }
+
+ 
   OpenAddDialog(templateRef: any) {
     this.dialog.open(templateRef, {
       width: '700px',
@@ -62,18 +73,7 @@ export class TenantUserListComponent  implements AfterViewInit,OnInit{
 
   edit(element: any, templateRef: any) {
     this.SelectedRow = element;
-    // const dialogRef = this.dialog.open(templateRef, {
-    //   width: '100%',
-    //   minHeight:'400px',
-    //   disableClose: true,
-    // });
-    console.log('element: %d',element);
-
     this.router.navigate([`/Tenant/TenantUser/Edit`], { queryParams: { userId: this.SelectedRow.id } });
   }
 
-  nextPage(event:any){
-    console.log("event nextPage",event);
-
-  }
 }
