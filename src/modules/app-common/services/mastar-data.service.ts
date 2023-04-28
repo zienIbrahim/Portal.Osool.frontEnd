@@ -23,4 +23,7 @@ GetAllOption(){
 GetAllTenant(){
   return this.http.get(this.apiUrl + "Common/GetAllTenant")
 }
+GetAllUsers(){
+  return this.http.get(this.apiUrl + "Common/GetAllUsers")
+}
 }

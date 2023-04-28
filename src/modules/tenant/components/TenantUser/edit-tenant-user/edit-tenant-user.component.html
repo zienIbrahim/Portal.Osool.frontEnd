@@ -1,5 +1,10 @@
 <mat-toolbar  fxLayout="row" fxLayoutAlign="space-between center">
     <span class="fill-remaining-space">Update User Tenant</span>
+    <span class="fill-remaining-space">
+        <button mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+            </span>
     <!-- <button #btnClose matDialogClose mat-icon-button>
         <mat-icon>close</mat-icon>
     </button> -->
@@ -27,6 +32,12 @@
                     Invalid Phone Number Input
                 </mat-error>
             </mat-form-field>
+            <br>
+            <div  fxFlex="100%" > 
+                <button  mat-icon-button (click)="adduserInGroup()">
+                    <mat-icon>add</mat-icon>
+                </button>            </div>
+           
             <div class="tableFixHead" fxFlex="100%">
                 <table>
                     <thead>
@@ -45,16 +56,18 @@
                     <tbody formArrayName="userInGroups">
                         <tr *ngFor="let item of userInGroupsList.controls  let i = index;" [formGroupName]="i">
                         <td>
-                                <mat-form-field appearance="outline" >
+                                <mat-form-field appearance="outline"  >
                                 <mat-label>Tenan Name</mat-label>
-                                <input matInput placeholder="Tenan Name" formControlName="tenantName" [readonly]="true">
+                                <mat-select matNativeControl required formControlName="tenantId" (selectionChange)="ChangeTenant(i)">
+                                    <mat-option *ngFor="let tenant of TenantList" [value]="tenant.id" >{{tenant.name}}</mat-option>
+                                  </mat-select>
                                 <mat-error *ngIf="!item.get('tenantName')?.errors && item.get('tenantName')?.touched">
                                     Invalid Tenan Name Input
                                 </mat-error>
                             </mat-form-field>
                         </td>
                         <td>
-                            <mat-form-field appearance="outline" >
+                            <mat-form-field appearance="outline" style="width: 10rem;">
                             <mat-label>Database Name</mat-label>
                             <input matInput placeholder="Database Name" formControlName="databaseName" [readonly]="true">
                             <mat-error *ngIf="!item.get('databaseName')?.errors && item.get('databaseName')?.touched">
@@ -72,7 +85,7 @@
                         </mat-form-field>
                     </td>
                         <td>
-                            <mat-form-field appearance="outline" [ngStyle]="{'width': '8rem'}">
+                            <mat-form-field appearance="outline" [ngStyle]="{'width': '5rem'}">
                                 <mat-label>Tenant UserId</mat-label>
                                 <input matInput placeholder="Tenant UserId" formControlName="tenantUserId" type="number">
                                 <mat-error *ngIf="!item.get('tenantUserId')?.errors && item.get('tenantUserId')?.touched">
@@ -90,7 +103,7 @@
                             </mat-form-field>
                         </td>
                         <td>
-                            <mat-form-field appearance="outline" >
+                            <mat-form-field appearance="outline" style="width: 10rem;">
                                 <mat-label>Time Removed</mat-label>
                                 <input matInput placeholder="Time Removed" formControlName="timeRemoved" [readonly]="true">
                                 <mat-error *ngIf="!item.get('timeRemoved')?.errors && item.get('timeRemoved')?.touched">

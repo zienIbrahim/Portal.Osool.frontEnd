@@ -32,7 +32,7 @@ import { EditTenantComponent } from './components/Tenant/edit-tenant/edit-tenant
         MainLayoutModule,
     ],
     providers: [...tenantServices.services, ...tenantGuards.guards],
-    declarations: [...tenantContainers.containers, ...tenantComponents.components, ],
+    declarations: [...tenantContainers.containers, ...tenantComponents.components,  ],
     exports: [...tenantContainers.containers, ...tenantComponents.components],
 })
 export class TenantModule {}

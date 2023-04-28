@@ -100,9 +100,7 @@ export class EditTenantUserComponent implements OnInit {
       next: (value: any) => {
         console.log(value);
         this.TenantList = value.data;
-      },
-      complete: () => {},
-      error: (value) => {},
+      }
     });
   }
   adduserInGroup(): void {
@@ -150,8 +148,47 @@ export class EditTenantUserComponent implements OnInit {
       console.log('🚀  element', element);
     });
   }
-
- 
+  ChangeTenant(index:number){
+  let tenantId=this.userInGroupsList.controls[index].get("tenantId")?.value
+  console.log('tenantId :',tenantId)
+  console.log('index :',index)
+    if(this.UserData.userInGroups.some(x=> x.tenantId== tenantId)){
+      let element=this.UserData.userInGroups.find(x=> x.tenantId==tenantId)
+      console.log('element :',element)
+      if(element){
+        this.userInGroupsList.controls[index].patchValue({
+          groupAdmin: element.groupAdmin,
+          isActive: element.isActive,
+          tenantId: element.tenantId,
+          tenantUserId: element.tenantUserId,
+          timeAdded: element.timeAdded,
+          tenantName: element.userTenant.name,
+          databaseName: element.userTenant.databaseName,
+          tenantinsertTs: element.userTenant.insertTs,
+          tenantGroupTypeId: element.userTenant.tenantGroupTypeId,
+          userTenantGroupTypeName: element.userTenant.userTenantGroupType.typeName,
+          timeRemoved: element.timeRemoved,
+        });
+      }
+    } else{
+      console.log('TenantList :',this.TenantList.find(x=> x.id==tenantId))
+    let tenant=  this.TenantList.find(x=> x.id==tenantId)??<TenantList>{}
+      this.userInGroupsList.controls[index].patchValue({
+        groupAdmin: false,
+        isActive: false,
+        tenantUserId: null,
+        tenantName: tenant.name,
+        databaseName: tenant.databaseName,
+        tenantinsertTs: null,
+        tenantGroupTypeId: null,
+        userTenantGroupTypeName: null,
+        timeRemoved: null,
+        timeAdded: null,
+      });
+    }
+    
+  
+  }
   removeUser(index: number) {
     const add = this.userInGroupsList;
     if (add.length > 1) add.removeAt(index);
@@ -163,4 +200,4 @@ export class EditTenantUserComponent implements OnInit {
   get userInGroupsList(): FormArray {
     return this.TenantUserform.controls['userInGroups'] as FormArray;
   }
-}
+} 

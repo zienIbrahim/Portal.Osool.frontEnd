@@ -1,0 +1,63 @@
+<mat-card>
+    <mat-card-header class="p-0-card-header">
+        <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="fill-remaining-space">Add New User to Tenant</span>
+            <button #btnClose matDialogClose mat-icon-button>
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+    </mat-card-header>
+    <mat-card-content >
+        <form [formGroup]="TenantUserform" (ngSubmit)="onSubmit(btnClose)" style="padding: 16px;">
+            <div  fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%" style="padding-top: 5px;">
+                <mat-form-field appearance="outline" [fxFlex]="100" >
+                    <mat-label>Tenants</mat-label>
+                    <mat-select   formControlName="TenantId"  >
+                        <!-- <mat-select-trigger><span *ngFor="let select of tenantList" class="testTrigar">{{select.name}}</span></mat-select-trigger> -->
+
+                      <mat-option *ngFor="let tenant of TenantList" [value]="tenant.id" >{{tenant.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="100%">
+                <mat-label>User Name</mat-label>
+                <input matInput placeholder="enter User Name" formControlName="userName">
+                <mat-error *ngIf="!f['userName'].errors && f['userName'].touched">
+                    Invalid User Name Input
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="100%">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="enter Email" formControlName="email">
+                <mat-error *ngIf="!f['email'].errors && f['email'].touched">
+                    Invalid Email Input
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="100%">
+                <mat-label>Phone Number</mat-label>
+                <input matInput placeholder="enter Phone Number" formControlName="phoneNumber">
+                <mat-error *ngIf="!f['phoneNumber'].errors && f['phoneNumber'].touched">
+                    Invalid Phone Number Input
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="100%">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="enter Password" formControlName="password">
+                <mat-error *ngIf="!f['password'].errors && f['password'].touched">
+                    Invalid Password Input
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="100%">
+                <mat-label>Confirem Password</mat-label>
+                <input matInput placeholder="enter Confirem Password" formControlName="ConfiremPassword">
+                <mat-error *ngIf="!f['ConfiremPassword'].errors && f['ConfiremPassword'].touched">
+                    Invalid Confirem Password Input
+                </mat-error>
+            </mat-form-field>
+          
+            <br>
+            <button type="button" mat-raised-button color="accent" type="submit">Submit</button>
+            </div>
+           
+        </form>
+    </mat-card-content>
+</mat-card>

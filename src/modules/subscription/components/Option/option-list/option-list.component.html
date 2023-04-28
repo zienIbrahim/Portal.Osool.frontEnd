@@ -37,7 +37,7 @@
         <tr mat-row *matRowDef="let row let i=index; columns: displayedColumns;" (dblclick)="edit(row,editTemplate)">
         </tr>
       </table>
-    <mat-paginator class="mat-paginator-sticky"
+     <mat-paginator class="mat-paginator-sticky"
        [length]="totalCount"
        [pageSizeOptions]="[5, 10, 25, 100]">
      </mat-paginator>

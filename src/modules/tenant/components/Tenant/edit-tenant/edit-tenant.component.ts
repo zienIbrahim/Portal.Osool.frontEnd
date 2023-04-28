@@ -1,3 +1,4 @@
+import { UserInGroup } from './../../../data/Tenant';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +8,7 @@ import { MastarDataService } from 'src/modules/app-common/services/mastar-data.s
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
 import { EditTenantRequest, TenantDetails } from 'src/modules/tenant/data/Tenant';
 import { TenantGroupType } from 'src/modules/tenant/data/TenantGroupType';
+import { UserList } from 'src/modules/tenant/data/TenantUser';
 import { TenantService } from 'src/modules/tenant/services';
 
 @Component({
@@ -18,6 +20,7 @@ export class EditTenantComponent implements OnInit{
   Tenantform: FormGroup=<FormGroup>{};
   public UsersList: FormArray=<FormArray>{};
   TenantGroupTypeList: TenantGroupType[] = [];
+  _userList: UserList[] = [];
   TenantId: string = '';
   TenantDat: TenantDetails=<TenantDetails>{};
   constructor(private formBuilder: FormBuilder,
@@ -48,7 +51,7 @@ export class EditTenantComponent implements OnInit{
   }
   createUsers(): FormGroup{
     return this.formBuilder.group({
-      userId: [null, [Validators.required]],
+     userId: [null, [Validators.required]],
      userName: [null, [Validators.required]],
      email: [null, [Validators.required]],
      phoneNumber: [null, [Validators.required]],
@@ -64,11 +67,14 @@ export class EditTenantComponent implements OnInit{
  _getMAsterData(){
   this.mastarDataService.GetAllTenantGroupType().subscribe({
     next:(value:any)=> {
-      console.log(value)
       this.TenantGroupTypeList=value.data
     }
-  }
-  ) 
+  });
+  this.mastarDataService.GetAllUsers().subscribe({
+    next: (value: any) => {
+      this._userList = value.data;
+    }
+  });
 }
 _getTenantById(){
   this.route.queryParams.subscribe((params) => {
@@ -161,6 +167,49 @@ addUser() {
     this.notificationService.error(value.error.ErrorMessage)
   },
 });  }
+OpenAddDialog(templateRef: any) {
+  this.dialog.open(templateRef, {
+    width: '400px',
+  });
+}
+
+ChangeUser(index:number){
+  let userId=this.Users.controls[index].get("userId")?.value
+  console.log("ChangeUser \\ userId :",userId)
+  if(this.TenantDat.userInGroups.some(x=> x.userId== userId)){
+    let element=this.TenantDat.userInGroups.find(x=> x.userId==userId) ??<UserInGroup>{}
+    this.Users.controls[index].patchValue({
+       userName: element.userName,
+       email: element.email,
+       phoneNumber: element.phoneNumber,
+       tenantId:  element.tenantId,
+       timeRemoved:  element.timeRemoved,
+       timeAdded:  element.timeAdded,
+       groupAdmin:  element.groupAdmin,  
+       tenantUserId:  element.tenantUserId,  
+       isActive:  element.groupAdmin,  
+    });
+  }
+  else{
+    let userData=this._userList.find(x=> x.id==userId) ?? <UserList>{};
+    this.Users.controls[index].patchValue({
+      userName: userData.userName,
+      email: userData.email,
+      phoneNumber: userData.phoneNumber,
+      groupAdmin:  false,  
+      isActive:  false,  
+      tenantId:null,
+      timeRemoved:  null,
+      timeAdded:null,
+      tenantUserId:null,
+    });
+  }
+  
+}
+removeTenat(index: number) {
+  const add = this.Users;
+  if (add.length > 1) add.removeAt(index);
+}
  get f() {
   return this.Tenantform.controls
  }

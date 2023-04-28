@@ -58,4 +58,10 @@ export interface TenantUserList {
     tenantId: string
     isActive: boolean
   }
+  export interface UserList {
+    id: string
+    userName: string
+    phoneNumber?: string
+    email: string
+  }
   

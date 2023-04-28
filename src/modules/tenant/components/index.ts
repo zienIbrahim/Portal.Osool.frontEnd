@@ -7,9 +7,11 @@ import { TenantGroupTypeListComponent } from './TenantGroupType/tenant-group-typ
 import { CreateTenantUserComponent } from './TenantUser/create-tenant-user/create-tenant-user.component';
 import { EditTenantUserComponent } from './TenantUser/edit-tenant-user/edit-tenant-user.component';
 import { TenantUserListComponent } from './TenantUser/tenant-user-list/tenant-user-list.component';
+import { AddNewUserToTenantComponent } from './Tenant/add-new-user-to-tenant/add-new-user-to-tenant.component';
 
 export const components = [
   TenantTenantListComponent,
+  AddNewUserToTenantComponent,
   TenantGroupTypeListComponent,
   AddTenantGroupTypeComponent,
   EditTenantGroupTypeComponent,
@@ -22,10 +24,11 @@ export const components = [
 
  export * from './Tenant/tenant-tenant-list/tenant-tenant-list.component';
  export * from './TenantGroupType/add-tenant-group-type/add-tenant-group-type.component';
- export *  from './TenantGroupType/edit-tenant-group-type/edit-tenant-group-type.component';
- export *  from './TenantGroupType/tenant-group-type-list/tenant-group-type-list.component';
+ export * from './TenantGroupType/edit-tenant-group-type/edit-tenant-group-type.component';
+ export * from './TenantGroupType/tenant-group-type-list/tenant-group-type-list.component';
  export * from './TenantUser/create-tenant-user/create-tenant-user.component';
- export *  from './TenantUser/edit-tenant-user/edit-tenant-user.component';
- export *  from './TenantUser/tenant-user-list/tenant-user-list.component';
- export *  from './Tenant/create-tenant/create-tenant.component';
+ export * from './TenantUser/edit-tenant-user/edit-tenant-user.component';
+ export * from './TenantUser/tenant-user-list/tenant-user-list.component';
+ export * from './Tenant/create-tenant/create-tenant.component';
  export * from './Tenant/edit-tenant/edit-tenant.component';
+ export * from './Tenant/add-new-user-to-tenant/add-new-user-to-tenant.component';
