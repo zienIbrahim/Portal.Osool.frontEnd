@@ -20,7 +20,7 @@ import * as tenantGuards from './guards';
 
 /* Services */
 import * as tenantServices from './services';
-import { EditTenantComponent } from './components/Tenant/edit-tenant/edit-tenant.component';
+import { SubscriptionModule } from '../subscription/subscription.module';
 
 @NgModule({
     imports: [
@@ -29,6 +29,7 @@ import { EditTenantComponent } from './components/Tenant/edit-tenant/edit-tenant
         ReactiveFormsModule,
         FormsModule,
         AppCommonModule,
+        SubscriptionModule,
         MainLayoutModule,
     ],
     providers: [...tenantServices.services, ...tenantGuards.guards],

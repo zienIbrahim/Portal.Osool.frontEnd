@@ -19,20 +19,51 @@ import * as subscriptionGuards from './guards';
 
 /* Services */
 import * as subscriptionServices from './services';
-
-
+import {
+  DateAdapter,
+  MAT_DATE_LOCALE,
+  MAT_DATE_FORMATS,
+} from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'DD-MM-YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        ReactiveFormsModule,
-        FormsModule,
-        AppCommonModule,
-        MainLayoutModule,
-    ],
-    providers: [...subscriptionServices.services, ...subscriptionGuards.guards],
-    declarations: [...subscriptionContainers.containers, ...subscriptionComponents.components ],
-    exports: [...subscriptionContainers.containers, ...subscriptionComponents.components],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    AppCommonModule,
+    MainLayoutModule,
+  ],
+  providers: [
+    ...subscriptionServices.services,
+    ...subscriptionGuards.guards,
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
+  declarations: [
+    ...subscriptionContainers.containers,
+    ...subscriptionComponents.components,
+  ],
+  exports: [
+    ...subscriptionContainers.containers,
+    ...subscriptionComponents.components,
+  ],
 })
 export class SubscriptionModule {}

@@ -26,4 +26,7 @@ GetAllTenant(){
 GetAllUsers(){
   return this.http.get(this.apiUrl + "Common/GetAllUsers")
 }
+GetAllPlanList(){
+  return this.http.get(this.apiUrl + "Common/GetAllPlanList")
+}
 }

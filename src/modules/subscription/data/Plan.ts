@@ -4,7 +4,8 @@ export interface PlanList{
         planName: string
         userGroupName: string
         softwareName: string
-        planPrice: number
+        monthlyPlanPrice: number
+        yearlyPlanPrice: number
         isActive: boolean
         userGroupTypeId: number
         maxUsers: number
@@ -19,7 +20,8 @@ export interface Plan{
         planName: string
         userGroupName: string
         softwareName: string
-        planPrice: number
+        monthlyPlanPrice: number
+        yearlyPlanPrice: number
         isActive: boolean
         userGroupTypeId: number
         maxUsers: number
@@ -38,7 +40,8 @@ export interface AddPlan{
         planName: string
         userGroupName: string
         softwareName: string
-        planPrice: number
+        monthlyPlanPrice: number
+        yearlyPlanPrice: number
         isActive: boolean
         userGroupTypeId: number
         maxUsers: number
@@ -51,3 +54,16 @@ export interface AddPlan{
 export interface options{
   optionId: number            
 }
+export interface DDLPlanList {
+        planId: number
+        planName: string
+        monthlyPlanPrice: number
+        yearlyPlanPrice: number
+        isActive: boolean
+        userGroupTypeId: number
+        maxUsers: number
+        maxBranches: number
+        includeUsers: number
+        includeBranches: number
+      }
+

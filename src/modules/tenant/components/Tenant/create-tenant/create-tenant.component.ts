@@ -40,6 +40,7 @@ export class CreateTenantComponent implements OnInit {
       name: [null, Validators.required],
       databaseName: [null, [Validators.required]],
       tenantGroupTypeId: [null, [Validators.required]],
+      createNewDatabase: [false, [Validators.required]],        
       users: this.formBuilder.array([this.createUsers()]) 
     })
   }
@@ -51,6 +52,7 @@ export class CreateTenantComponent implements OnInit {
       password: [null, [Validators.required]],
       tenantUserId: [null, [Validators.required]],
       admin: [false],  
+      isPOSUser: [false],  
      });
   }
   addUser() {
@@ -122,7 +124,4 @@ export class CreateTenantComponent implements OnInit {
    get getUsersControls() {
     return (this.Tenantform.get('users') as FormArray).controls;
   }
-
-
-
 }

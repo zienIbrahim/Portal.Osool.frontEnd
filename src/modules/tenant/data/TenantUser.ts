@@ -28,6 +28,7 @@ export interface TenantUserList {
     tenantId: string
     userTenant: UserTenant
     isActive: boolean
+    isPOSUser: boolean
   }
   
   export interface UserTenant {

@@ -61,6 +61,7 @@ export class EditTenantComponent implements OnInit{
      timeAdded: [null],
      groupAdmin: [false],  
      isActive: [false],  
+     isPOSUser: [false],  
     });
  }
 
@@ -101,6 +102,8 @@ _getTenantById(){
       tenantGroupTypeId: this.TenantDat.tenantGroupTypeId,
     });
     this.TenantDat.userInGroups.forEach((element, index) => {
+      console.log("element: ",element)
+
       this.addUser();
       this.Users.controls[index].patchValue({
         userId: element.userId,
@@ -113,6 +116,7 @@ _getTenantById(){
         timeAdded: element.timeAdded,
         groupAdmin: element.groupAdmin,  
         isActive: element.isActive,  
+        isPOSUser: element.isPOSUser,  
       });
     })
   }
@@ -133,7 +137,6 @@ addUser() {
  }
  onSubmit() {
   if (this.Tenantform.invalid) {
-    console.log("TenantUserform  invalid : ",this.Tenantform)
 
     return;
   }
@@ -151,6 +154,7 @@ addUser() {
     groupAdmin: element.groupAdmin,
     tenantUserId: element.tenantUserId,
     isActive: element.isActive,
+    isPOSUser: element.isPOSUser,  
   }})
 
  }
@@ -170,6 +174,11 @@ addUser() {
 OpenAddDialog(templateRef: any) {
   this.dialog.open(templateRef, {
     width: '400px',
+  });
+}
+OpenSubscriptionDialog(templateRef: any) {
+  this.dialog.open(templateRef, {
+    width: '800px',
   });
 }
 

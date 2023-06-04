@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AddOption,Option } from '../data/Option';
 import { AddPlan, Plan } from '../data/Plan';
 import { AddSoftware, EditSoftware } from '../data/Software';
+import { CreateNewSubscription } from '../data/Subscription';
 
 @Injectable()
 export class SubscriptionService {
@@ -43,6 +44,9 @@ export class SubscriptionService {
     }
     AddSoftware(data:AddSoftware){
         return this.http.post(this.apiUrl + "Software/AddSoftware", data)
+    }
+    CreateNewSubscriptions(data:CreateNewSubscription){
+        return this.http.post(this.apiUrl + "Subscriptions/CreateNewSubscriptions", data)
     }
    
     EditSoftware(data:EditSoftware){

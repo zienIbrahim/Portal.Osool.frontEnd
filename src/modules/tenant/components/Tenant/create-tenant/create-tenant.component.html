@@ -34,6 +34,9 @@
                                 Invalid tenant Group Name Input
                             </mat-error>
                         </mat-form-field>
+                        <div class="mat-form-field" appearance="outline" [fxFlex]="51">
+                            <mat-checkbox matInput formControlName="createNewDatabase">Create New Database</mat-checkbox>
+                        </div>
                     </div>
                     <div  fxLayout="row wrap">
                         <button  fxLayout="row" type="button" mat-raised-button color="primary" matStepperNext>Next</button>
@@ -73,6 +76,7 @@
                                     <th>Password</th>
                                     <th>Tenant User Id</th>
                                     <th>Admin</th>
+                                    <th>is POS User</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -125,6 +129,9 @@
                                 </td>
                                 <td>
                                         <mat-checkbox matInput formControlName="admin"  color="primary"(change)="setAdmin(i)"></mat-checkbox>
+                                </td>
+                                <td>
+                                        <mat-checkbox matInput formControlName="isPOSUser"  color="primary"(change)="setAdmin(i)"></mat-checkbox>
                                 </td>
                                 <td>
                                     <mat-icon (click)="removeUser(i)" [ngStyle]="{'color': 'red'}">delete</mat-icon>

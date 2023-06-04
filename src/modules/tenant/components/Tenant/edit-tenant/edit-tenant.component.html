@@ -4,6 +4,7 @@
             <span class="fill-remaining-space">Update Tenant</span>
            <span> 
             <button mat-raised-button color="accent" (click)="OpenAddDialog(AddNewUserToTenant)">Add New User</button>
+            <button mat-raised-button color="accent" (click)="OpenSubscriptionDialog(AddNewSubscriptionToTenant)">New Subscription</button>
             <!-- <button mat-raised-button color="accent">Add Exist User</button>
             <button mat-raised-button color="accent">Accent</button> -->
     </span>
@@ -55,6 +56,7 @@
                             <th>Time Removed</th>
                             <th>Admin</th>
                             <th>is Active</th>
+                            <th>is POS User</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -122,6 +124,9 @@
                                 <mat-checkbox matInput formControlName="isActive"  color="primary" ></mat-checkbox>
                         </td>
                         <td>
+                                <mat-checkbox matInput formControlName="isPOSUser"  color="primary" ></mat-checkbox>
+                        </td>
+                        <td>
                             <mat-icon (click)="removeTenat(i)" [ngStyle]="{'color': 'red'}">delete</mat-icon>
                         </td>
                         </tr>
@@ -140,4 +145,7 @@
 </mat-card>
 <ng-template #AddNewUserToTenant>
     <app-add-new-user-to-tenant [TenantId]="TenantId"></app-add-new-user-to-tenant>
+</ng-template>
+<ng-template #AddNewSubscriptionToTenant>
+    <app-new-subscription [TenantData]="{tenantName:Tenantform.value.name,tenantId:Tenantform.value.id}"></app-new-subscription>
 </ng-template>

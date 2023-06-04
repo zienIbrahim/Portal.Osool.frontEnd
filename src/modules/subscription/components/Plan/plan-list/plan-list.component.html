@@ -29,9 +29,15 @@
     </ng-container>
   
   <!-- planPrice Column -->
-  <ng-container matColumnDef="planPrice">
-      <th mat-header-cell *matHeaderCellDef> plan Price </th>
-      <td mat-cell *matCellDef="let element"> {{element.planPrice}} </td>
+  <ng-container matColumnDef="monthlyPlanPrice">
+      <th mat-header-cell *matHeaderCellDef>monthly Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.monthlyPlanPrice}} </td>
+    </ng-container>
+  
+  <!-- planPrice Column -->
+  <ng-container matColumnDef="yearlyPlanPrice">
+      <th mat-header-cell *matHeaderCellDef>yearly Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.yearlyPlanPrice}} </td>
     </ng-container>
   
   <!-- isActive Column -->

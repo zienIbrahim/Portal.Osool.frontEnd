@@ -27,7 +27,6 @@ export interface TenantList {
     insertTs: string
     userInGroups: UserInGroup[]
   }
-  
   export interface UserInGroup {
     userId: string
     userName: string
@@ -39,6 +38,7 @@ export interface TenantList {
     groupAdmin: boolean
     tenantId: string
     isActive: boolean
+    isPOSUser: boolean;
   }
   export interface EditTenantRequest {
     id: string;
@@ -47,8 +47,6 @@ export interface TenantList {
     tenantGroupTypeId: number;
     users: EditUsersTenant[];
 }
-
-
 export interface EditUsersTenant {
     userId: string;
     userName: string;
@@ -57,4 +55,5 @@ export interface EditUsersTenant {
     admin: boolean;
     tenantUserId: number;
     isActive: boolean;
+    isPOSUser: boolean;
 }

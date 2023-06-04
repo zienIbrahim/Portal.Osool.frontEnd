@@ -46,7 +46,7 @@ intiForm(){
 }
 
 getSoftwareById(){
-  this.subscriptionService.GetSoftwareById(1).subscribe({
+  this.subscriptionService.GetSoftwareById(this.SoftwareData.softwareId).subscribe({
     next: (value: any) => {
       this.SoftwareData=value
       this.dataSource.data=this.SoftwareData.plans

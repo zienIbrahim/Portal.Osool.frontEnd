@@ -83,6 +83,7 @@ export class EditTenantUserComponent implements OnInit {
       groupAdmin: element.groupAdmin,
       tenantId: element.tenantId,
       isActive: element.isActive,
+      isPOSUser: element.isPOSUser,  
     }})
    }
    this.tenantUserService.EditTenantUser(EditRequest).subscribe({
@@ -107,7 +108,8 @@ export class EditTenantUserComponent implements OnInit {
     this.userInGroupsList.push(
       this.formBuilder.group({
         groupAdmin: ['', Validators.required],
-        isActive: [''],
+        isActive: [false],
+        isPOSUser: [false],
         tenantId: ['', Validators.required],
         tenantUserId: ['', Validators.required],
         timeAdded: [''],
@@ -144,6 +146,8 @@ export class EditTenantUserComponent implements OnInit {
         tenantGroupTypeId: element.userTenant.tenantGroupTypeId,
         userTenantGroupTypeName: element.userTenant.userTenantGroupType.typeName,
         timeRemoved: element.timeRemoved,
+        isPOSUser: element.isPOSUser,  
+
       });
       console.log('🚀  element', element);
     });

@@ -1,5 +1,4 @@
-import { CreateSubscriptionComponent } from "./create-subscription/create-subscription.component";
-import { EditSubscriptionComponent } from "./edit-subscription/edit-subscription.component";
+
 import { CreateOptionComponent } from "./Option/create-option/create-option.component";
 import { EditOptionComponent } from "./Option/edit-option/edit-option.component";
 import { OptionListComponent } from "./Option/option-list/option-list.component";
@@ -9,12 +8,14 @@ import { PlanListComponent } from "./Plan/plan-list/plan-list.component";
 import { CreateSoftwareComponent } from "./Software/create-software/create-software.component";
 import { EditSoftwareComponent } from "./Software/edit-software/edit-software.component";
 import { SoftwareListComponent } from "./Software/software-list/software-list.component";
-import { SubscriptionListComponent } from "./subscription-list/subscription-list.component";
+import { NewSubscriptionComponent } from "./Subscription/new-subscription/new-subscription.component";
+import { RenewSubscriptionComponent } from "./Subscription/renew-subscription/renew-subscription.component";
+import { TenantSubscriptionComponent } from "./Subscription/tenant-subscription/tenant-subscription.component";
 
 export const components = [
-  SubscriptionListComponent,
-  CreateSubscriptionComponent,
-  EditSubscriptionComponent,
+  RenewSubscriptionComponent, 
+  NewSubscriptionComponent,
+  TenantSubscriptionComponent,
   PlanListComponent,
   CreatePlanComponent,
   EditPlanComponent,
@@ -25,8 +26,7 @@ export const components = [
   EditSoftwareComponent,
   CreateSoftwareComponent,
 ];
-export * from "./create-subscription/create-subscription.component";
-export * from "./edit-subscription/edit-subscription.component";
+
 export * from "./Option/create-option/create-option.component";
 export * from "./Option/edit-option/edit-option.component";
 export * from "./Option/option-list/option-list.component";
@@ -36,4 +36,6 @@ export * from "./Plan/plan-list/plan-list.component";
 export * from "./Software/create-software/create-software.component";
 export * from "./Software/edit-software/edit-software.component";
 export * from "./Software/software-list/software-list.component";
-export * from "./subscription-list/subscription-list.component";
+export * from "./Subscription/new-subscription/new-subscription.component";
+export * from "./Subscription/renew-subscription/renew-subscription.component";
+export * from "./Subscription/tenant-subscription/tenant-subscription.component";

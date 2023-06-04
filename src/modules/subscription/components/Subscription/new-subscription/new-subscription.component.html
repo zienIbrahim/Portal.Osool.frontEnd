@@ -1,0 +1,87 @@
+<mat-card>
+    <mat-card-header class="p-0-card-header">
+        <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="fill-remaining-space">New Subscription for : {{TenantData.tenantName}}</span>
+            <button #btnClose matDialogClose mat-icon-button  >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-toolbar>
+    </mat-card-header>
+<mat-card-content>
+    <form [formGroup]="Subscriptionform" (ngSubmit)="onSubmit(btnClose)" fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%"
+    style="padding: 16px;">
+        <mat-form-field appearance="outline" fxFlex="49%">
+            <mat-label>Tenant Name</mat-label>
+            <input matInput  formControlName="Tenantname">
+            <mat-error *ngIf="!f['Tenantname'].errors && f['Tenantname'].touched">
+                Invalid Tenant Name Input
+            </mat-error>
+        </mat-form-field>
+        <mat-slide-toggle fxFlex="49%" formControlName="trialSubscription" (change)="changeTrialSubscription()">Trial subscription</mat-slide-toggle>
+        <mat-form-field *ngIf="f['trialSubscription']?.value" appearance="outline" fxFlex="49%">
+            <mat-label>trial Period Start Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="trialPeriodStartDate">
+            
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="!f['trialPeriodStartDate'].errors && f['trialPeriodStartDate'].touched">
+                Invalid trial Period Start Date Input
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="f['trialSubscription']?.value" appearance="outline" fxFlex="49%">
+            <mat-label>trial Period End Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="trialPeriodEndDate">
+            
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="!f['trialPeriodEndDate'].errors && f['trialPeriodEndDate'].touched">
+                Invalid trial Period Start Date Input
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" [fxFlex]="49">
+            <mat-label>Plan</mat-label>
+            <mat-select matNativeControl required formControlName="currentPlanId" (selectionChange)="changeCurrentPlanId()">
+              <mat-option *ngFor="let plan of PlanList" [value]="plan.planId" >{{plan.planName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="49%">
+            <mat-label>Number of Month</mat-label>
+            <input matInput  (change)="changeNumberOfMonth()" type="number" formControlName="numberOfMonth">
+            <mat-error *ngIf="!f['numberOfCurrentUserPOS'].errors && f['numberOfCurrentUserPOS'].touched">
+                Invalid Number of current POS user Input
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field  appearance="outline" fxFlex="49%">
+            <mat-label>valid To</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="validTo">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="!f['validTo'].errors && f['validTo'].touched">
+                Invalid trial validTo Date Input
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="49%">
+            <mat-label>Number of current user</mat-label>
+            <input matInput (change)="calcTotalPrice()"  type="number" formControlName="numberOfCurrentUser">
+            <mat-error *ngIf="!f['numberOfCurrentUser'].errors && f['numberOfCurrentUser'].touched">
+                Invalid Number of current user Input
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="49%">
+            <mat-label>Number of current POS user</mat-label>
+            <input matInput (change)="calcTotalPrice()"  type="number" formControlName="numberOfCurrentUserPOS">
+            <mat-error *ngIf="!f['numberOfCurrentUserPOS'].errors && f['numberOfCurrentUserPOS'].touched">
+                Invalid Number of current POS user Input
+            </mat-error>
+        </mat-form-field>
+         <div fxFlex="51%">
+            
+         </div>
+            <mat-dialog-actions fxLayout="row" [fxFlex]="100" fxLayoutAlign="space-between center">
+                <button [fxFlex]="12" type="submit" mat-raised-button color="primary" type="submit" class="button">Save</button>
+                <span><Strong>Total Price :<Strong [ngStyle]="{'color': TotalPrice==0 ? 'green' : 'red' }">{{TotalPrice==0?'FREE':TotalPrice.toFixed(2)}}</Strong></Strong></span>
+                <span><Strong>Total Price Includ Vat :<Strong [ngStyle]="{'color': TotalPriceIncludVat==0 ? 'green' : 'red' }">{{TotalPriceIncludVat.toFixed(2)}}</Strong></Strong></span>
+           </mat-dialog-actions>
+    </form>
+</mat-card-content>
+</mat-card>

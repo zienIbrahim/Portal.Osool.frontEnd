@@ -36,7 +36,8 @@ export class CreatePlanComponent implements OnInit {
     this.Planform = this.formBuilder.group({
      softwareId: [null, Validators.required],
      planName: [null, Validators.required],
-     planPrice: [null, Validators.required],
+     monthlyPlanPrice: [null, Validators.required],
+     yearlyPlanPrice: [null, Validators.required],
      isActive: [false, Validators.required],
      userGroupTypeId: [null, Validators.required],
      maxUsers: [null, Validators.required],
@@ -67,7 +68,6 @@ export class CreatePlanComponent implements OnInit {
       return;
     }
     let Data: AddPlan ={...this.Planform.value,options:this.Planform.value.options.map((x:number)=>{return{optionId:x}})} ;
-
     console.log("Planform -> Data -> ",Data)
     this.subscriptionService.AddPlan(Data).subscribe({
       next: (value: any) => {

@@ -50,6 +50,7 @@
                             <th>time Removed</th>
                             <th>group Admin</th>
                             <th>is Active</th>
+                            <th>is POS User</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -117,6 +118,9 @@
                         </td>
                         <td>
                             <mat-checkbox matInput formControlName="isActive"  color="primary"></mat-checkbox>
+                    </td>
+                        <td>
+                            <mat-checkbox matInput formControlName="isPOSUser"  color="primary"></mat-checkbox>
                     </td>
                         <td>
                             <mat-icon (click)="removeUser(i)" [ngStyle]="{'color': 'red'}">delete</mat-icon>

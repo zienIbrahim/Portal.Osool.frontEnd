@@ -20,14 +20,14 @@
               </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="fill" [fxFlex]="49">
+          <mat-form-field appearance="outline" [fxFlex]="49">
             <mat-label>software</mat-label>
             <mat-select matNativeControl required formControlName="softwareId">
               <mat-option *ngFor="let software of SoftwareList" [value]="software.softwareId" >{{software.softwareName}}</mat-option>
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="fill" [fxFlex]="49">
+          <mat-form-field appearance="outline" [fxFlex]="49">
             <mat-label>Tenant Group Type</mat-label>
             <mat-select matNativeControl required formControlName="userGroupTypeId">
               <mat-option *ngFor="let Type of TenantGroupTypeList" [value]="Type.id" >{{Type.typeName}}</mat-option>
@@ -36,8 +36,15 @@
 
           <mat-form-field appearance="outline" [fxFlex]="49" >
             <mat-label>plan Price</mat-label>
-            <input matInput  placeholder="plan Price" formControlName="planPrice" type="number">
-            <mat-error *ngIf="!f['planPrice'].errors && f['planPrice'].touched">
+            <input matInput  placeholder="plan Price" formControlName="monthlyPlanPrice" type="number">
+            <mat-error *ngIf="!f['monthlyPlanPrice'].errors && f['monthlyPlanPrice'].touched">
+                Invalid plan Price Input
+              </mat-error>
+          </mat-form-field> 
+          <mat-form-field appearance="outline" [fxFlex]="49" >
+            <mat-label>plan Price</mat-label>
+            <input matInput  placeholder="plan Price" formControlName="yearlyPlanPrice" type="number">
+            <mat-error *ngIf="!f['yearlyPlanPrice'].errors && f['yearlyPlanPrice'].touched">
                 Invalid plan Price Input
               </mat-error>
           </mat-form-field>
