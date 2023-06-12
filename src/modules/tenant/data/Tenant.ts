@@ -57,3 +57,26 @@ export interface EditUsersTenant {
     isActive: boolean;
     isPOSUser: boolean;
 }
+export interface TenantSubscription {
+  subscriptionId: number;
+  tenantId: string;
+  trialPeriodStartDate: string | null;
+  trialPeriodEndDate: string | null;
+  subscribeAfterTrial: boolean;
+  currentPlanId: number;
+  offerId: number | null;
+  numberOfCurrentUser: number;
+  numberOfCurrentUserPOS: number;
+  offerStartDate: string | null;
+  offerEndDate: string | null;
+  dateSubscribed: string;
+  validTo: string;
+  dateUnsubscribed: string | null;
+}
+export interface TenantFilters {
+  Name?: string;
+  Id?: string;
+  DatabaseName?: string;
+  pageNumber:number;
+  pageSize:number; 
+}

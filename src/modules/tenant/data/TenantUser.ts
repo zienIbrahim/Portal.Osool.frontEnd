@@ -65,4 +65,12 @@ export interface TenantUserList {
     phoneNumber?: string
     email: string
   }
+  export interface TenantUsersFilters {
+    PageSize:number;
+    PageNumber:number; 
+    Email?: string;
+    PhoneNumber?: string;
+    UserName?: string;
+    Id?: string;
+  }
   

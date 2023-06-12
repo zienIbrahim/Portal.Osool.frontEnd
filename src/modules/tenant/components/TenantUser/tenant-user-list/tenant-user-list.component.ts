@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { startWith, switchMap, catchError, of, map } from 'rxjs';
-import { TenantUserList } from 'src/modules/tenant/data/TenantUser';
+import { TenantUserList, TenantUsersFilters } from 'src/modules/tenant/data/TenantUser';
 import { TenantUserService } from 'src/modules/tenant/services/tenant-user.service';
 
 @Component({
@@ -17,6 +17,8 @@ export class TenantUserListComponent  implements AfterViewInit,OnInit{
   SelectedRow:any;
   dataSource = new MatTableDataSource<TenantUserList>();
   totalCount:number=0;
+  filtersby: TenantUsersFilters={PageNumber:1,PageSize:10};
+  pageEvent: PageEvent=<PageEvent>{};
 
 
   displayedColumns: string[] = ['id', 'userName', 'email', 'phoneNumber', 'edit'];
@@ -30,29 +32,16 @@ export class TenantUserListComponent  implements AfterViewInit,OnInit{
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    this.paginator.page
-    .pipe(
-      startWith({}),
-      switchMap(() => {    return this.getTableData$(
-        this.paginator.pageIndex + 1,
-        this.paginator.pageSize
-      ).pipe(catchError(() => of(null)));}),
-      map((Data :any) => {
-        if (Data == null) return [];
-        this.totalCount = Data.totalCount;
-        return Data.data;
-      })
-    )
-    .subscribe((Data) => {
-      this.tenantUser = Data;
-      this.dataSource = new MatTableDataSource(this.tenantUser);
+}
+  getTableData$() {
+    this.tenantUserService.GetAllTenantUsers(this.filtersby).subscribe((Data:any) => {
+      this.dataSource=new MatTableDataSource(Data.data)
+      this.totalCount=Data.totalCount
     });
   }
-
-  getTableData$(pageNumber: number, pageSize: number) {
-    return  this.tenantUserService.GetAllTenantUsers(pageSize,pageNumber);
-  }
   ngOnInit(): void {
+    this.getTableData$()
+
   }
 
  
@@ -71,9 +60,19 @@ export class TenantUserListComponent  implements AfterViewInit,OnInit{
 
   }
 
+  filterQuery() {
+    this.filtersby.PageNumber = 1;
+    this.getTableData$();
+  }
+
   edit(element: any, templateRef: any) {
     this.SelectedRow = element;
     this.router.navigate([`/Tenant/TenantUser/Edit`], { queryParams: { userId: this.SelectedRow.id } });
   }
+  onPaginateChange(event: PageEvent) {
+    this.filtersby.PageNumber = event.pageIndex +1;
+    this.filtersby.PageSize = event.pageSize;
+  this.getTableData$();
+}
 
 }

@@ -1,5 +1,5 @@
-import { UserInGroup } from './../../../data/Tenant';
-import { Component, OnInit } from '@angular/core';
+import { TenantSubscription, UserInGroup } from 'src/modules/tenant/data/Tenant';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,6 +10,7 @@ import { EditTenantRequest, TenantDetails } from 'src/modules/tenant/data/Tenant
 import { TenantGroupType } from 'src/modules/tenant/data/TenantGroupType';
 import { UserList } from 'src/modules/tenant/data/TenantUser';
 import { TenantService } from 'src/modules/tenant/services';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-edit-tenant',
@@ -23,11 +24,38 @@ export class EditTenantComponent implements OnInit{
   _userList: UserList[] = [];
   TenantId: string = '';
   TenantDat: TenantDetails=<TenantDetails>{};
+  TenantSubscriptionsLst: TenantSubscription[]=[];
+  TenantSubscriptionDataSource = new MatTableDataSource<TenantSubscription>();
+  displayedColumns: string[] = [
+     'trialPeriodStartDate',
+     'trialPeriodEndDate',
+     'dateSubscribed',
+     'numberOfCurrentUser',
+     'numberOfCurrentUserPOS',
+     'validTo',
+    ];
+  // displayedColumns: string[] = [
+  //    'subscriptionId',
+  //    'trialPeriodStartDate',
+  //    'trialPeriodEndDate',
+  //    'subscribeAfterTrial',
+  //    'currentPlanId',
+  //    'offerId',
+  //    'dateSubscribed',
+  //    'numberOfCurrentUser',
+  //    'numberOfCurrentUserPOS',
+  //    'offerStartDate',
+  //    'offerEndDate',
+  //    'validTo',
+  //    'dateUnsubscribed'
+  //   ];
+
+
   constructor(private formBuilder: FormBuilder,
     public tenantService: TenantService,
     public notificationService: NotificationService,
     private mastarDataService: MastarDataService,
-
+    private ref: ChangeDetectorRef,
     private _snackBar: MatSnackBar  ,  
     private route: ActivatedRoute,
     public dialog: MatDialog
@@ -76,6 +104,7 @@ export class EditTenantComponent implements OnInit{
       this._userList = value.data;
     }
   });
+ 
 }
 _getTenantById(){
   this.route.queryParams.subscribe((params) => {
@@ -171,9 +200,9 @@ addUser() {
     this.notificationService.error(value.error.ErrorMessage)
   },
 });  }
-OpenAddDialog(templateRef: any) {
+OpenAddDialog(templateRef: any,width:string="400px") {
   this.dialog.open(templateRef, {
-    width: '400px',
+    width: width,
   });
 }
 OpenSubscriptionDialog(templateRef: any) {
@@ -181,6 +210,18 @@ OpenSubscriptionDialog(templateRef: any) {
     width: '800px',
   });
 }
+OpenTenantSubscriptionsDialog(templateRef: any) {
+  this.tenantService.GetGetTenantSubscriptions(this.TenantId).subscribe({
+    next:(value:any)=> {
+      this.TenantSubscriptionsLst=value.data;
+      this.TenantSubscriptionDataSource= new MatTableDataSource(this.TenantSubscriptionsLst)
+      this.dialog.open(templateRef, {
+        width: '100%',
+      });    }
+  });
+ 
+}
+
 
 ChangeUser(index:number){
   let userId=this.Users.controls[index].get("userId")?.value

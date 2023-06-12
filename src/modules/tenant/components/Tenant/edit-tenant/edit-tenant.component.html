@@ -5,6 +5,7 @@
            <span> 
             <button mat-raised-button color="accent" (click)="OpenAddDialog(AddNewUserToTenant)">Add New User</button>
             <button mat-raised-button color="accent" (click)="OpenSubscriptionDialog(AddNewSubscriptionToTenant)">New Subscription</button>
+            <button mat-raised-button color="accent" (click)="OpenTenantSubscriptionsDialog(TenantSubscriptions)">Tenant Subscriptions</button>
             <!-- <button mat-raised-button color="accent">Add Exist User</button>
             <button mat-raised-button color="accent">Accent</button> -->
     </span>
@@ -148,4 +149,80 @@
 </ng-template>
 <ng-template #AddNewSubscriptionToTenant>
     <app-new-subscription [TenantData]="{tenantName:Tenantform.value.name,tenantId:Tenantform.value.id}"></app-new-subscription>
+</ng-template>
+<ng-template #TenantSubscriptions>
+            <mat-toolbar  fxLayout="row" fxLayoutAlign="space-between center">
+                <span class="fill-remaining-space">Tenant Subscriptions</span>
+            </mat-toolbar>
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="TenantSubscriptionDataSource">
+                    <!-- subscriptionId Column -->
+                    <!-- <ng-container matColumnDef="subscriptionId">
+                        <th mat-header-cell *matHeaderCellDef> subscriptionId. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.subscriptionId}} </td>
+                    </ng-container> -->
+                    <!-- trialPeriodStartDate Column -->
+                    <ng-container matColumnDef="trialPeriodStartDate">
+                        <th mat-header-cell *matHeaderCellDef> trialPeriodStartDate. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.trialPeriodStartDate}} </td>
+                    </ng-container>
+                    <!-- trialPeriodEndDate Column -->
+                    <ng-container matColumnDef="trialPeriodEndDate">
+                        <th mat-header-cell *matHeaderCellDef> trialPeriodEndDate. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.trialPeriodEndDate}} </td>
+                    </ng-container>
+                    <!-- subscribeAfterTrial Column -->
+                    <!-- <ng-container matColumnDef="subscribeAfterTrial">
+                        <th mat-header-cell *matHeaderCellDef> subscribeAfterTrial. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.subscribeAfterTrial}} </td>
+                    </ng-container> -->
+                    <!-- currentPlanId Column -->
+                    <!-- <ng-container matColumnDef="currentPlanId">
+                        <th mat-header-cell *matHeaderCellDef> currentPlanId. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.currentPlanId}} </td>
+                    </ng-container> -->
+                    <!-- offerId Column -->
+                    <!-- <ng-container matColumnDef="offerId">
+                        <th mat-header-cell *matHeaderCellDef> offerId. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.offerId}} </td>
+                    </ng-container> -->
+                    <!-- numberOfCurrentUser Column -->
+                    <ng-container matColumnDef="numberOfCurrentUser">
+                        <th mat-header-cell *matHeaderCellDef> numberOfCurrentUser. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.numberOfCurrentUser}} </td>
+                    </ng-container>
+                    <!-- numberOfCurrentUserPOS Column -->
+                    <ng-container matColumnDef="numberOfCurrentUserPOS">
+                        <th mat-header-cell *matHeaderCellDef> numberOfCurrentUserPOS. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.numberOfCurrentUserPOS}} </td>
+                    </ng-container>
+                    <!-- offerStartDate Column -->
+                    <!-- <ng-container matColumnDef="offerStartDate">
+                        <th mat-header-cell *matHeaderCellDef> offerStartDate. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.offerStartDate}} </td>
+                    </ng-container> -->
+                    <!-- offerEndDate Column -->
+                    <!-- <ng-container matColumnDef="offerEndDate">
+                        <th mat-header-cell *matHeaderCellDef> offerEndDate. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.offerEndDate}} </td>
+                    </ng-container> -->
+                    <!-- dateSubscribed Column -->
+                    <ng-container matColumnDef="dateSubscribed">
+                        <th mat-header-cell *matHeaderCellDef> dateSubscribed. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.dateSubscribed}} </td>
+                    </ng-container>
+                    <!-- validTo Column -->
+                    <ng-container matColumnDef="validTo">
+                        <th mat-header-cell *matHeaderCellDef> validTo. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.validTo}} </td>
+                    </ng-container>
+                    <!-- dateUnsubscribed Column -->
+                    <!-- <ng-container matColumnDef="dateUnsubscribed">
+                        <th mat-header-cell *matHeaderCellDef> dateUnsubscribed. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.dateUnsubscribed}} </td>
+                    </ng-container> -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row let i=index; columns: displayedColumns;" >
+                </table>
+            </div>
 </ng-template>

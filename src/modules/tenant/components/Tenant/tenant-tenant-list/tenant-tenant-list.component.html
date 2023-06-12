@@ -9,29 +9,48 @@
     </mat-toolbar>
   </mat-card-header>
   <mat-card-content card>
+  
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource">
   
   <!-- Position Column -->
   <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <th mat-header-cell *matHeaderCellDef> No. 
+            <div><mat-form-field>
+              <input matInput class="form-field"  placeholder="No Filter" [(ngModel)]="filtersby.Id">
+            </mat-form-field></div>
+          </th>
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
   
   <!-- Name Column -->
   <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <th mat-header-cell *matHeaderCellDef> Name 
+            <div><mat-form-field>
+              <input matInput class="form-field"  placeholder="Name Filter" [(ngModel)]="filtersby.Name">
+            </mat-form-field></div>
+          </th>
           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
   
   <!-- Weight Column -->
   <ng-container matColumnDef="databaseName">
-          <th mat-header-cell *matHeaderCellDef> Database Name </th>
+          <th mat-header-cell *matHeaderCellDef> Database Name 
+            <div><mat-form-field>
+              <input matInput class="form-field"  placeholder="Database Name Filter" [(ngModel)]="filtersby.DatabaseName">
+            </mat-form-field></div>
+          </th>
           <td mat-cell *matCellDef="let element"> {{element.databaseName}} </td>
         </ng-container>
   
   <ng-container matColumnDef="edit">
-          <th *matHeaderCellDef> Edit </th>
+          <th *matHeaderCellDef>
+             <button mat-icon-button matTooltip="Click to Edit" class="iconbutton"
+            color="primary" 
+            (click)="filterQuery()">
+            <mat-icon>search</mat-icon>
+          </button>
+          </th>
           <td *matCellDef="let element">
              <button mat-icon-button matTooltip="Click to Edit" class="iconbutton"
               color="primary" (click)="edit(element,editTemplate)">
@@ -40,12 +59,14 @@
            </td>
         </ng-container>
      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row let i=index; columns: displayedColumns;" (dblclick)="edit(row,editTemplate)">
     </table>
     <mat-paginator class="mat-paginator-sticky"
     [length]="totalCount"
-    [pageSizeOptions]="[5, 10, 25, 100]">
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="pageEvent = $event; onPaginateChange($event)"
+    >
   </mat-paginator>
     </div>
   </mat-card-content>
