@@ -1,0 +1,74 @@
+<mat-card>
+    <mat-card-header class="p-0-card-header">
+        <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="fill-remaining-space">Add New Offer</span>
+            <button #btnClose matDialogClose mat-icon-button  >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-toolbar>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="Offerform" (ngSubmit)="onSubmit(btnClose)" 
+        fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%"
+         style="padding: 16px;">
+         <mat-form-field appearance="outline" fxFlex="100%" >
+            <mat-label>offer Name</mat-label>
+            <input matInput  placeholder="Option Name" formControlName="offerName">
+            <mat-error *ngIf="!f['offerName'].errors && f['offerName'].touched">
+                Invalid offer name  Input
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" fxFlex="100%" >
+            <mat-label>description</mat-label>
+            <input matInput  placeholder="description" formControlName="description">
+            <mat-error *ngIf="!f['description'].errors && f['description'].touched">
+                Invalid description  Input
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" fxFlex="49%" >
+            <mat-label>start Date</mat-label>
+            <input matInput [matDatepicker]="pickerStartDate" formControlName="offerStartDate">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStartDate></mat-datepicker>
+            <mat-error *ngIf="!f['offerStartDate'].errors && f['offerStartDate'].touched">
+                Invalid Start Date Input
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" fxFlex="49%" >
+            <mat-label>end Date</mat-label>
+            <input matInput [matDatepicker]="pickerEndDate" formControlName="offerEndDate">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEndDate></mat-datepicker>
+            <mat-error *ngIf="!f['offerEndDate'].errors && f['offerEndDate'].touched">
+                Invalid end Date Input
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" fxFlex="49%" >
+            <mat-label>yearly Discount</mat-label>
+            <input matInput type="number"  placeholder="yearly Discount" formControlName="yearlyDiscount">
+            <span matSuffix>% &nbsp;</span>
+            <mat-error *ngIf="!f['yearlyDiscount'].errors && f['yearlyDiscount'].touched">
+                Invalid yearly Discount  Input
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" fxFlex="49%" >
+            <mat-label>monthly Discount</mat-label>
+            <input matInput type="number"  placeholder="yearly Discount" formControlName="monthlyDiscount">
+            <span matSuffix>% &nbsp;</span>
+            <mat-error *ngIf="!f['monthlyDiscount'].errors && f['monthlyDiscount'].touched">
+                Invalid monthly Discount  Input
+              </mat-error>
+          </mat-form-field>
+
+          <mat-slide-toggle fxFlex="49%" formControlName="isActive" >Active</mat-slide-toggle>
+          <mat-dialog-actions fxFlex="100%">
+            <button fxFlex mat-raised-button color="primary" type="submit" class="button">Save</button>
+       </mat-dialog-actions>
+        </form>
+    </mat-card-content>
+</mat-card>
