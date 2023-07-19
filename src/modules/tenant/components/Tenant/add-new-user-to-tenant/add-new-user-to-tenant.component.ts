@@ -31,12 +31,14 @@ export class AddNewUserToTenantComponent implements OnInit {
 
   intiForm(){
     this.TenantUserform = this.formBuilder.group({
-      userName: [null, [Validators.required]],
       email: [null, [Validators.required]],
       phoneNumber: [null, [Validators.required]],
       password: [null, [Validators.required]],
       ConfiremPassword: [null, [Validators.required]],
-      TenantId: [{value:this.TenantId, disabled: true}, [Validators.required]],
+      tenantId: [{value:this.TenantId, disabled: true}, [Validators.required]],
+      isPOSUser: [null, [Validators.required]],
+      groupAdmin: [null, [Validators.required]],
+      tenantUserId: [null, [Validators.required]]
     })
   }
 
@@ -61,7 +63,12 @@ export class AddNewUserToTenantComponent implements OnInit {
       return
     }
    let Data:AddTenantUser=this.TenantUserform.value;
-   Data.tenantList=[this.TenantId]
+   Data.tenantList=this.TenantUserform.value.tenantList.map((element:any) => { return  {
+    tenantUserId: element.tenantUserId,
+    groupAdmin: element.groupAdmin,
+    tenantId:this.TenantUserform.value.TenantId,
+    isPOSUser: element.isPOSUser,  
+  }})
    console.log("this.Tenantform",Data)
    
    this.tenantUserService.AddTenantUser(Data).subscribe({
@@ -74,7 +81,6 @@ export class AddNewUserToTenantComponent implements OnInit {
       this.notificationService.error(value.error.ErrorMessage)
     },
   });
-
   }
 
   get f() {

@@ -1,0 +1,20 @@
+table thead th {
+  
+    position: sticky;
+    top: 0;
+  }
+  .tableFixHead {
+    overflow-y: auto; /* make the table scrollable if height is more than 200 px  */
+    height: 10rem; /* gives an initial height of 200px to the table */
+    border: 1px solid lightslategray;
+    width: 100%;
+  }
+  tr th {
+    background: #1976d2;
+    color: white;
+    height: 2rem;
+  }
+  table {
+    border-collapse: collapse; 
+    width: 100%;
+  }

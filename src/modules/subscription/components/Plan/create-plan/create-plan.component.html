@@ -14,7 +14,7 @@
 
          <mat-form-field appearance="outline" [fxFlex]="49" >
             <mat-label>plan Name</mat-label>
-            <input matInput  placeholder="software Name" formControlName="planName">
+            <input matInput  placeholder="plan Name" formControlName="planName">
             <mat-error *ngIf="!f['planName'].errors && f['planName'].touched">
                 Invalid plan Name Input
               </mat-error>
@@ -35,25 +35,25 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline" [fxFlex]="49" >
-            <mat-label>plan Price</mat-label>
+            <mat-label>monthly plan Price</mat-label>
             <input matInput  placeholder="plan Price" formControlName="monthlyPlanPrice" type="number">
             <mat-error *ngIf="!f['monthlyPlanPrice'].errors && f['monthlyPlanPrice'].touched">
                 Invalid plan Price Input
               </mat-error>
           </mat-form-field> 
           <mat-form-field appearance="outline" [fxFlex]="49" >
-            <mat-label>plan Price</mat-label>
+            <mat-label>yearly plan Price</mat-label>
             <input matInput  placeholder="plan Price" formControlName="yearlyPlanPrice" type="number">
             <mat-error *ngIf="!f['yearlyPlanPrice'].errors && f['yearlyPlanPrice'].touched">
                 Invalid plan Price Input
               </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="outline" [fxFlex]="100" >
+          <!-- <mat-form-field appearance="outline" [fxFlex]="100" >
             <mat-label>Options</mat-label>
             <mat-select matNativeControl required formControlName="options" multiple>
               <mat-option *ngFor="let option of OtionList" [value]="option.id" >{{option.optionName}}</mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
 
           <mat-form-field appearance="outline" [fxFlex]="100/4-1" >
             <mat-label>max Users</mat-label>
@@ -90,6 +90,45 @@
           <div [fxFlex]="100/4-1" >
             <mat-slide-toggle  formControlName="isActive"> is Active</mat-slide-toggle>
           </div>
+          <button fxLayout="row"  fxFlex="30%" mat-raised-button type="button" (click)="addOption()">add Option</button>
+          <div class="tableFixHead">
+                        <table>
+                            <thead>
+                                <tr class="red">
+                                    <th>Option</th>
+                                    <th>Option Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="options">
+                                <tr *ngFor="let item of getOptionsControls  let i = index;" [formGroupName]="i">
+                                <td>
+                                        <mat-form-field appearance="outline" >
+                                        <mat-label>Option Name</mat-label>
+                                        <mat-select matNativeControl required formControlName="optionId">
+                                          <mat-option *ngFor="let option of OtionList" [value]="option.id" >{{option.optionName}}</mat-option>
+                                        </mat-select>                                      
+                                          <mat-error *ngIf="!getOptionsControls[i].get('optionId')?.errors && getOptionsControls[i].get('optionId')?.touched">
+                                            Invalid Option Name  Input
+                                        </mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="outline" >
+                                    <mat-label>Price</mat-label>
+                                    <input matInput placeholder="enter price" formControlName="price" type="number">
+                                    <mat-error *ngIf="!getOptionsControls[i].get('price')?.errors && getOptionsControls[i].get('price')?.touched">
+                                        Invalid Price Input
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>
+                                <td>
+                                    <mat-icon (click)="removeOption(i)" [ngStyle]="{'color': 'red'}">delete</mat-icon>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
           <mat-dialog-actions fxLayout="row" [fxFlex]="100">
             <button [fxFlex]="12" mat-raised-button color="primary" type="submit" class="button">Save</button>

@@ -29,4 +29,7 @@ GetAllUsers(){
 GetAllPlanList(){
   return this.http.get(this.apiUrl + "Common/GetAllPlanList")
 }
+GetAllActiveOffer(){
+  return this.http.get(this.apiUrl + "Common/GetAllActiveOffer")
+}
 }

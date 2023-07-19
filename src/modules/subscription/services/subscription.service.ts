@@ -6,6 +6,7 @@ import { AddOption,Option } from '../data/Option';
 import { AddPlan, Plan } from '../data/Plan';
 import { AddSoftware, EditSoftware } from '../data/Software';
 import { CreateNewSubscription } from '../data/Subscription';
+import { AddOffer, Offer } from '../data/Offer';
 
 @Injectable()
 export class SubscriptionService {
@@ -55,5 +56,18 @@ export class SubscriptionService {
     GetSoftwareById(SoftwareId:number){
         return this.http.get(this.apiUrl + "Software/GetSoftwareById?SoftwareId="+SoftwareId)
     }
+    GetAllOffer(_pageSize:number,_pageNumber:number){
+        return this.http.get(this.apiUrl + `Offers/GetAllOffer?PageNumber=${_pageNumber}&PageSize=${_pageSize}`)
+    }
+    AddOffer(data:AddOffer){
+        return this.http.post(this.apiUrl + "Offers/AddOffer", data)
+    }
+    EditOffer(data:Offer){
+        return this.http.put(this.apiUrl + "Offers/EditOffer", data)
+    }
+    GetOfferById(OfferId:number){
+        return this.http.get(this.apiUrl + "Offers/GetOfferById?OfferId="+OfferId)
+    }
+
    
 }

@@ -5,11 +5,10 @@ export interface TenantUserList {
     email: string;
   }
   export interface AddTenantUser{
-    userName: string;
     phoneNumber: string;
     email: string;
     password: string;
-    tenantList:string[]
+    tenantList:UserInTenant[]
   }
   export interface UserData {
     userId: string
@@ -17,16 +16,14 @@ export interface TenantUserList {
     email: string
     phoneNumber: any
     isActive: boolean
-    userInGroups: UserInGroup[]
+    userInTenant: UserInTenant[]
   }
   
-  export interface UserInGroup {
+  export interface UserInTenant {
     tenantUserId: number
     timeAdded: string
-    timeRemoved: any
     groupAdmin: boolean
     tenantId: string
-    userTenant: UserTenant
     isActive: boolean
     isPOSUser: boolean
   }

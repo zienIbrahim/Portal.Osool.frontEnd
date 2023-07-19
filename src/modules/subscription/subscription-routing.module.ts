@@ -61,6 +61,21 @@ export const ROUTES: Routes = [
            
         ],
     }
+    ,
+    {
+        path: 'Offer',
+        canActivate : [],
+        component:subscriptionContainers.SubscriptionLayoutComponent ,
+        children: [
+            {
+                
+                path: '',
+                component: subscriptionComponent.OfferListComponent,
+            }
+          
+           
+        ],
+    }
 ];
 
 @NgModule({

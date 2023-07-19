@@ -43,11 +43,8 @@
                     <thead>
                         <tr class="red">
                             <th>tenant Name</th>
-                            <th>database Name</th>
-                            <th>tenant Group Type</th>
                             <th>tenant UserId</th>
                             <th>time Added</th>
-                            <th>time Removed</th>
                             <th>group Admin</th>
                             <th>is Active</th>
                             <th>is POS User</th>
@@ -68,25 +65,7 @@
                             </mat-form-field>
                         </td>
                         <td>
-                            <mat-form-field appearance="outline" style="width: 10rem;">
-                            <mat-label>Database Name</mat-label>
-                            <input matInput placeholder="Database Name" formControlName="databaseName" [readonly]="true">
-                            <mat-error *ngIf="!item.get('databaseName')?.errors && item.get('databaseName')?.touched">
-                                Invalid Database Name Input
-                            </mat-error>
-                        </mat-form-field>
-                    </td>
-                    <td>
-                        <mat-form-field appearance="outline" [ngStyle]="{'width': '8rem'}">
-                            <mat-label>GroupType Name</mat-label>
-                            <input matInput placeholder="Tenant UserId" formControlName="userTenantGroupTypeName" [readonly]="true">
-                            <mat-error *ngIf="!item.get('userTenantGroupTypeName')?.errors && item.get('userTenantGroupTypeName')?.touched">
-                                Invalid GroupType Name Input
-                            </mat-error>
-                        </mat-form-field>
-                    </td>
-                        <td>
-                            <mat-form-field appearance="outline" [ngStyle]="{'width': '5rem'}">
+                            <mat-form-field appearance="outline" >
                                 <mat-label>Tenant UserId</mat-label>
                                 <input matInput placeholder="Tenant UserId" formControlName="tenantUserId" type="number">
                                 <mat-error *ngIf="!item.get('tenantUserId')?.errors && item.get('tenantUserId')?.touched">
@@ -104,23 +83,13 @@
                             </mat-form-field>
                         </td>
                         <td>
-                            <mat-form-field appearance="outline" style="width: 10rem;">
-                                <mat-label>Time Removed</mat-label>
-                                <input matInput placeholder="Time Removed" formControlName="timeRemoved" [readonly]="true">
-                                <mat-error *ngIf="!item.get('timeRemoved')?.errors && item.get('timeRemoved')?.touched">
-                                    Invalid Time Removed Input
-                                </mat-error>
-                            </mat-form-field>
-                        </td>
-                        
-                        <td>
-                                <mat-checkbox matInput formControlName="groupAdmin"  color="primary"></mat-checkbox>
+                                <mat-checkbox [ngStyle]="{'width': '5rem'}" matInput formControlName="groupAdmin"  color="primary"></mat-checkbox>
                         </td>
                         <td>
-                            <mat-checkbox matInput formControlName="isActive"  color="primary"></mat-checkbox>
+                            <mat-checkbox matInput [ngStyle]="{'width': '5rem'}" formControlName="isActive"  color="primary"></mat-checkbox>
                     </td>
                         <td>
-                            <mat-checkbox matInput formControlName="isPOSUser"  color="primary"></mat-checkbox>
+                            <mat-checkbox matInput [ngStyle]="{'width': '5rem'}" formControlName="isPOSUser"  color="primary"></mat-checkbox>
                     </td>
                         <td>
                             <mat-icon (click)="removeUser(i)" [ngStyle]="{'color': 'red'}">delete</mat-icon>

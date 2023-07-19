@@ -80,12 +80,10 @@ export class EditTenantComponent implements OnInit{
   createUsers(): FormGroup{
     return this.formBuilder.group({
      userId: [null, [Validators.required]],
-     userName: [null, [Validators.required]],
      email: [null, [Validators.required]],
      phoneNumber: [null, [Validators.required]],
      tenantUserId: [null, [Validators.required]],
      tenantId: [null],
-     timeRemoved: [null],
      timeAdded: [null],
      groupAdmin: [false],  
      isActive: [false],  
@@ -122,7 +120,7 @@ _getTenantById(){
     });
   }
 }
-  _setFormValue(){
+_setFormValue(){
     this.Tenantform.patchValue({
       id: this.TenantDat.id,
       name: this.TenantDat.name,
@@ -136,7 +134,6 @@ _getTenantById(){
       this.addUser();
       this.Users.controls[index].patchValue({
         userId: element.userId,
-        userName: element.userName,
         email: element.email,
         phoneNumber: element.phoneNumber,
         tenantUserId: element.tenantUserId,
@@ -148,7 +145,7 @@ _getTenantById(){
         isPOSUser: element.isPOSUser,  
       });
     })
-  }
+}
 
 addUser() {
   this.UsersList = this.Users;
@@ -177,7 +174,6 @@ addUser() {
   databaseName:this.Tenantform.value.databaseName,
   users: this.Tenantform.value.users.map((element:any) => { return  {
     userId: element.userId,
-    userName: element.userName,
     email: element.email,
     phoneNumber: element.phoneNumber,
     groupAdmin: element.groupAdmin,
@@ -221,8 +217,6 @@ OpenTenantSubscriptionsDialog(templateRef: any) {
   });
  
 }
-
-
 ChangeUser(index:number){
   let userId=this.Users.controls[index].get("userId")?.value
   console.log("ChangeUser \\ userId :",userId)

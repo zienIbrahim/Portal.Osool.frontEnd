@@ -29,11 +29,25 @@ export interface Plan{
         includeUsers: number
         includeBranches: number
         options:PlanOptions[]
+        offers:PlanOffer[]
 
 }
 export interface PlanOptions{
-        id: number    ,
-        OptionName: string       
+        id:number,
+        OptionName: string,
+        price:number      
+      }
+      export interface PlanOffer{
+        offerId: number    ,
+        offerName: string,
+        description: string,
+        price:number,
+        offerStartDate:Date ,
+        offerEndDate:Date,
+        yearlyDiscount:number,
+        monthlyDiscount:number,
+        isActive:boolean,
+
       }
 export interface AddPlan{
         softwareId: number
@@ -52,7 +66,8 @@ export interface AddPlan{
 }
 
 export interface options{
-  optionId: number            
+  optionId: number  ,
+  price:  number        
 }
 export interface DDLPlanList {
         planId: number

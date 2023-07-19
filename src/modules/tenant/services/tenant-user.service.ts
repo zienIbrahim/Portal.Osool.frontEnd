@@ -37,6 +37,7 @@ GetUserTenantById(Id :string ){
   return this.http.get(this.apiUrl + "TenantUsers/GetTenantUserById?Id="+Id)
 }
 AddTenantUser(data:AddTenantUser){
+  ///
   return this.http.post(this.apiUrl + "TenantUsers/AddTenantUser",data)
 }
 EditTenantUser(data:EditUserRequest){

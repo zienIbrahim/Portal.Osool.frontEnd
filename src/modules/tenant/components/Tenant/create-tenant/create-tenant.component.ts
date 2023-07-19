@@ -46,7 +46,6 @@ export class CreateTenantComponent implements OnInit {
   }
   createUsers(): FormGroup{
      return this.formBuilder.group({
-      userName: [null, [Validators.required]],
       email: [null, [Validators.required]],
       phoneNumber: [null, [Validators.required]],
       password: [null, [Validators.required]],

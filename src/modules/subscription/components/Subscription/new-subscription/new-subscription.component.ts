@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
-import { DDLPlanList } from 'src/modules/subscription/data/Plan';
+import { DDLPlanList, Plan } from 'src/modules/subscription/data/Plan';
 import { CreateNewSubscriptionParam,CreateNewSubscription } from 'src/modules/subscription/data/Subscription';
 import { SubscriptionService } from 'src/modules/subscription/services';
 import { formatDate } from '@angular/common';
@@ -18,9 +18,9 @@ import { formatDate } from '@angular/common';
 export class NewSubscriptionComponent {
   Subscriptionform: FormGroup=<FormGroup>{};
   PlanList: DDLPlanList[] = [];
-  SelectedPlan!:DDLPlanList | undefined;
   TotalPrice:number=0;
   TotalPriceIncludVat:number=0;
+  SelectedPlanData: Plan=<Plan>{}
   @Input()  TenantData: CreateNewSubscriptionParam=<CreateNewSubscriptionParam>{};
 
   constructor(private formBuilder: FormBuilder,
@@ -52,6 +52,7 @@ export class NewSubscriptionComponent {
       trialPeriodEndDate: [{ value: endDate, disabled: true }],
       currentPlanId: [null, Validators.required],
       offerId: [null],
+      offerName:[null],
       numberOfCurrentUser: [null, Validators.required],
       numberOfMonth: [null, Validators.required],
       numberOfCurrentUserPOS: [null, Validators.required],
@@ -70,6 +71,7 @@ export class NewSubscriptionComponent {
       currentPlanId: this.Subscriptionform.get('currentPlanId')?.value,
       offerId: this.Subscriptionform.get('offerId')?.value,
       numberOfCurrentUser: this.Subscriptionform.get('numberOfCurrentUser')?.value,
+      numberOfMonth: this.Subscriptionform.get('numberOfMonth')?.value,
       numberOfCurrentUserPOS: this.Subscriptionform.get('numberOfCurrentUserPOS')?.value,
       validTo:formatDate(this.Subscriptionform.get('validTo')?.value, 'yyyy-MM-dd', 'en-UM') ,
     };
@@ -89,8 +91,15 @@ export class NewSubscriptionComponent {
   }
 
   changeCurrentPlanId(){
-    this.SelectedPlan =this.PlanList.find(x=> x.planId==this.Subscriptionform.value.currentPlanId);
+   let currentPlanId= this.Subscriptionform.value.currentPlanId;
+   this.subscriptionService.GetPlanById(currentPlanId).subscribe((res)=>{
+    console.log("res :",res)
+
+    this.SelectedPlanData=res as Plan;
     this.calcTotalPrice();
+   }
+  
+  );
   }
 
   changeTrialSubscription(){
@@ -132,20 +141,46 @@ export class NewSubscriptionComponent {
 
   calcTotalPrice(){
     if(!this.Subscriptionform.value.trialSubscription){
+
     let numberOfMonth=Number(this.Subscriptionform.value.numberOfMonth);
-    let priceOfCurrentUser=(Number(this.Subscriptionform.value.numberOfCurrentUser)-2) * 20;
-    let priceOfCurrentUserPOS= Number(this.Subscriptionform.value.numberOfCurrentUserPOS) * 30;
-    let planPrice=Number((numberOfMonth >=12)?this.SelectedPlan?.yearlyPlanPrice:this.SelectedPlan?.monthlyPlanPrice);
+
+    let priceOfCurrentUser=
+    (Number(this.Subscriptionform.value.numberOfCurrentUser)-this.SelectedPlanData.includeUsers)
+    * Number(this.SelectedPlanData.options.find(x=> x.id==1)?.price);
+
+    let priceOfCurrentUserPOS= Number(this.Subscriptionform.value.numberOfCurrentUserPOS) * Number(this.SelectedPlanData.options.find(x=> x.id==2)?.price);
+
+    let planPrice=Number((numberOfMonth >=12)?this.SelectedPlanData?.yearlyPlanPrice:this.SelectedPlanData?.monthlyPlanPrice);
+
+    console.log("priceOfCurrentUser :",priceOfCurrentUser)
+    console.log("priceOfCurrentUserPOS :",priceOfCurrentUserPOS)
+    console.log("Plan  includeUsers :",this.SelectedPlanData.includeUsers)
+    console.log("Plan  options :",this.SelectedPlanData.options)
+    // implemment Offer
+
+    const today = new Date();
+
+    let OfferEndDate=this.SelectedPlanData.offers[0].offerEndDate;
+
+    let  offerList=   this.SelectedPlanData.offers?.filter(x=> x.isActive==true && new Date(x.offerEndDate)>=today);
+   
+    let discount= Math.max(...offerList.map(o => (numberOfMonth >=12)? o.yearlyDiscount: o.monthlyDiscount))
+    
+    planPrice=planPrice-((discount * planPrice)/100);
+
+    console.log("planPrice after offer discount :", planPrice)
+
     this.TotalPrice=(priceOfCurrentUser+priceOfCurrentUserPOS + planPrice) * numberOfMonth;
+
     this.TotalPriceIncludVat=this.TotalPrice * 1.15;
-
+  }
+  else
+  {
+    this.TotalPrice=0;
+    this.TotalPriceIncludVat=0;
+  }
   }
 
-    else{
-      this.TotalPrice=0;
-      this.TotalPriceIncludVat=0;
-    }
-  }
   formatDate(d: any): string {
     return [
         d.year,

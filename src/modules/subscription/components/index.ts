@@ -1,4 +1,7 @@
 
+import { CreateOfferComponent } from "./Offer/create-offer/create-offer.component";
+import { EditOfferComponent } from "./Offer/edit-offer/edit-offer.component";
+import { OfferListComponent } from "./Offer/offer-list/offer-list.component";
 import { CreateOptionComponent } from "./Option/create-option/create-option.component";
 import { EditOptionComponent } from "./Option/edit-option/edit-option.component";
 import { OptionListComponent } from "./Option/option-list/option-list.component";
@@ -25,6 +28,9 @@ export const components = [
   SoftwareListComponent,
   EditSoftwareComponent,
   CreateSoftwareComponent,
+  OfferListComponent,
+  CreateOfferComponent,
+  EditOfferComponent,
 ];
 
 export * from "./Option/create-option/create-option.component";
@@ -39,3 +45,6 @@ export * from "./Software/software-list/software-list.component";
 export * from "./Subscription/new-subscription/new-subscription.component";
 export * from "./Subscription/renew-subscription/renew-subscription.component";
 export * from "./Subscription/tenant-subscription/tenant-subscription.component";
+export * from "./Offer/create-offer/create-offer.component"
+export * from "./Offer/edit-offer/edit-offer.component";
+export * from "./Offer/offer-list/offer-list.component";

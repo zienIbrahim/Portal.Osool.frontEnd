@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
@@ -21,6 +21,7 @@ export class EditPlanComponent {
   OtionList: Option[] = [];
   SoftwareList: SoftwareList[] = [];
   TenantGroupTypeList: TenantGroupType[] = [];
+  OptionsList: FormArray=<FormArray>{};
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +48,7 @@ export class EditPlanComponent {
      maxBranches: [null, Validators.required],
      includeUsers: [null, Validators.required],
      includeBranches: [null, Validators.required],
-     options: [null, Validators.required],
+     options: this.formBuilder.array([]),
 
     });
   }
@@ -71,9 +72,15 @@ this.Planform.patchValue({
   maxBranches: this.PlanData.maxBranches,
   includeUsers: this.PlanData.includeUsers,
   includeBranches: this.PlanData.includeBranches,
-  options: this.PlanData.options.map(x=> {return x.id}),
 });
-  }
+this.PlanData.options.forEach((element, index)=>{
+  this.addOption()
+  this.Options.controls[index].patchValue({
+    optionId: element.id,
+    price: element.price
+  })
+})
+}
 
   _getMasterTable(){
     this.mastarDataService.GetAllOption().subscribe({
@@ -94,7 +101,7 @@ this.Planform.patchValue({
     if (this.Planform.invalid) {
       return;
     }
-    let Data: Plan ={...this.Planform.value,options:this.Planform.value.options.map((x:number)=>{return{optionId:x}})} ;
+    let Data: Plan ={...this.Planform.value};
 
     console.log("Planform -> Data -> ",Data)
     this.subscriptionService.EditPlan(Data).subscribe({
@@ -112,4 +119,25 @@ this.Planform.patchValue({
   get f() {
     return this.Planform.controls;
   }
+  createOptions(): FormGroup{
+    return this.formBuilder.group({
+     optionId: [null, [Validators.required]],
+     price: [null, [Validators.required]],
+    });
+ }
+
+  addOption(){
+    this.OptionsList = this.Options;
+    this.OptionsList.push(this.createOptions());
+  }
+  removeOption(index:number){
+    const add = this.Options;
+    if (add.length > 1) add.removeAt(index);
+  }
+  get getOptionsControls(){
+    return (this.Planform.get('options') as FormArray).controls;
+  }
+  get Options() :FormArray {
+    return   this.Planform.get('options') as FormArray; 
+   }
 }

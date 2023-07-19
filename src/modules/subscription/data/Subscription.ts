@@ -5,6 +5,7 @@ export interface CreateNewSubscription {
     offerId: number
     numberOfCurrentUser: number
     numberOfCurrentUserPOS: number
+    numberOfMonth: number
     validTo: string
   }
   export interface CreateNewSubscriptionParam {

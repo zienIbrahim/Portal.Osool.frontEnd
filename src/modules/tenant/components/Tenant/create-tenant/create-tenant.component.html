@@ -42,7 +42,7 @@
                         <button  fxLayout="row" type="button" mat-raised-button color="primary" matStepperNext>Next</button>
                     </div>
                 </mat-step>
-                <mat-step>
+                <mat-step>    
                     <ng-template  matStepLabel>Fill out Admin User</ng-template>
                     <ng-template  #userFrom >
                         <mat-card>
@@ -70,7 +70,6 @@
                         <table>
                             <thead>
                                 <tr class="red">
-                                    <th>User Name</th>
                                     <th>email</th>
                                     <th>Phone Number</th>
                                     <th>Password</th>
@@ -82,15 +81,6 @@
                             </thead>
                             <tbody formArrayName="users">
                                 <tr *ngFor="let item of getUsersControls  let i = index;" [formGroupName]="i">
-                                <td>
-                                        <mat-form-field appearance="outline" >
-                                        <mat-label>User Name</mat-label>
-                                        <input matInput placeholder="enter User Name" formControlName="userName">
-                                        <mat-error *ngIf="!getUsersControls[i].get('userName')?.errors && getUsersControls[i].get('userName')?.touched">
-                                            Invalid User Name Input
-                                        </mat-error>
-                                    </mat-form-field>
-                                </td>
                                 <td>
                                     <mat-form-field appearance="outline" >
                                     <mat-label>Email</mat-label>

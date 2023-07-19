@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
@@ -20,6 +20,7 @@ export class CreatePlanComponent implements OnInit {
   OtionList: Option[] = [];
   SoftwareList: SoftwareList[] = [];
   TenantGroupTypeList: TenantGroupType[] = [];
+   OptionsList: FormArray=<FormArray>{};
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,7 +45,7 @@ export class CreatePlanComponent implements OnInit {
      maxBranches: [null, Validators.required],
      includeUsers: [null, Validators.required],
      includeBranches: [null, Validators.required],
-     options: [null, Validators.required],
+     options: this.formBuilder.array([this.createOptions()]),
 
     });
   }
@@ -67,8 +68,8 @@ export class CreatePlanComponent implements OnInit {
     if (this.Planform.invalid) {
       return;
     }
-    let Data: AddPlan ={...this.Planform.value,options:this.Planform.value.options.map((x:number)=>{return{optionId:x}})} ;
-    console.log("Planform -> Data -> ",Data)
+   // ,options:this.Planform.value.options.map((x:number)=>{return{optionId:x}})
+    let Data: AddPlan ={...this.Planform.value} ;
     this.subscriptionService.AddPlan(Data).subscribe({
       next: (value: any) => {
         this.notificationService.success('Option Updated Successfully');
@@ -80,8 +81,29 @@ export class CreatePlanComponent implements OnInit {
       },
     });
   }
-
+ 
   get f() {
     return this.Planform.controls;
   }
+  createOptions(): FormGroup{
+    return this.formBuilder.group({
+     optionId: [null, [Validators.required]],
+     price: [null, [Validators.required]],
+    });
+ }
+
+  addOption(){
+    this.OptionsList = this.Options;
+    this.OptionsList.push(this.createOptions());
+  }
+  removeOption(index:number){
+    const add = this.Options;
+    if (add.length > 1) add.removeAt(index);
+  }
+  get getOptionsControls(){
+    return (this.Planform.get('options') as FormArray).controls;
+  }
+  get Options() :FormArray {
+    return   this.Planform.get('options') as FormArray; 
+   }
 }

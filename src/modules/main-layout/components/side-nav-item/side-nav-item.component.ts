@@ -11,11 +11,12 @@ export class SideNavItemComponent {
   @Input() isExpanded: boolean  = false;
 
   public routeLinks = [
-    { link: "/Tenant/List", name: "Tenant", icon: "dashboard" },
-    { link: "/Tenant/GroupType", name: "Group Type", icon: "dashboard" },
-    { link: "/Plan/Option", name: "Option", icon: "dns" },
+    { link: "/Tenant/List", name: "Tenant", icon: "location_city" },
+    { link: "/Tenant/GroupType", name: "Group Type", icon: "group_work" },
+    { link: "/Plan/Option", name: "Options", icon: "grade" },
+    { link: "/Plan/Offer", name: "Offers", icon: "local_offer" },
     { link: "/Plan/Software", name: "Software", icon: "bookmark" },
-    { link: "/Plan/Plan", name: "Plan", icon: "view_in_ar" },
+    { link: "/Plan/Plan", name: "Plan", icon: "category" },
     { link: "/Tenant/TenantUser/List", name: "Tenant User", icon: "account_box" },
   ];
 

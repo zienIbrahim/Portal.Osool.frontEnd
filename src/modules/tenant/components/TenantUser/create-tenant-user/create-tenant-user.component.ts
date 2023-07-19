@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
@@ -31,12 +31,11 @@ export class CreateTenantUserComponent implements OnInit {
 
   intiForm(){
     this.TenantUserform = this.formBuilder.group({
-      userName: [null, [Validators.required]],
       email: [null, [Validators.required]],
       phoneNumber: [null, [Validators.required]],
       password: [null, [Validators.required]],
       ConfiremPassword: [null, [Validators.required]],
-      tenantList: [null, [Validators.required]],
+      tenantList: this.formBuilder.array([]),
     })
   }
 
@@ -55,7 +54,7 @@ export class CreateTenantUserComponent implements OnInit {
     }
     ) 
   }
-
+  
   onSubmit(addTemplateClose:MatIconButton){
     if(this.TenantUserform.invalid){
       return
@@ -76,8 +75,25 @@ export class CreateTenantUserComponent implements OnInit {
   });
 
   }
-
+  adduserInGroup(): void {
+    this.userInGroupsList.push(
+      this.formBuilder.group({
+        groupAdmin: ['', Validators.required],
+        isPOSUser: [false],
+        tenantId: ['', Validators.required],
+        tenantUserId: ['', Validators.required],
+      })
+    );
+  }
+  removeUser(index: number) {
+    const add = this.userInGroupsList;
+    if (add.length > 1) add.removeAt(index);
+  }
   get f() {
     return this.TenantUserform.controls
+  }
+
+  get userInGroupsList(): FormArray {
+    return this.TenantUserform.controls['tenantList'] as FormArray;
   }
 }

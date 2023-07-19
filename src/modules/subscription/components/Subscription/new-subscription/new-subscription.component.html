@@ -21,7 +21,6 @@
         <mat-form-field *ngIf="f['trialSubscription']?.value" appearance="outline" fxFlex="49%">
             <mat-label>trial Period Start Date</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="trialPeriodStartDate">
-            
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="!f['trialPeriodStartDate'].errors && f['trialPeriodStartDate'].touched">

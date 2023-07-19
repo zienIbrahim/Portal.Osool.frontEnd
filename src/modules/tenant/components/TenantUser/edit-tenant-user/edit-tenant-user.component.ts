@@ -72,6 +72,7 @@ export class EditTenantUserComponent implements OnInit {
 
       return;
     }
+    
    let EditRequest :EditUserRequest={
     userName:this.TenantUserform.value.userName,
     email:this.TenantUserform.value.email,
@@ -86,6 +87,7 @@ export class EditTenantUserComponent implements OnInit {
       isPOSUser: element.isPOSUser,  
     }})
    }
+
    this.tenantUserService.EditTenantUser(EditRequest).subscribe({
     next: (value: any) => {
     this.notificationService.success("Software added Successfully")
@@ -104,6 +106,7 @@ export class EditTenantUserComponent implements OnInit {
       }
     });
   }
+
   adduserInGroup(): void {
     this.userInGroupsList.push(
       this.formBuilder.group({
@@ -113,13 +116,6 @@ export class EditTenantUserComponent implements OnInit {
         tenantId: ['', Validators.required],
         tenantUserId: ['', Validators.required],
         timeAdded: [''],
-        tenantName: [''],
-        databaseName: [''],
-        tenantinsertTs: [''],
-        tenantGroupTypeId: [''],
-        userTenantGroupTypeName: [''],
-        timeRemoved: [''],
-
       })
     );
   }
@@ -132,7 +128,7 @@ export class EditTenantUserComponent implements OnInit {
       phoneNumber: this.UserData.phoneNumber,
     });
 
-    this.UserData.userInGroups.forEach((element, index) => {
+    this.UserData.userInTenant.forEach((element, index) => {
       this.adduserInGroup();
       this.userInGroupsList.controls[index].patchValue({
         groupAdmin: element.groupAdmin,
@@ -140,12 +136,6 @@ export class EditTenantUserComponent implements OnInit {
         tenantId: element.tenantId,
         tenantUserId: element.tenantUserId,
         timeAdded: element.timeAdded,
-        tenantName: element.userTenant.name,
-        databaseName: element.userTenant.databaseName,
-        tenantinsertTs: element.userTenant.insertTs,
-        tenantGroupTypeId: element.userTenant.tenantGroupTypeId,
-        userTenantGroupTypeName: element.userTenant.userTenantGroupType.typeName,
-        timeRemoved: element.timeRemoved,
         isPOSUser: element.isPOSUser,  
 
       });
@@ -156,8 +146,8 @@ export class EditTenantUserComponent implements OnInit {
   let tenantId=this.userInGroupsList.controls[index].get("tenantId")?.value
   console.log('tenantId :',tenantId)
   console.log('index :',index)
-    if(this.UserData.userInGroups.some(x=> x.tenantId== tenantId)){
-      let element=this.UserData.userInGroups.find(x=> x.tenantId==tenantId)
+    if(this.UserData.userInTenant.some(x=> x.tenantId== tenantId)){
+      let element=this.UserData.userInTenant.find(x=> x.tenantId==tenantId)
       console.log('element :',element)
       if(element){
         this.userInGroupsList.controls[index].patchValue({
@@ -166,12 +156,6 @@ export class EditTenantUserComponent implements OnInit {
           tenantId: element.tenantId,
           tenantUserId: element.tenantUserId,
           timeAdded: element.timeAdded,
-          tenantName: element.userTenant.name,
-          databaseName: element.userTenant.databaseName,
-          tenantinsertTs: element.userTenant.insertTs,
-          tenantGroupTypeId: element.userTenant.tenantGroupTypeId,
-          userTenantGroupTypeName: element.userTenant.userTenantGroupType.typeName,
-          timeRemoved: element.timeRemoved,
         });
       }
     } else{
@@ -193,6 +177,7 @@ export class EditTenantUserComponent implements OnInit {
     
   
   }
+
   removeUser(index: number) {
     const add = this.userInGroupsList;
     if (add.length > 1) add.removeAt(index);
