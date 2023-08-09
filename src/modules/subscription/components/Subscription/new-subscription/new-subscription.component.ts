@@ -159,14 +159,15 @@ export class NewSubscriptionComponent {
     // implemment Offer
 
     const today = new Date();
-
-    let OfferEndDate=this.SelectedPlanData.offers[0].offerEndDate;
-
-    let  offerList=   this.SelectedPlanData.offers?.filter(x=> x.isActive==true && new Date(x.offerEndDate)>=today);
-   
-    let discount= Math.max(...offerList.map(o => (numberOfMonth >=12)? o.yearlyDiscount: o.monthlyDiscount))
     
-    planPrice=planPrice-((discount * planPrice)/100);
+    let  offerList=   this.SelectedPlanData.offers?.filter(x=> x.isActive==true && new Date(x.offerEndDate)>=today);
+    if(offerList.length != 0)
+    {
+      let discount=  Math.max(...offerList.map(o => (numberOfMonth >=12)? o.yearlyDiscount: o.monthlyDiscount))
+      planPrice=planPrice-((discount * planPrice)/100);
+    }
+  
+    console.log("Plan  planPrice :",offerList.length)
 
     console.log("planPrice after offer discount :", planPrice)
 
