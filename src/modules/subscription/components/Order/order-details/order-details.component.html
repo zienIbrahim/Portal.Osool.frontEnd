@@ -1,0 +1,182 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Subscription Order</mat-card-title>
+        <mat-card-subtitle>{{ order.tenantName }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%" style="padding: 16px;">
+            <div  [fxFlex]="100"  class="section-header">Order Information</div>
+            <div [fxFlex]="100">
+                <mat-grid-list cols="3" rowHeight="30px">
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>group</mat-icon> 
+                            Tenant: {{ order.tenantName }}
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>person</mat-icon>
+                        User: {{ order.userName }}
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>calendar_today</mat-icon> 
+                        Valid To: {{ order.validTo | date: 'medium' }}
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>calendar_today</mat-icon> 
+                        Creation Date: {{ order.creationDate | date: 'medium' }}
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>place</mat-icon> 
+                            Plan Name: {{ order.planName }}
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>local_offer</mat-icon> 
+                            Offer Name: {{ order.offerName }}
+                    </mat-grid-tile>
+                    
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>money</mat-icon> 
+                        Plan Price: {{ order.planPrice }}
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>money</mat-icon> 
+                            Discount: {{ order.discount }}
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>money</mat-icon> 
+                        Tax Amount: {{ order.taxAmount }}
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>money</mat-icon>
+                        Total Price: <strong style="color: rgb(214, 19, 19);"> {{ order.totalPrice }}</strong>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>calendar_today</mat-icon> 
+                        number Of Month: {{ order.numberOfMonth }}
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>network_check</mat-icon> 
+                        <div class="status-badge" [ngClass]="getStatusClass(order.status)">
+                            {{getStatusName(order.status) }} 
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-icon matListIcon>notes</mat-icon> 
+                        Notes: {{ order.notes }}
+                    </mat-grid-tile>
+                  </mat-grid-list>
+            </div>
+            <div [fxFlex]="100"  class="section-header">Order Details</div>
+            <mat-divider></mat-divider>
+            <div [fxFlex]="100" >
+                <mat-table [dataSource]="orderDetailsDataSource">
+                    <ng-container matColumnDef="optionNameAr">
+                        <mat-header-cell *matHeaderCellDef>Option Name (Ar)</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.optionNameAr }}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="optionNameEn">
+                        <mat-header-cell *matHeaderCellDef>Option Name (En)</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.optionNameEn }}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="optionPrice">
+                        <mat-header-cell *matHeaderCellDef>Option Price</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.optionPrice }}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="qty">
+                        <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.qty }}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="taxAmount">
+                        <mat-header-cell *matHeaderCellDef>Tax Amount</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.taxAmount }}</mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                </mat-table>
+            </div>
+            <mat-divider></mat-divider>
+            <div [fxFlex]="100"  class="section-header">Payments</div>
+            <div [fxFlex]="100" >
+                <mat-table [dataSource]="PaymentDataSource">
+                    <ng-container matColumnDef="createdBy">
+                        <mat-header-cell *matHeaderCellDef>Created By</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.createdBy }}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="createdAt">
+                        <mat-header-cell *matHeaderCellDef>Created At</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.createdAt }}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="totalPrice">
+                        <mat-header-cell *matHeaderCellDef>Total Price</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.totalPrice }}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.status }}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="payemntType">
+                        <mat-header-cell *matHeaderCellDef>payemnt Type</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.payemntType }}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="transactionId">
+                        <mat-header-cell *matHeaderCellDef>transaction Id</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.transactionId }}</mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="PaymentDisplayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: PaymentDisplayedColumns"></mat-row>
+                </mat-table>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="section-btn" [fxFlex]="100" fxLayoutGap="1%" fxLayout="row">
+                <button [fxFlex]="12" mat-raised-button (click)="checkout(checkoutTemplate)"
+                 color="primary" type="submit" class="button">
+                    Checkout
+                </button>
+                <button [fxFlex]="12" mat-raised-button 
+                 color="primary" type="submit" class="button" (click)="update()">
+                    Update
+                </button>
+                <button [fxFlex]="12" mat-raised-button color="primary" type="submit" class="button"
+                (click)="CanceleOrder(CanceleTemplate)"
+                >
+                    Cancle Order
+                </button>
+                <button [fxFlex]="12" mat-raised-button (click)="BackToList()"
+                 color="primary" type="submit" class="button"
+                >
+                   Back To List
+                </button>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<ng-template #checkoutTemplate>
+    <app-order-ckeckout [OrderData]="order"></app-order-ckeckout>
+  </ng-template>
+
+  <ng-template #CanceleTemplate>
+    <mat-card>
+        <mat-card-header class="card-header">
+            <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+                <mat-card-title>Cancle Order</mat-card-title>
+                <button #btnClose matDialogClose mat-icon-button  >
+                    <mat-icon>close</mat-icon>
+                  </button>
+            </mat-toolbar>
+        </mat-card-header>
+        <mat-card-content fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%" style="padding: 16px;">
+            <h2 [fxFlex]="100"> Are you sure you want to cancel the order?</h2>
+            <div class="section-btn" [fxFlex]="100" fxLayoutGap="1%" fxLayout="row">
+                <button [fxFlex]="12" mat-raised-button (click)="confirmCanceleOrder(btnClose)"
+                 color="primary" type="submit" class="button">
+                    OK       
+                </button>
+                <button [fxFlex]="12" mat-raised-button 
+                 color="primary" type="submit" class="button" (click)=" closeModal(btnClose)">
+                    Close
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <!-- <app-edit-option [OptionData]="SelectedRow"></app-edit-option> -->
+  </ng-template>

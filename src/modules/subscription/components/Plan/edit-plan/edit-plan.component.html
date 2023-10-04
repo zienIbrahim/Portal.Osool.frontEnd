@@ -100,7 +100,7 @@
                                         <mat-form-field appearance="outline" >
                                         <mat-label>Option Name</mat-label>
                                         <mat-select matNativeControl required formControlName="optionId">
-                                          <mat-option *ngFor="let option of OtionList" [value]="option.id" >{{option.optionName}}</mat-option>
+                                          <mat-option *ngFor="let option of OtionList" [value]="option.id" >{{option.optionNameAr}}</mat-option>
                                         </mat-select>                                      
                                           <mat-error *ngIf="!getOptionsControls[i].get('optionId')?.errors && getOptionsControls[i].get('optionId')?.touched">
                                             Invalid Option Name  Input

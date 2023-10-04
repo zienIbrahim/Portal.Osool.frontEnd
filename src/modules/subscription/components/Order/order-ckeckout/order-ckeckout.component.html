@@ -1,0 +1,64 @@
+
+
+<mat-card>
+    <mat-card-header class="p-0-card-header">
+        <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="fill-remaining-space">Ckeckout Order</span>
+        <button #btnClose matDialogClose mat-icon-button  >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-toolbar>
+    </mat-card-header>
+    <mat-card-content fxLayout="Column wrap">
+        <div [fxFlex]="100" class="section-header">Order information</div>
+        <div fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%">
+            <mat-grid-list cols="3" rowHeight="30px" [fxFlex]="100">
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-icon matListIcon>group</mat-icon>
+                    Order ID: {{ OrderData.id }}
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-icon matListIcon>group</mat-icon>
+                    Tenant: {{ OrderData.tenantName }}
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-icon matListIcon>place</mat-icon>
+                    Plan Name: {{ OrderData.planName }}
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-icon matListIcon>local_offer</mat-icon>
+                    Offer Name: {{ OrderData.offerName }}
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-icon matListIcon>money</mat-icon>
+                    Plan Price: {{ OrderData.planPrice }}
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-icon matListIcon>money</mat-icon>
+                    Discount: {{ OrderData.discount }}
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-icon matListIcon>money</mat-icon>
+                    Tax Amount: {{ OrderData.taxAmount }}
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-icon matListIcon>money</mat-icon>
+                    Total Price: <strong style="color: rgb(214, 19, 19);"> {{ OrderData.totalPrice }}</strong>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+        <div [fxFlex]="100" class="section-header">Payment information</div>
+        <form [formGroup]="Orderform" (ngSubmit)="onSubmit(btnClose)" fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%">
+            <mat-chip-listbox [fxFlex]="100" aria-label="Fish selection" formControlName="payMethod">
+                <mat-chip-option *ngFor="let item of PayMethods" [value]="item.id">{{item.name}}</mat-chip-option>
+            </mat-chip-listbox>
+            <mat-form-field appearance="outline" [fxFlex]="49">
+                <mat-label>paid Amount</mat-label>
+                <input type="number" matInput placeholder="paid Amount" formControlName="paidAmount">
+            </mat-form-field>
+        </form>
+        <mat-dialog-actions fxLayout="row" [fxFlex]="100" fxLayoutAlign="space-between center">
+            <button  (click)="onSubmit(btnClose)" mat-raised-button color="primary" type="submit" class="button">Checkout</button>
+       </mat-dialog-actions>
+    </mat-card-content>
+  </mat-card>

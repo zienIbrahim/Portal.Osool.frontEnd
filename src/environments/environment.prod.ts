@@ -1,5 +1,5 @@
 export const environment = {
     production: true,   
-     apiUrl: "http://osool.mine.nu:2703/api/",
+     apiUrl: "https://api.osoolsys.com:2703/api/",
 
 };

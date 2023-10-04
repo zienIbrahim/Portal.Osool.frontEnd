@@ -21,7 +21,7 @@ export interface TenantUserList {
   
   export interface UserInTenant {
     tenantUserId: number
-    timeAdded: string
+    timeAdded?: string
     groupAdmin: boolean
     tenantId: string
     isActive: boolean

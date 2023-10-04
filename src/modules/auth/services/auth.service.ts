@@ -87,4 +87,7 @@ async logout(): Promise<any> {
 refreshToken(tokenModel:any):Observable<any>{
   return this.http.post(this.apiUrl + "Authenticate/RefreshToken", tokenModel);
 }
+havePermission(Permission :string):boolean{
+  return this.getDecodedToken()['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'].includes(Permission);
+}
 }

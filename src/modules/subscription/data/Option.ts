@@ -1,7 +1,13 @@
 export interface Option{
     id:number;
-    optionName:string;
+    type:number;
+    optionNameAr:string;
+    optionNameEn:string;
+
 }
 export interface AddOption{
-    optionName:string;
+    type:number;
+    optionNameAr:string;
+    optionNameEn:string;
 }
+

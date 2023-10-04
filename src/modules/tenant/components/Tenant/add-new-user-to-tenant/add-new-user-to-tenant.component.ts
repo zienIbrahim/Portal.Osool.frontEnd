@@ -31,14 +31,15 @@ export class AddNewUserToTenantComponent implements OnInit {
 
   intiForm(){
     this.TenantUserform = this.formBuilder.group({
-      email: [null, [Validators.required]],
+      email: ['', [Validators.required]],
       phoneNumber: [null, [Validators.required]],
-      password: [null, [Validators.required]],
+      password: ['', [Validators.required]],
       ConfiremPassword: [null, [Validators.required]],
       tenantId: [{value:this.TenantId, disabled: true}, [Validators.required]],
-      isPOSUser: [null, [Validators.required]],
-      groupAdmin: [null, [Validators.required]],
-      tenantUserId: [null, [Validators.required]]
+      isPOSUser: [false, [Validators.required]],
+      groupAdmin: [false, [Validators.required]],
+      isActive: [false, [Validators.required]],
+      tenantUserId: ['', [Validators.required]]
     })
   }
 
@@ -59,16 +60,20 @@ export class AddNewUserToTenantComponent implements OnInit {
   }
 
   onSubmit(addTemplateClose:MatIconButton){
+    console.log("this.Tenantform",this.TenantUserform)
+
     if(this.TenantUserform.invalid){
       return
     }
+
    let Data:AddTenantUser=this.TenantUserform.value;
-   Data.tenantList=this.TenantUserform.value.tenantList.map((element:any) => { return  {
-    tenantUserId: element.tenantUserId,
-    groupAdmin: element.groupAdmin,
-    tenantId:this.TenantUserform.value.TenantId,
-    isPOSUser: element.isPOSUser,  
-  }})
+    Data.tenantList=[{
+      tenantUserId: this.TenantUserform.value.tenantUserId,
+      groupAdmin: this.TenantUserform.value.groupAdmin,
+      tenantId:this.TenantId,
+      isPOSUser: this.TenantUserform.value.isPOSUser, 
+      isActive:this.TenantUserform.value.isActive,
+    }]
    console.log("this.Tenantform",Data)
    
    this.tenantUserService.AddTenantUser(Data).subscribe({

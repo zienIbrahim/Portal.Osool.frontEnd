@@ -35,7 +35,7 @@
                             </mat-error>
                         </mat-form-field>
                         <div class="mat-form-field" appearance="outline" [fxFlex]="51">
-                            <mat-checkbox matInput formControlName="createNewDatabase">Create New Database</mat-checkbox>
+                            <mat-checkbox (change)="changeCreateNewDatabase($event,changeCreateDatabseConfirm)"  matInput formControlName="createNewDatabase">Create New Database</mat-checkbox>
                         </div>
                     </div>
                     <div  fxLayout="row wrap">
@@ -130,7 +130,6 @@
                             </tbody>
                         </table>
                     </div>
-                  
                     <br>
                     <button type="button" mat-raised-button color="primary" matStepperPrevious>Back</button>
                     <button type="button" mat-raised-button color="primary" matStepperNext>Next</button>
@@ -138,6 +137,10 @@
                 <mat-step>
                     <ng-template matStepLabel>Review</ng-template>
                     <div fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%" style="padding-top: 5px;">
+                        <div  [fxFlex]="100"  class="section-header">Tenant Information</div>
+                        <mat-divider></mat-divider>
+                        <div  [fxFlex]="100"  class="section-header">Tenant Users Information</div>
+                        <mat-divider></mat-divider>
                         <br>
                         <button type="button" mat-raised-button color="primary" matStepperPrevious>Back</button>
                         <button type="button" mat-raised-button color="primary" matStepperNext>Next</button>
@@ -148,5 +151,27 @@
         </form>
     </mat-card-content>
 </mat-card>
+<ng-template #changeCreateDatabseConfirm>
+    <mat-card>
+        <mat-card-header class="card-header">
+            <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+                <mat-card-title> change create new database</mat-card-title>
+            </mat-toolbar>
+        </mat-card-header>
+        <mat-card-content fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%" style="padding: 16px;">
+            <h2 [fxFlex]="100"> Are you sure you want to change create new database  will remove all user from list?</h2>
+            <div class="section-btn" [fxFlex]="100" fxLayoutGap="1%" fxLayout="row">
+                <button [fxFlex]="12" mat-raised-button (click)="CreateDatabseConfirm(true)"
+                 color="primary" type="submit" class="button">
+                    OK       
+                </button>
+                <button [fxFlex]="12" mat-raised-button 
+                 color="primary" type="submit" class="button" (click)=" CreateDatabseConfirm(false)">
+                    cancel
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</ng-template>
 
 

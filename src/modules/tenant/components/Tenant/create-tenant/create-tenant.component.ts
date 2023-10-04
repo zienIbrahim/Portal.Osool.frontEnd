@@ -55,14 +55,20 @@ export class CreateTenantComponent implements OnInit {
      });
   }
   addUser() {
+    if(this.createNewDatabase ){
+      const add = this.Users;
+      if (add.length >= 1)
+      return;
+    }
     this.UsersList = this.Users;
     this.UsersList.push(this.createUsers());
-   }
+  }
    // remove User from group
   removeUser(index:number) {
     const add = this.Users;
     if (add.length > 1) add.removeAt(index);
-    }
+  }
+
   _getMAsterData(){
     this.mastarDataService.GetAllTenantGroupType().subscribe({
       next:(value:any)=> {
@@ -78,7 +84,30 @@ export class CreateTenantComponent implements OnInit {
     }
     ) 
   }
-  
+
+  changeCreateNewDatabase(event:any,changeCreateDatabseConfirm:any){
+    console.log("this.getUsersControls.length",this.getUsersControls.length)
+    console.log("event",event.checked)
+    console.log("createNewDatabase",this.createNewDatabase)
+    if(this.createNewDatabase && this.getUsersControls.length>1)
+    {
+      this.dialog.open(changeCreateDatabseConfirm, {
+        disableClose: true,
+      });
+    }
+  }
+
+  CreateDatabseConfirm(Okflag: boolean) {
+    if (Okflag) {
+      while (this.Users.length > 1) {
+        this.Users.removeAt(1); 
+      }
+    } else {
+      this.Tenantform.get('createNewDatabase')?.setValue(false)
+    }
+    this.dialog.closeAll()
+  }
+
   onSubmit(){
     console.log("this.Tenantform",this.Tenantform.value)
     if(this.Tenantform.invalid){
@@ -97,6 +126,7 @@ export class CreateTenantComponent implements OnInit {
     },
   });
   }
+
   setAdmin(Rowindex:number){
     if (this.Users.controls.length > 1) {
       this.Users.controls.forEach((item: any,index:number) => {
@@ -106,6 +136,7 @@ export class CreateTenantComponent implements OnInit {
       });
   }
   }
+
   OpenAddDialog(templateRef: any) {
     this.dialog.open(templateRef, {
       width: '1000px',
@@ -114,6 +145,7 @@ export class CreateTenantComponent implements OnInit {
 
     });
   }
+
   get f() {
     return this.Tenantform.controls
   }
@@ -122,5 +154,9 @@ export class CreateTenantComponent implements OnInit {
    }
    get getUsersControls() {
     return (this.Tenantform.get('users') as FormArray).controls;
+  }
+  get createNewDatabase():boolean
+  {
+    return this.Tenantform.get('createNewDatabase')?.value as boolean;
   }
 }

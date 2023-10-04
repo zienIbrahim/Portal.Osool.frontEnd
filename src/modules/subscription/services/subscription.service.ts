@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -7,6 +7,7 @@ import { AddPlan, Plan } from '../data/Plan';
 import { AddSoftware, EditSoftware } from '../data/Software';
 import { CreateNewSubscription } from '../data/Subscription';
 import { AddOffer, Offer } from '../data/Offer';
+import { AddNewOrderDto, CheckoutData, EditOrderDto, OrdersListFilters } from '../data/Order';
 
 @Injectable()
 export class SubscriptionService {
@@ -49,6 +50,12 @@ export class SubscriptionService {
     CreateNewSubscriptions(data:CreateNewSubscription){
         return this.http.post(this.apiUrl + "Subscriptions/CreateNewSubscriptions", data)
     }
+    AddNewOrder(data:AddNewOrderDto){
+        return this.http.post(this.apiUrl + "Order/AddNewOrder", data)
+    }
+    EditOrder(data:EditOrderDto){
+        return this.http.put(this.apiUrl + "Order/EditOrder", data)
+    }
    
     EditSoftware(data:EditSoftware){
         return this.http.put(this.apiUrl + "Software/EditSoftware", data)
@@ -65,9 +72,43 @@ export class SubscriptionService {
     EditOffer(data:Offer){
         return this.http.put(this.apiUrl + "Offers/EditOffer", data)
     }
+    CheckoutOrder(data:CheckoutData){
+        return this.http.post(this.apiUrl + "Order/CheckoutOrder", data)
+    }
     GetOfferById(OfferId:number){
         return this.http.get(this.apiUrl + "Offers/GetOfferById?OfferId="+OfferId)
     }
-
-   
+    GetOrderById(OrderId:number){
+        return this.http.get(this.apiUrl + "Order/GetOrderById?OrderId="+OrderId)
+    }
+    CanceleOrder(OrderId:number){
+        return this.http.post(this.apiUrl + "Order/CanceleOrder",{orderId:OrderId})
+    }
+    GetOrdersList(filter:OrdersListFilters) {
+        let params = new HttpParams();
+        params = params.append('PageNumber', String(filter.pageNumber));
+        params = params.append('PageSize', String(filter.pageSize));
+        if(filter.planId){
+          params = params.append('PlanId', filter.planId);
+        }
+        if(filter.tenantId){
+          params = params.append('TenantId', filter.tenantId);
+        }
+        if(filter.userId){
+          params = params.append('UserId', filter.userId);
+        }
+        if(filter.from){
+            params = params.append('From', filter.from);
+        }
+        if(filter.to){
+            params = params.append('To', filter.to);
+        }
+        if(filter.status){
+            params = params.append('Status', filter.status);
+        }
+        if(filter.orderType){
+            params = params.append('OrderType', filter.orderType);
+        }
+        return this.http.get(this.apiUrl + "Order/GetOrdersList",{params});
+    }
 }

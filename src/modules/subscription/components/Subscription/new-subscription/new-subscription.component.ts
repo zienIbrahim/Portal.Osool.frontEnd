@@ -53,9 +53,9 @@ export class NewSubscriptionComponent {
       currentPlanId: [null, Validators.required],
       offerId: [null],
       offerName:[null],
-      numberOfCurrentUser: [null, Validators.required],
+      numberOfUser: [null, Validators.required],
       numberOfMonth: [null, Validators.required],
-      numberOfCurrentUserPOS: [null, Validators.required],
+      numberOfUserPOS: [null, Validators.required],
       validTo: [{ value: null, disabled: true }, Validators.required],
       trialSubscription: [false, Validators.required]
     })
@@ -70,12 +70,12 @@ export class NewSubscriptionComponent {
       trialSubscription: this.Subscriptionform.get('trialSubscription')?.value,
       currentPlanId: this.Subscriptionform.get('currentPlanId')?.value,
       offerId: this.Subscriptionform.get('offerId')?.value,
-      numberOfCurrentUser: this.Subscriptionform.get('numberOfCurrentUser')?.value,
+      numberOfUser: this.Subscriptionform.get('numberOfUser')?.value,
       numberOfMonth: this.Subscriptionform.get('numberOfMonth')?.value,
-      numberOfCurrentUserPOS: this.Subscriptionform.get('numberOfCurrentUserPOS')?.value,
+      numberOfUserPOS: this.Subscriptionform.get('numberOfUserPOS')?.value,
       validTo:formatDate(this.Subscriptionform.get('validTo')?.value, 'yyyy-MM-dd', 'en-UM') ,
     };
-    if(Data.numberOfCurrentUser<Data.numberOfCurrentUserPOS){
+    if(Data.numberOfUser<Data.numberOfUserPOS){
       this.notificationService.error("Number Of User Must be great than POS Key");
     }
     this.subscriptionService.CreateNewSubscriptions(Data).subscribe({
@@ -104,26 +104,26 @@ export class NewSubscriptionComponent {
 
   changeTrialSubscription(){
     if(this.Subscriptionform.value.trialSubscription){
-      this.Subscriptionform.get('numberOfCurrentUserPOS')?.setValue(1)
-      this.Subscriptionform.get('numberOfCurrentUser')?.setValue(2)
-      this.Subscriptionform.get('numberOfCurrentUser')?.disable();
-      this.Subscriptionform.get('numberOfCurrentUserPOS')?.disable()
+      this.Subscriptionform.get('numberOfUserPOS')?.setValue(1)
+      this.Subscriptionform.get('numberOfUser')?.setValue(2)
+      this.Subscriptionform.get('numberOfUser')?.disable();
+      this.Subscriptionform.get('numberOfUserPOS')?.disable()
       this.Subscriptionform.get('numberOfMonth')?.disable()
       this.Subscriptionform.get('numberOfMonth')?.setValue(0)
       this.Subscriptionform.get('validTo')?.setValue(this.Subscriptionform.get('trialPeriodEndDate')?.value)
     }
     else{
       let validTo= new Date();
-      this.Subscriptionform.get('numberOfCurrentUserPOS')?.setValue(0)
-      this.Subscriptionform.get('numberOfCurrentUser')?.setValue(2)
-      this.Subscriptionform.get('numberOfCurrentUser')?.enable();
-      this.Subscriptionform.get('numberOfCurrentUserPOS')?.enable();
+      this.Subscriptionform.get('numberOfUserPOS')?.setValue(0)
+      this.Subscriptionform.get('numberOfUser')?.setValue(2)
+      this.Subscriptionform.get('numberOfUser')?.enable();
+      this.Subscriptionform.get('numberOfUserPOS')?.enable();
       this.Subscriptionform.get('numberOfMonth')?.enable()
       this.Subscriptionform.get('numberOfMonth')?.setValue(1)
       this.Subscriptionform.get('validTo')?.setValue(validTo.getDate() + 30)
     }
-    this.Subscriptionform.get('numberOfCurrentUser')?.updateValueAndValidity();
-    this.Subscriptionform.get('numberOfCurrentUserPOS')?.updateValueAndValidity();
+    this.Subscriptionform.get('numberOfUser')?.updateValueAndValidity();
+    this.Subscriptionform.get('numberOfUserPOS')?.updateValueAndValidity();
     this.Subscriptionform.get('numberOfMonth')?.updateValueAndValidity();
     this.calcTotalPrice()
   }
@@ -145,10 +145,10 @@ export class NewSubscriptionComponent {
     let numberOfMonth=Number(this.Subscriptionform.value.numberOfMonth);
 
     let priceOfCurrentUser=
-    (Number(this.Subscriptionform.value.numberOfCurrentUser)-this.SelectedPlanData.includeUsers)
+    (Number(this.Subscriptionform.value.numberOfUser)-this.SelectedPlanData.includeUsers)
     * Number(this.SelectedPlanData.options.find(x=> x.id==1)?.price);
 
-    let priceOfCurrentUserPOS= Number(this.Subscriptionform.value.numberOfCurrentUserPOS) * Number(this.SelectedPlanData.options.find(x=> x.id==2)?.price);
+    let priceOfCurrentUserPOS= Number(this.Subscriptionform.value.numberOfUserPOS) * Number(this.SelectedPlanData.options.find(x=> x.id==2)?.price);
 
     let planPrice=Number((numberOfMonth >=12)?this.SelectedPlanData?.yearlyPlanPrice:this.SelectedPlanData?.monthlyPlanPrice);
 

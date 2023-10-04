@@ -13,7 +13,7 @@ import { startWith, switchMap, catchError, of, map } from 'rxjs';
   styleUrls: ['./option-list.component.scss'],
 })
 export class OptionListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'optionName', 'edit'];
+  displayedColumns: string[] = ['id', 'optionNameAr','optionNameEn','type', 'edit'];
   dataSource = new MatTableDataSource<Option>();
   @ViewChild(MatPaginator) paginator: MatPaginator = <MatPaginator>{};
   OptionList: Option[] = [];

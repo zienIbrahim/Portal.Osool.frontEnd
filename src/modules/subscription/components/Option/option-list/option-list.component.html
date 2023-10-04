@@ -19,9 +19,19 @@
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="optionName">
-          <th mat-header-cell *matHeaderCellDef> Name option </th>
-          <td mat-cell *matCellDef="let element"> {{element.optionName}} </td>
+        <ng-container matColumnDef="optionNameAr">
+          <th mat-header-cell *matHeaderCellDef> Name option (Arabic)</th>
+          <td mat-cell *matCellDef="let element"> {{element.optionNameAr}} </td>
+        </ng-container>
+         <!-- Name Column -->
+         <ng-container matColumnDef="optionNameEn">
+          <th mat-header-cell *matHeaderCellDef> Name option (English)</th>
+          <td mat-cell *matCellDef="let element"> {{element.optionNameEn}} </td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Type</th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
         </ng-container>
 
         <ng-container matColumnDef="edit">

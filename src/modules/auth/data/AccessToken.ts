@@ -13,3 +13,14 @@ export interface AccessToken {
     tenantName:string;
     userName:string;
  }
+
+ export const UserRole :UserRole={
+       Admin: "Admin",
+       OsoolUser: "OsoolUser",
+       Delegate: "Delegate",
+ }
+ export interface UserRole{
+    OsoolUser: string,
+    Delegate: string,
+    Admin: string,
+ }

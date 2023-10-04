@@ -31,6 +31,12 @@ const routes: Routes = [
   loadChildren: () =>
       import('../modules/error/error-routing.module').then((m) => m.ErrorRoutingModule),
 },
+{
+  path: 'Subscription',
+  canActivate: [AuthGuard],
+  loadChildren: () =>
+      import('../modules/subscription/subscription-routing.module').then((m) => m.SubscriptionRoutingModule),
+},
 //  {
 //   path: 'dashboard',
 //   canActivate: [],

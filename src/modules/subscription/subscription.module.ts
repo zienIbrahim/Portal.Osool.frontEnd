@@ -25,6 +25,10 @@ import {
   MAT_DATE_FORMATS,
 } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { AddOrderComponent } from './components/Order/add-order/add-order.component';
+import { OrderListComponent } from './components/Order/order-list/order-list.component';
+import { EditOrderComponent } from './components/Order/edit-order/edit-order.component';
+import { OrderCkeckoutComponent } from './components/Order/order-ckeckout/order-ckeckout.component';
 
 export const MY_FORMATS = {
   parse: {

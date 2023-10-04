@@ -1,10 +1,10 @@
 export interface CreateNewSubscription {
     tenantId: string
-    trialSubscription: boolean
+    trialSubscription?: boolean
     currentPlanId: number
     offerId: number
-    numberOfCurrentUser: number
-    numberOfCurrentUserPOS: number
+    numberOfUser: number
+    numberOfUserPOS: number
     numberOfMonth: number
     validTo: string
   }

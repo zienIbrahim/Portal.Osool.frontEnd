@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
 import { SubscriptionService } from 'src/modules/subscription/services';
 import { Option,AddOption } from 'src/modules/subscription/data/Option';
+import { OptionType, OptionTypes } from 'src/modules/subscription/models/OptionType';
 
 @Component({
   selector: 'app-create-option',
@@ -13,6 +14,7 @@ import { Option,AddOption } from 'src/modules/subscription/data/Option';
 })
 export class CreateOptionComponent implements OnInit {
   Optionform: FormGroup = <FormGroup>{};
+  OptionTypes:OptionType[]=OptionTypes
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,7 +27,9 @@ export class CreateOptionComponent implements OnInit {
   }
   intiForm() {
     this.Optionform = this.formBuilder.group({
-      optionName: [null, Validators.required],
+      optionNameAr: [null, Validators.required],
+      optionNameEn: [null, Validators.required],
+      type: [1, Validators.required],
     });
   }
 
@@ -36,7 +40,7 @@ export class CreateOptionComponent implements OnInit {
     let Data: AddOption = this.Optionform.value;
     this.subscriptionService.AddOtion(Data).subscribe({
       next: (value: any) => {
-        this.notificationService.success('Option Updated Successfully');
+        this.notificationService.success('Option Added Successfully');
         addTemplateClose._elementRef.nativeElement.click();
       },
       complete: () => {},

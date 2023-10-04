@@ -45,7 +45,6 @@
                     Invalid Confirem Password Input
                 </mat-error>
             </mat-form-field>
-          
             <br>
                 <mat-form-field appearance="outline" fxFlex="100%">
                     <mat-label>Tenant UserId</mat-label>
@@ -57,16 +56,18 @@
                     </mat-error>
                 </mat-form-field>
                 <br>
-                <mat-checkbox fxFlex="49%"  matInput formControlName="groupAdmin"
+                <mat-checkbox matInput fxFlex="25%" formControlName="isActive"
+                    color="primary">Active</mat-checkbox>
+                <mat-checkbox matInput fxFlex="32%" formControlName="isPOSUser"
+                    color="primary">POS User</mat-checkbox>
+                    <br>
+                <mat-checkbox fxFlex="40%"  matInput formControlName="groupAdmin"
                     color="primary">Group Admin</mat-checkbox>
                 <br>
-                <mat-checkbox matInput fxFlex="49%" formControlName="isPOSUser"
-                    color="primary">POS User</mat-checkbox>
-                    <div fxFlex="51%" >
-                        <button   type="button" mat-raised-button color="accent" type="submit">Submit</button>
-                    </div>
+                <div fxFlex="51%">
+                     <button type="button" mat-raised-button color="accent" type="submit">Submit</button>
+                </div>
             </div>
-           
         </form>
     </mat-card-content>
 </mat-card>

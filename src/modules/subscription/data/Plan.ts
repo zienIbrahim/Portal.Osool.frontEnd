@@ -34,7 +34,9 @@ export interface Plan{
 }
 export interface PlanOptions{
         id:number,
-        OptionName: string,
+        type:number,
+        optionNameAr: string,
+        optionNameEn: string,
         price:number      
       }
       export interface PlanOffer{

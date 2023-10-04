@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
 import { Option } from 'src/modules/subscription/data/Option';
 import { Software } from 'src/modules/subscription/data/Software';
+import { OptionType, OptionTypes } from 'src/modules/subscription/models/OptionType';
 import { SubscriptionService } from 'src/modules/subscription/services';
 
 
@@ -16,6 +17,7 @@ import { SubscriptionService } from 'src/modules/subscription/services';
 export class EditOptionComponent implements OnInit{
 
   Optionform: FormGroup=<FormGroup>{};
+  OptionTypes:OptionType[]=OptionTypes
   @Input()  OptionData: Option=<Option>{}
 
   constructor(
@@ -29,7 +31,9 @@ export class EditOptionComponent implements OnInit{
   }
   intiForm() {
     this.Optionform = this.formBuilder.group({
-      optionName: [this.OptionData.optionName, Validators.required],
+      optionNameAr: [this.OptionData.optionNameAr, Validators.required],
+      optionNameEn: [this.OptionData.optionNameEn, Validators.required],
+      type: [this.OptionData.type, Validators.required],
       id: [this.OptionData.id, Validators.required],
     });
   }

@@ -19,10 +19,27 @@
               </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" fxFlex="100%" >
-            <mat-label>Option Name</mat-label>
-            <input matInput  placeholder="Option Name" formControlName="optionName" >
-            <mat-error *ngIf="!f['optionName'].errors && f['optionName'].touched">
-                Invalid Option Name Input
+            <mat-label>Option Name (Arabic)</mat-label>
+            <input matInput  placeholder="Option Name (Arabic)" formControlName="optionNameAr" >
+            <mat-error *ngIf="!f['optionNameAr'].errors && f['optionNameAr'].touched">
+                Invalid Option Name (Arabic) Input
+              </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="100%" >
+            <mat-label>Option Name (English)</mat-label>
+            <input matInput  placeholder="Option Name (English)" formControlName="optionNameEn" >
+            <mat-error *ngIf="!f['optionNameEn'].errors && f['optionNameEn'].touched">
+                Invalid Option Name (English) Input
+              </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="100%" >
+            <mat-label>"Option Type</mat-label>
+
+            <mat-select matNativeControl required formControlName="type">
+              <mat-option *ngFor="let option of OptionTypes" [value]="option.TypeId" >{{option.TypeNameAr}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="!f['type'].errors && f['type'].touched">
+                Invalid "Option Type Input
               </mat-error>
           </mat-form-field>
           <mat-dialog-actions>

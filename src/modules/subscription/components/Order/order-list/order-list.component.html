@@ -1,0 +1,154 @@
+<mat-card>
+    <mat-card-header>
+        <mat-toolbar class="device-form-toolbar mat-elevation-z4" fxLayout="row" fxLayoutAlign="space-between center">
+            <!-- <button mat-icon-button style="margin-right: 24px;"><mat-icon>arrow_back</mat-icon></button> -->
+            <span> Orders </span>
+            <!-- (click)="OpenAddDialog(addTemplate)" -->
+            <button mat-raised-button routerLink="/Order/Create">Add</button>
+        </mat-toolbar>
+    </mat-card-header>
+    <mat-card-content card>
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel [expanded]="0" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Filter data
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Filter data
+                        <mat-icon>filter_list</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-form-field appearance="outline">
+                    <mat-label>User Name</mat-label>
+                    <mat-select
+                     matNativeControl
+                     c
+                       [(ngModel)]="filtersby.userId">
+                        <mat-option *ngFor="let user  of _userList" [value]="user.id">{{user.userName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" >
+                    <mat-label>Tenan Name</mat-label>
+                    <mat-select matNativeControl required [(ngModel)]="filtersby.tenantId">
+                        <mat-option *ngFor="let tenant of TenantList" [value]="tenant.id">{{tenant.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>User Name</mat-label>
+                    <mat-select matNativeControl required [(ngModel)]="filtersby.planId">
+                        <mat-option *ngFor="let Plan  of PlanList" [value]="Plan.planId">{{Plan.planName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select panelClass="status-ddl" matNativeControl required [(ngModel)]="filtersby.status">
+                        <mat-option *ngFor="let status  of orderStatusList" [value]="status.id">
+                            <span>{{status.name}}</span>
+                            <span class="dot" [ngClass]="getStatusClass(status.id)"></span>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-action-row>
+                    <button mat-icon-button matTooltip="Click to Edit" class="iconbutton"
+                    color="primary" 
+                    (click)="filterQuery()">
+                    <mat-icon>search</mat-icon>
+                  </button>                </mat-action-row>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
+                <!-- Position Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> No.
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+                 <!-- TenantName Column -->
+                 <ng-container matColumnDef="tenantName">
+                    <th mat-header-cell *matHeaderCellDef> Tenant Name.
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.tenantName}} </td>
+                </ng-container>
+                 <!-- ValidTo Column -->
+                 <ng-container matColumnDef="validTo">
+                    <th mat-header-cell *matHeaderCellDef> Valid To.
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.validTo}} </td>
+                </ng-container>
+                 <!-- planName Column -->
+                 <ng-container matColumnDef="planName">
+                    <th mat-header-cell *matHeaderCellDef> plan Name.
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.planName}} </td>
+                </ng-container>
+                 <!-- CreationDate Column -->
+                 <ng-container matColumnDef="creationDate">
+                    <th mat-header-cell *matHeaderCellDef> Creation Date.
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.creationDate|date}} </td>
+                </ng-container>
+                 <!-- TotalPrice Column -->
+                 <ng-container matColumnDef="totalPrice">
+                    <th mat-header-cell *matHeaderCellDef> Total Price.
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.totalPrice |currency}} </td>
+                </ng-container>
+                <!-- Discount Column -->
+                <ng-container matColumnDef="discount">
+                    <th mat-header-cell *matHeaderCellDef> Discount.
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.discount}} </td>
+                </ng-container>
+                 <!-- UserName Column -->
+                 <ng-container matColumnDef="userName">
+                    <th mat-header-cell *matHeaderCellDef> User Name.
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+                </ng-container>
+                  <!-- Status Column -->
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status.
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="status-badge" [ngClass]="getStatusClass(element.status)">
+                            {{getStatusName(element.status) }} 
+                        </div>
+                        </td>
+                </ng-container>
+                 <!-- Status Column -->
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> action.
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button matTooltip="Click to View" class="iconbutton" color="primary"
+                            (click)="edit(element,editTemplate)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="Click to View" class="iconbutton"
+                        color="primary" (click)="view(element,editTemplate)">
+                        <mat-icon>remove_red_eye</mat-icon>
+                      </button>
+                    </td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row let i=index; columns: displayedColumns;" (dblclick)="view(row,editTemplate)">
+            </table>
+            <mat-paginator class="mat-paginator-sticky"
+            [length]="totalCount"
+            [pageSizeOptions]="[5, 10, 25, 100]"
+            (page)="pageEvent = $event; onPaginateChange($event)"
+            >
+          </mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+
+
+<ng-template #editTemplate>
+    <!-- <app-edit-option [OptionData]="SelectedRow"></app-edit-option> -->
+  </ng-template>

@@ -75,6 +75,31 @@ export const ROUTES: Routes = [
           
            
         ],
+    },
+    {
+        path: 'Order',
+        canActivate : [],
+        component:subscriptionContainers.SubscriptionLayoutComponent ,
+        children: [
+            {
+                
+                path: '',
+                component: subscriptionComponent.OrderListComponent,
+            },
+            {
+                
+                path: 'Details',
+                component: subscriptionComponent.OrderDetailsComponent,
+            }
+            ,
+            {
+                
+                path: 'Edit',
+                component: subscriptionComponent.EditOrderComponent,
+            }
+          
+           
+        ],
     }
 ];
 
