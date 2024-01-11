@@ -65,9 +65,16 @@
                         <td>
                                 <mat-form-field appearance="outline" >
                                 <mat-label>User Name</mat-label>
-                                <mat-select matNativeControl required formControlName="userId" 
+                                <mat-select #users  matNativeControl required formControlName="userId" 
                                 (selectionChange)="ChangeUser(i)">
-                                    <mat-option *ngFor="let user  of _userList"
+                                <mat-option>
+                                    <lib-mat-select-search
+                                      [list]="_userList"
+                                      [searchProperties]="['id', 'userName']"
+                                      (filtered)="_filteredUserList = $event">
+                                    </lib-mat-select-search>
+                                </mat-option>
+                                    <mat-option *ngFor="let user  of _filteredUserList"
                                         [value]="user.id">{{user.userName}}</mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="!getUsersControls[i].get('userName')?.errors && getUsersControls[i].get('userName')?.touched">

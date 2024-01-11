@@ -121,9 +121,11 @@ export class AddOrderComponent implements OnInit{
         this.getorderDetails.controls[index].get("qty")?.setValue(1);
       }
       if(option.id==1){
-        this.getorderDetails.controls[index].get("qty")?.setValidators( [Validators.required,Validators.max(this.SelectedPlanData.maxUsers)]);
+        this.getorderDetails.controls[index].get("qty")?.setValidators(
+           Validators.compose([Validators.required,Validators.max(this.SelectedPlanData.maxUsers)]));
         this.getorderDetails.controls[index].get("qty")?.updateValueAndValidity();
       }
+
 
     });
     this.calcTotalPrice();
@@ -137,6 +139,35 @@ export class AddOrderComponent implements OnInit{
    this.Subscriptionform.get('validTo')?.setValue(validTo)
    this.Subscriptionform.get('validTo')?.updateValueAndValidity();
    this.calcTotalPrice()
+  }
+  changeOptionQty(index:number){
+    let ExtraUserQty:number=0;
+    let PosKeyQty:number=0;
+    const orderDetails= this.getorderDetails.getRawValue();
+
+    orderDetails.forEach((element:any,index:number)=> {
+      if(element.optionId==2){
+        PosKeyQty=element.qty
+      }
+      if(element.optionId==1){
+        ExtraUserQty=element.qty
+      }
+    });
+    if((this.SelectedPlanData.includeUsers+ExtraUserQty)>this.SelectedPlanData.maxUsers){
+      orderDetails.forEach((element:any,index:number)=> {
+        if(element.optionId==1){
+          this.getorderDetails.controls[index].get("qty")?.setValue(0);
+        }
+      });
+    }
+    if((this.SelectedPlanData.includeUsers+ExtraUserQty)<PosKeyQty){
+      orderDetails.forEach((element:any,index:number)=> {
+        if(element.optionId==2){
+          this.getorderDetails.controls[index].get("qty")?.setValue(0);
+        }
+      });
+    }
+    this.calcTotalPrice()
   }
 
   calcTotalPrice(){
@@ -158,14 +189,13 @@ export class AddOrderComponent implements OnInit{
     this.TotalPrice=(TotalPriceorderDetails + planPrice) * numberOfMonth;
     this.TotalPriceIncludVat=this.TotalPrice * 1.15;
   }
-
   formatDate(d: any): string {
     return [
         d.year,
         d.month < 10 ? '0' + d.month : d.month,
         d.day < 10 ? '0' + d.day : d.day,
     ].join('-');
-}
+  }
 
   get f() {
     return this.Subscriptionform.controls

@@ -255,4 +255,34 @@ export class EditOrderComponent implements OnInit {
     }
   }
   
+  changeOptionQty(index:number){
+    let ExtraUserQty:number=0;
+    let PosKeyQty:number=0;
+    const orderDetails= this.getorderDetails.getRawValue();
+
+    orderDetails.forEach((element:any,index:number)=> {
+      if(element.optionId==2){
+        PosKeyQty=element.qty
+      }
+      if(element.optionId==1){
+        ExtraUserQty=element.qty
+      }
+    });
+    if((this.SelectedPlanData.includeUsers+ExtraUserQty)>this.SelectedPlanData.maxUsers){
+      orderDetails.forEach((element:any,index:number)=> {
+        if(element.optionId==1){
+          this.getorderDetails.controls[index].get("qty")?.setValue(0);
+        }
+      });
+    }
+    if((this.SelectedPlanData.includeUsers+ExtraUserQty)<PosKeyQty){
+      orderDetails.forEach((element:any,index:number)=> {
+        if(element.optionId==2){
+          this.getorderDetails.controls[index].get("qty")?.setValue(0);
+        }
+      });
+    }
+    this.calcTotalPrice()
+  }
+  
 }

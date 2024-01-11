@@ -107,7 +107,6 @@ export class OrderListComponent implements AfterViewInit, OnInit {
 
   }
   getStatusClass(status: number) {
-
     switch (status) {
       case OrderStatusEnum.Pending:
        { return 'status-pending'}
@@ -119,8 +118,6 @@ export class OrderListComponent implements AfterViewInit, OnInit {
         {return 'status-completed'}
       default: {return 'status-default'}
     }
-   
-
   }
   getStatusName(status: number) {
     switch (status) {

@@ -59,7 +59,7 @@
                         <td>
                             <mat-form-field appearance="outline">
                                 <mat-label>Quantity</mat-label>
-                                <input matInput formControlName="qty" type="number" (change)="calcTotalPrice()">
+                                <input matInput formControlName="qty" type="number" (change)="changeOptionQty(i)">
                                 <mat-error *ngIf="!item.get('qty')?.errors && item.get('qty')?.touched">
                                     Invalid Quantity  Input
                                 </mat-error>

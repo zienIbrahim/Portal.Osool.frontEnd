@@ -18,7 +18,8 @@ import { MastarDataService } from 'src/modules/app-common/services/mastar-data.s
 })
 export class EditTenantUserComponent implements OnInit {
   TenantUserform: FormGroup = <FormGroup>{};
-  TenantList: TenantList[] = [];
+  TenantList: TenantList[] | any = [] ;
+  TenantListfiltered: TenantList[] | any = [] ;
   UserData: UserData = <UserData>{};
   @Input() TenantUserId: string = '';
 
@@ -159,8 +160,8 @@ export class EditTenantUserComponent implements OnInit {
         });
       }
     } else{
-      console.log('TenantList :',this.TenantList.find(x=> x.id==tenantId))
-    let tenant=  this.TenantList.find(x=> x.id==tenantId)??<TenantList>{}
+      console.log('TenantList :',this.TenantList.find((x:any)=> x.id==tenantId))
+    let tenant=  this.TenantList.find((x:any)=> x.id==tenantId)??<TenantList>{}
       this.userInGroupsList.controls[index].patchValue({
         groupAdmin: false,
         isActive: false,

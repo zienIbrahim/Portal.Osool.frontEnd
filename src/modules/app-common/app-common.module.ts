@@ -60,6 +60,7 @@ const modules = [IconsModule,
     MatIconModule,
     MatButtonModule,
     FlexLayoutModule,
+    MatSelectSearchModule,
     LayoutModule
 
 ];
@@ -131,6 +132,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SnackBarNotificationComponent } from './components/snack-bar-notification/snack-bar-notification.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatSelectSearchModule } from 'mat-select-search';
 
 @NgModule({
     imports: [

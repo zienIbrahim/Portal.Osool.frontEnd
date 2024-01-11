@@ -27,7 +27,6 @@ export const ROUTES: Routes = [
         component:subscriptionContainers.SubscriptionLayoutComponent ,
         children: [
             {
-                
                 path: '',
                 component: subscriptionComponent.PlanListComponent,
             }
@@ -39,12 +38,9 @@ export const ROUTES: Routes = [
         component:subscriptionContainers.SubscriptionLayoutComponent ,
         children: [
             {
-                
                 path: '',
                 component: subscriptionComponent.SoftwareListComponent,
             }
-          
-           
         ],
     },
     {

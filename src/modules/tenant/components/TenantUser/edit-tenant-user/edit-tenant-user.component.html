@@ -54,10 +54,17 @@
                     <tbody formArrayName="userInGroups">
                         <tr *ngFor="let item of userInGroupsList.controls  let i = index;" [formGroupName]="i">
                         <td>
-                                <mat-form-field appearance="outline"  >
+                                <mat-form-field appearance="outline">
                                 <mat-label>Tenan Name</mat-label>
                                 <mat-select matNativeControl required formControlName="tenantId" (selectionChange)="ChangeTenant(i)">
-                                    <mat-option *ngFor="let tenant of TenantList" [value]="tenant.id" >{{tenant.name}}</mat-option>
+                                    <mat-option>
+                                        <lib-mat-select-search
+                                          [list]="TenantList"
+                                          [searchProperties]="['id', 'name']"
+                                          (filtered)="TenantListfiltered = $event">
+                                        </lib-mat-select-search>
+                                    </mat-option>
+                                    <mat-option *ngFor="let tenant of TenantListfiltered" [value]="tenant.id" >{{tenant.name}}</mat-option>
                                   </mat-select>
                                 <mat-error *ngIf="!item.get('tenantName')?.errors && item.get('tenantName')?.touched">
                                     Invalid Tenan Name Input

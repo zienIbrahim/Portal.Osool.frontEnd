@@ -21,7 +21,8 @@ export class EditTenantComponent implements OnInit{
   Tenantform: FormGroup=<FormGroup>{};
   public UsersList: FormArray=<FormArray>{};
   TenantGroupTypeList: TenantGroupType[] = [];
-  _userList: UserList[] = [];
+  _userList: any;
+  _filteredUserList: any;
   TenantId: string = '';
   TenantDat: TenantDetails=<TenantDetails>{};
   TenantSubscriptionsLst: TenantSubscription[]=[];
@@ -235,7 +236,7 @@ ChangeUser(index:number){
     });
   }
   else{
-    let userData=this._userList.find(x=> x.id==userId) ?? <UserList>{};
+    let userData=this._userList.find((x :any)=> x.id==userId) ?? <UserList>{};
     this.Users.controls[index].patchValue({
       userName: userData.userName,
       email: userData.email,
