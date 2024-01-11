@@ -62,7 +62,7 @@ export class EditTenantUserComponent implements OnInit {
       userName: [null, [Validators.required]],
       email: [null, [Validators.required]],
       phoneNumber: [null, [Validators.required]],
-      isActive: [false],
+      isActive: [false, [Validators.required]],
       userInGroups: this.formBuilder.array([]),
     });
   }

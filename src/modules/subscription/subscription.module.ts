@@ -29,6 +29,7 @@ import { AddOrderComponent } from './components/Order/add-order/add-order.compon
 import { OrderListComponent } from './components/Order/order-list/order-list.component';
 import { EditOrderComponent } from './components/Order/edit-order/edit-order.component';
 import { OrderCkeckoutComponent } from './components/Order/order-ckeckout/order-ckeckout.component';
+import { UpgreadOrderComponent } from './components/Order/upgread-order/upgread-order.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -65,6 +66,7 @@ export const MY_FORMATS = {
   declarations: [
     ...subscriptionContainers.containers,
     ...subscriptionComponents.components,
+    UpgreadOrderComponent,
   ],
   exports: [
     ...subscriptionContainers.containers,
