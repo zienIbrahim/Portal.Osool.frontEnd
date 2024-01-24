@@ -17,6 +17,17 @@ export interface EditOrderDto{
   status :number
   orderDetails :AddNewOrderDetailDto[]
 }
+export interface UpgrateOrderDto{
+  tenantId :string
+  subscriptionId :number
+  planId :number
+  oredreId :number
+  offerId :number
+  numberOfMonth :number
+  validTo :string
+  status :number
+  orderDetails :AddNewOrderDetailDto[]
+}
 export interface AddNewOrderDetailDto
 {
     optionId :number

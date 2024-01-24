@@ -81,6 +81,9 @@ export class SubscriptionService {
     GetOrderById(OrderId:number){
         return this.http.get(this.apiUrl + "Order/GetOrderById?OrderId="+OrderId)
     }
+    GetSubscriptionById(SubscriptionId:number){
+        return this.http.get(this.apiUrl + "Subscriptions/GetSubscriptionById?SubscriptionId="+SubscriptionId)
+    }
     CanceleOrder(OrderId:number){
         return this.http.post(this.apiUrl + "Order/CanceleOrder",{orderId:OrderId})
     }

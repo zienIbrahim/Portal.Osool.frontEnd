@@ -60,19 +60,17 @@ export interface EditUsersTenant {
 export interface TenantSubscription {
   subscriptionId: number;
   tenantId: string;
-  trialPeriodStartDate: string | null;
-  trialPeriodEndDate: string | null;
-  subscribeAfterTrial: boolean;
-  currentPlanId: number;
-  offerId: number | null;
+  planId: number;
+  planName: string;
   numberOfCurrentUser: number;
-  numberOfCurrentUserPOS: number;
-  offerStartDate: string | null;
-  offerEndDate: string | null;
-  dateSubscribed: string;
+  numberOfCurrentUserPos: number;
   validTo: string;
-  dateUnsubscribed: string | null;
+  validFrom: string | null;
+  status: number | null;
+  notes: string;
 }
+
+
 export interface TenantFilters {
   Name?: string;
   Id?: string;

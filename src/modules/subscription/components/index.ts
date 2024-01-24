@@ -10,6 +10,7 @@ import { EditOrderComponent } from "./Order/edit-order/edit-order.component";
 import { OrderCkeckoutComponent } from "./Order/order-ckeckout/order-ckeckout.component";
 import { OrderDetailsComponent } from "./Order/order-details/order-details.component";
 import { OrderListComponent } from "./Order/order-list/order-list.component";
+import { UpgreadOrderComponent } from "./Order/upgread-order/upgread-order.component";
 import { CreatePlanComponent } from "./Plan/create-plan/create-plan.component";
 import { EditPlanComponent } from "./Plan/edit-plan/edit-plan.component";
 import { PlanListComponent } from "./Plan/plan-list/plan-list.component";
@@ -40,6 +41,7 @@ export const components = [
   EditOrderComponent,
   OrderCkeckoutComponent,
   OrderListComponent,
+  UpgreadOrderComponent,
   OrderDetailsComponent
 ];
 
@@ -63,3 +65,4 @@ export * from "./Order/edit-order/edit-order.component";
 export * from "./Order/order-list/order-list.component";
 export * from "./Order/order-details/order-details.component";
 export * from "./Order/order-ckeckout/order-ckeckout.component";
+export * from "./Order/upgread-order/upgread-order.component";

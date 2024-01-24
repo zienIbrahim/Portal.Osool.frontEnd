@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
 import { EditTenantRequest, TenantDetails } from 'src/modules/tenant/data/Tenant';
@@ -28,13 +28,16 @@ export class EditTenantComponent implements OnInit{
   TenantSubscriptionsLst: TenantSubscription[]=[];
   TenantSubscriptionDataSource = new MatTableDataSource<TenantSubscription>();
   displayedColumns: string[] = [
-     'trialPeriodStartDate',
-     'trialPeriodEndDate',
-     'dateSubscribed',
+     'planName',
      'numberOfCurrentUser',
-     'numberOfCurrentUserPOS',
+     'numberOfCurrentUserPos',
      'validTo',
+     'validFrom',
+     'notes',
+     'status',
+     'action',
     ];
+
   // displayedColumns: string[] = [
   //    'subscriptionId',
   //    'trialPeriodStartDate',
@@ -58,6 +61,8 @@ export class EditTenantComponent implements OnInit{
     private mastarDataService: MastarDataService,
     private ref: ChangeDetectorRef,
     private _snackBar: MatSnackBar  ,  
+    private router: Router,
+
     private route: ActivatedRoute,
     public dialog: MatDialog
     ) { }
@@ -210,13 +215,14 @@ OpenSubscriptionDialog(templateRef: any) {
 OpenTenantSubscriptionsDialog(templateRef: any) {
   this.tenantService.GetGetTenantSubscriptions(this.TenantId).subscribe({
     next:(value:any)=> {
+      console.log("Tenant Subscriptions Lst :",value)
       this.TenantSubscriptionsLst=value.data;
       this.TenantSubscriptionDataSource= new MatTableDataSource(this.TenantSubscriptionsLst)
       this.dialog.open(templateRef, {
         width: '100%',
       });    }
   });
- 
+
 }
 ChangeUser(index:number){
   let userId=this.Users.controls[index].get("userId")?.value
@@ -254,6 +260,10 @@ ChangeUser(index:number){
 removeTenat(index: number) {
   const add = this.Users;
   if (add.length > 1) add.removeAt(index);
+}
+upgrate(subscriptionId:number ){
+  this.dialog.closeAll();
+  this.router.navigate(['/Subscription/Order/Upgreate'], { queryParams: { subscriptionId: subscriptionId } });
 }
  get f() {
   return this.Tenantform.controls

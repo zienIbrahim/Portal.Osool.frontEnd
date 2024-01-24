@@ -92,7 +92,13 @@ export const ROUTES: Routes = [
                 
                 path: 'Edit',
                 component: subscriptionComponent.EditOrderComponent,
+            } ,
+            {
+                
+                path: 'Upgreate',
+                component: subscriptionComponent.UpgreadOrderComponent,
             }
+            
           
            
         ],

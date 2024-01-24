@@ -81,6 +81,9 @@ export class OrderDetailsComponent {
   update() {
     this.router.navigate([`/Subscription/Order/Edit`], { queryParams: { OrderId:this.OrderId} });
   }
+  Upgreate() {
+    this.router.navigate([`/Subscription/Order/Upgreate`], { queryParams: { OrderId:this.OrderId} });
+  }
 
   getStatusClass(status: number) {
     switch (status) {

@@ -32,7 +32,7 @@
         </mat-form-field>
         <mat-form-field  appearance="outline" fxFlex="49%">
             <mat-label>valid To</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="validTo">
+            <input matInput (dateChange)="changeValidTo()" [matDatepicker]="picker" formControlName="validTo">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="!f['validTo'].errors && f['validTo'].touched">

@@ -9,6 +9,7 @@ import { DDLPlanList, Plan, PlanOptions } from 'src/modules/subscription/data/Pl
 import { CreateNewSubscriptionParam } from 'src/modules/subscription/data/Subscription';
 import { SubscriptionService } from 'src/modules/subscription/services';
 import {AddNewOrderDto} from 'src/modules/subscription/data/Order'
+import * as moment from 'moment';
 @Component({
   selector: 'app-add-order',
   templateUrl: './add-order.component.html',
@@ -49,9 +50,9 @@ export class AddOrderComponent implements OnInit{
       tenantId: [{ value: this.TenantData.tenantId, disabled: true }, Validators.required],
       Tenantname: [{ value: this.TenantData.tenantName, disabled: true }, Validators.required],
       currentPlanId: [null, Validators.required],
-      numberOfMonth: [null, Validators.required],
+      numberOfMonth: [null, Validators.compose([Validators.required,Validators.pattern(/^[0-9]*$/)])],
       checkedAllOption: [true, Validators.required],
-      validTo: [{ value: null, disabled: true }, Validators.required],
+      validTo: [{ value: null, disabled: false }, Validators.required],
       orderDetails: this.formBuilder.array([this.createOrderDetails()]),
     })
   }
@@ -130,16 +131,26 @@ export class AddOrderComponent implements OnInit{
     });
     this.calcTotalPrice();
   }
+  
   changeNumberOfMonth(){
-    let validTo= new Date();
    let numberOfMonth= this.Subscriptionform.value.numberOfMonth;
-   validTo.setDate(validTo.getDate() + (numberOfMonth*30))
-   console.log("numberOfMonth :",numberOfMonth)
-   console.log("validTo :",validTo)
-   this.Subscriptionform.get('validTo')?.setValue(validTo)
+   let validTo= moment(new Date()).add(numberOfMonth,'month');
+   this.Subscriptionform.get('validTo')?.setValue(validTo.toDate())
    this.Subscriptionform.get('validTo')?.updateValueAndValidity();
    this.calcTotalPrice()
   }
+  calculateDiff(dateSent:any){
+    let currentDate = new Date();
+    dateSent = new Date(dateSent);
+    return Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(), dateSent.getDate()) ) /(1000 * 60 * 60 * 24));
+    }
+   changeValidTo(){
+    const NumberOfMonth=Math.abs((this.calculateDiff(this.Subscriptionform.get('validTo')?.value)/30));
+    console.log("NumberOfMonth :",NumberOfMonth)
+    this.Subscriptionform.get('numberOfMonth')?.setValue(NumberOfMonth)
+    this.Subscriptionform.get('numberOfMonth')?.updateValueAndValidity();
+    this.calcTotalPrice()
+   }
   changeOptionQty(index:number){
     let ExtraUserQty:number=0;
     let PosKeyQty:number=0;

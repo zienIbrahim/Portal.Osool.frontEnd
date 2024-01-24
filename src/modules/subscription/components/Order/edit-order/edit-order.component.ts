@@ -1,17 +1,15 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { MatIconButton } from '@angular/material/button';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormArray, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
-import { UserRole } from 'src/modules/auth/data/AccessToken';
 import { AuthService } from 'src/modules/auth/services';
-import { AddNewOrderDto, EditOrderDto, OrderById } from 'src/modules/subscription/data/Order';
+import { EditOrderDto, OrderById } from 'src/modules/subscription/data/Order';
 import { DDLPlanList, Plan, PlanOptions } from 'src/modules/subscription/data/Plan';
-import { CreateNewSubscriptionParam } from 'src/modules/subscription/data/Subscription';
 import { OrderStatus, OrderStatusEnum, OrderStatusLst } from 'src/modules/subscription/models/Order';
 import { SubscriptionService } from 'src/modules/subscription/services';
 
@@ -63,10 +61,10 @@ export class EditOrderComponent implements OnInit {
       Tenantname: [{ value: null, disabled: true }, Validators.required],
       currentPlanId: [null, Validators.required],
       orderId: [null, Validators.required],
-      numberOfMonth: [null, Validators.required],
+      numberOfMonth: [null, Validators.compose([Validators.required,Validators.pattern(/^[0-9]*$/)])],
       status: [{ value: null, disabled: false}, Validators.required],
       checkedAllOption: [true, Validators.required],
-      validTo: [{ value: null, disabled: true }, Validators.required],
+      validTo: [{ value: null, disabled: false }, Validators.required],
       orderDetails: this.formBuilder.array([]),
     })
   }
@@ -95,6 +93,7 @@ export class EditOrderComponent implements OnInit {
     this.SelectedPlanData= await lastValueFrom(this.subscriptionService.GetPlanById(this.order.planId)) as Plan; 
     this.setPlanDetails()
     this.changeNumberOfMonth();
+   
     this.order.orderDetails.forEach((order:any)=> {
     if(this.SelectedPlanData.options.find(x=> x.id==order.optionId)){
         this.getorderDetails.value.forEach((from:any,index:number)=>{
@@ -102,9 +101,14 @@ export class EditOrderComponent implements OnInit {
           this.getorderDetails.controls[index].patchValue({
             qty:order.qty
           })
+                      console.log("status",this.order.status)
+
+        
+          
         }) 
       }
     })
+    this.calcTotalPrice()
   }
   addOrderDeatils(){
     this.OrderDeatilsList = this.getorderDetails;
@@ -190,15 +194,24 @@ export class EditOrderComponent implements OnInit {
   }
 
   changeNumberOfMonth(){
-    let validTo= new Date();
-   let numberOfMonth= this.Subscriptionform.value.numberOfMonth;
-   validTo.setDate(validTo.getDate() + (numberOfMonth*30))
-   console.log("numberOfMonth :",numberOfMonth)
-   console.log("validTo :",validTo)
-   this.Subscriptionform.get('validTo')?.setValue(validTo)
-   this.Subscriptionform.get('validTo')?.updateValueAndValidity();
-   this.calcTotalPrice()
-  }
+    let numberOfMonth= this.Subscriptionform.value.numberOfMonth;
+    let validTo= moment(new Date()).add(numberOfMonth,'month');
+    this.Subscriptionform.get('validTo')?.setValue(validTo.toDate())
+    this.Subscriptionform.get('validTo')?.updateValueAndValidity();
+    this.calcTotalPrice()
+   }
+   calculateDiff(dateSent:any){
+    let currentDate = new Date();
+    dateSent = new Date(dateSent);
+    return Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(), dateSent.getDate()) ) /(1000 * 60 * 60 * 24));
+    }
+   changeValidTo(){
+    const NumberOfMonth=Math.abs((this.calculateDiff(this.Subscriptionform.get('validTo')?.value)/30));
+    console.log("NumberOfMonth :",NumberOfMonth)
+    this.Subscriptionform.get('numberOfMonth')?.setValue(NumberOfMonth)
+    this.Subscriptionform.get('numberOfMonth')?.updateValueAndValidity();
+    this.calcTotalPrice()
+   }
 
   calcTotalPrice(){
     let numberOfMonth=Number(this.Subscriptionform.value.numberOfMonth);
