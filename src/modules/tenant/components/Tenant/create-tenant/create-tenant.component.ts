@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
 import { AddTenant, TenantUserList } from 'src/modules/tenant/data/Tenant';
@@ -18,13 +19,14 @@ import { TenantService } from 'src/modules/tenant/services/tenant.service';
 })
 export class CreateTenantComponent implements OnInit {
   Tenantform: FormGroup=<FormGroup>{};
+  isLoading: Boolean=false;
   public UsersList: FormArray=<FormArray>{};
 
   constructor(private formBuilder: FormBuilder,
     public tenantService: TenantService,
     public notificationService: NotificationService,
     private mastarDataService: MastarDataService,
-
+    private router: Router,
     private _snackBar: MatSnackBar  ,
     public dialog: MatDialog
     ) { }
@@ -84,11 +86,7 @@ export class CreateTenantComponent implements OnInit {
     }
     ) 
   }
-
   changeCreateNewDatabase(event:any,changeCreateDatabseConfirm:any){
-    console.log("this.getUsersControls.length",this.getUsersControls.length)
-    console.log("event",event.checked)
-    console.log("createNewDatabase",this.createNewDatabase)
     if(this.createNewDatabase && this.getUsersControls.length>1)
     {
       this.dialog.open(changeCreateDatabseConfirm, {
@@ -109,16 +107,17 @@ export class CreateTenantComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log("this.Tenantform",this.Tenantform.value)
     if(this.Tenantform.invalid){
       return
     }
+    this.isLoading=true;
    let Data:AddTenant=this.Tenantform.value;
-   console.log("this.Tenantform",Data)
-
    this.tenantService.AddTenant(Data).subscribe({
     next: (value: any) => {
-    this.notificationService.success("Software added Successfully")
+      this.isLoading=false;
+     this.notificationService.success("Software added Successfully")
+     this.router.navigate([`/Tenant/Edit`], { queryParams: { tenatId: value.tenantId } });
+    
     },
     complete: () => {},
     error: (value) => {
@@ -142,7 +141,6 @@ export class CreateTenantComponent implements OnInit {
       width: '1000px',
       minHeight:'400px',
       disableClose: false,
-
     });
   }
 

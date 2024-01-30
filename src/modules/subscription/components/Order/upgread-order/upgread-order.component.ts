@@ -146,15 +146,16 @@ _math:any
 
   onSubmit(){
 
-    const DueAmount =  (this.TotalPrice <  this.ReminingAmount)?this.TotalPrice-this.ReminingAmount:this.ReminingAmount-this.TotalPrice;
+    const DueAmount =  this.TotalPrice - this.ReminingAmount;
 
     if (this.Subscriptionform.invalid) {
 
       this.Subscriptionform.markAllAsTouched();
       return;
     }
-   if(DueAmount< this.TotalPrice){
-    this.notificationService.error('due amount must be grater than total price !');
+    console.log("Due Amount :",DueAmount)
+   if(DueAmount>=0){
+    this.notificationService.error('due amount must be grater than or Equal 0 !');
     return;
    }
     let Data: EditOrderDto = {
@@ -172,6 +173,7 @@ _math:any
         }
       })
     };
+
   }
 
   changeCurrentPlanId(){

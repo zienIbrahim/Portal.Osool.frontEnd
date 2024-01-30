@@ -144,7 +144,7 @@
                         <br>
                         <button type="button" mat-raised-button color="primary" matStepperPrevious>Back</button>
                         <button type="button" mat-raised-button color="primary" matStepperNext>Next</button>
-                        <button type="button" mat-raised-button color="accent" type="submit">Submit</button>
+                        <button type="button" mat-raised-button color="accent" [disabled]="isLoading || Tenantform.invalid" type="submit">Submit</button>
                     </div>
                 </mat-step>
             </mat-stepper>

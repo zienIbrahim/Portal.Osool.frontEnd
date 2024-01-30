@@ -107,10 +107,10 @@
                     <Strong>Remaining Days :<Strong [ngStyle]="{'color': 'green' }">{{ReminingDays.toFixed(2)}}</Strong></Strong>
                 </span>
                 <span [fxFlex]="49" class="mt-1 line">
-                    <Strong>due amount :<Strong [ngStyle]="{'color': 'green' }">{{((TotalPrice < ReminingAmount)?TotalPrice-ReminingAmount:ReminingAmount-TotalPrice).toFixed(2)}}</Strong></Strong>
+                    <Strong>due amount :<Strong [ngStyle]="{'color': 'green' }">{{((TotalPrice-ReminingAmount)).toFixed(2)}}</Strong></Strong>
                 </span>
                 <span [fxFlex]="49" class="mt-1 line">
-                    <Strong>due amount with tax :<Strong [ngStyle]="{'color': 'green' }">{{(((TotalPrice < ReminingAmount)?TotalPrice-ReminingAmount:ReminingAmount-TotalPrice)*1.5).toFixed(2)}}</Strong></Strong>
+                    <Strong>due amount with tax :<Strong [ngStyle]="{'color': 'green' }">{{((TotalPrice-ReminingAmount)*1.15).toFixed(2)}}</Strong></Strong>
                 </span>
             </div>
             <mat-dialog-actions [fxFlex]="39" fxLayoutAlign="end end" >
