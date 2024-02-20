@@ -18,11 +18,20 @@ import { OrderStatusEnum, OrderStatusLst, OrderStatus } from 'src/modules/subscr
   styleUrls: ['./order-list.component.scss']
 })
 export class OrderListComponent implements AfterViewInit, OnInit {
-  PlanList: DDLPlanList[] = [];
-  TenantList: TenantList[] = []
-  _userList: UserList[] = [];
-  _ordersList: OrdersList[] = [];
-  orderStatusList: OrderStatus[] = [];
+  PlanList: DDLPlanList[]| any  = [];
+  TenantList: TenantList[]| any  = []
+  _userList: UserList[]| any  = [];
+  _ordersList: OrdersList[]| any  = [];
+  orderStatusList: OrderStatus[]| any  = [];
+
+  PlanListFilter: DDLPlanList[] | any = [];
+  TenantListFilter: TenantList[]| any  = []
+  _userListFilter: UserList[]| any  = [];
+  _ordersListFilter: OrdersList[]| any  = [];
+  orderStatusListFilter: OrderStatus[]| any  = [];
+
+
+  
   dataSource = new MatTableDataSource<OrdersList>();
   @ViewChild(MatPaginator) paginator: MatPaginator = <MatPaginator>{};
   displayedColumns: string[] = [

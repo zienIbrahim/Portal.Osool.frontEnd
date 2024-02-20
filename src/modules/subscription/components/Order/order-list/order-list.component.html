@@ -21,10 +21,14 @@
                 </mat-expansion-panel-header>
                 <mat-form-field appearance="outline">
                     <mat-label>User Name</mat-label>
-                    <mat-select
-                     matNativeControl
-                     c
-                       [(ngModel)]="filtersby.userId">
+                    <mat-select matNativeControl [(ngModel)]="filtersby.userId">
+                        <mat-option>
+                            <lib-mat-select-search
+                              [list]="_userList"
+                              [searchProperties]="['id', 'userName']"
+                              (filtered)="TenantListFilter = $event">
+                            </lib-mat-select-search>
+                        </mat-option>
                         <mat-option *ngFor="let user  of _userList" [value]="user.id">{{user.userName}}
                         </mat-option>
                     </mat-select>
@@ -32,12 +36,27 @@
                 <mat-form-field appearance="outline" >
                     <mat-label>Tenan Name</mat-label>
                     <mat-select matNativeControl required [(ngModel)]="filtersby.tenantId">
+                        <mat-option>
+                            <lib-mat-select-search
+                              [list]="TenantList"
+                              [searchProperties]="['id', 'name']"
+                              (filtered)="TenantListFilter = $event">
+                            </lib-mat-select-search>
+                        </mat-option>
                         <mat-option *ngFor="let tenant of TenantList" [value]="tenant.id">{{tenant.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
-                    <mat-label>User Name</mat-label>
+                    <mat-label>plan Name</mat-label>
+
                     <mat-select matNativeControl required [(ngModel)]="filtersby.planId">
+                        <mat-option>
+                            <lib-mat-select-search
+                              [list]="PlanList"
+                              [searchProperties]="['id', 'planName']"
+                              (filtered)="PlanListFilter = $event">
+                            </lib-mat-select-search>
+                        </mat-option>
                         <mat-option *ngFor="let Plan  of PlanList" [value]="Plan.planId">{{Plan.planName}}</mat-option>
                     </mat-select>
                 </mat-form-field>
