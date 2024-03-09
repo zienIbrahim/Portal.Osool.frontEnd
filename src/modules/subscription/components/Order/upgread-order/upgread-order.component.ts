@@ -7,7 +7,7 @@ import { lastValueFrom } from 'rxjs';
 import { MastarDataService } from 'src/modules/app-common/services/mastar-data.service';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
 import { AuthService } from 'src/modules/auth/services';
-import { EditOrderDto, OrderById } from 'src/modules/subscription/data/Order';
+import { EditOrderDto, OrderById, UpgrateOrderDto } from 'src/modules/subscription/data/Order';
 import { DDLPlanList, Plan, PlanOptions } from 'src/modules/subscription/data/Plan';
 import { OrderStatus, OrderStatusEnum, OrderStatusLst } from 'src/modules/subscription/models/Order';
 import { SubscriptionService } from 'src/modules/subscription/services';
@@ -154,25 +154,35 @@ _math:any
       return;
     }
     console.log("Due Amount :",DueAmount)
-   if(DueAmount>=0){
+   if(DueAmount<=0){
     this.notificationService.error('due amount must be grater than or Equal 0 !');
     return;
    }
-    let Data: EditOrderDto = {
-      oredreId: this.SubscriptionId,
+    let Data: UpgrateOrderDto = {
       tenantId: this.Subscriptionform.get('tenantId')?.value,
       planId: this.Subscriptionform.get('currentPlanId')?.value,
       offerId: this.Subscriptionform.get('offerId')?.value,
       numberOfMonth: this.Subscriptionform.get('numberOfMonth')?.value,
       validTo: formatDate(this.Subscriptionform.get('validTo')?.value, 'yyyy-MM-dd', 'en-UM'),
-      status:this.Subscriptionform.get('status')?.value,
-      orderDetails: this.Subscriptionform.get('orderDetails')?.value.map((item: any) => {
+      subscriptionId:this.SubscriptionId,
+      upgreateOrderDetail: this.Subscriptionform.get('orderDetails')?.value.map((item: any) => {
         return {
           optionId: item.optionId,
           qty: item.qty
         }
       })
     };
+    this.subscriptionService.UpgreateOrder(Data).subscribe({
+      next: (value: any) => {
+        console.log('UpgreateOrder value',value)
+        this.notificationService.success('Upgreate Order Saved Successfully');
+        this.router.navigate([`Subscription/Order/Details`], { queryParams: { OrderId:value.orderId } });
+      },
+      complete: () => { },
+      error: (value) => {
+        this.notificationService.error(value.error.ErrorMessage);
+      },
+    });
 
   }
 

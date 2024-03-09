@@ -7,7 +7,7 @@ import { AddPlan, Plan } from '../data/Plan';
 import { AddSoftware, EditSoftware } from '../data/Software';
 import { CreateNewSubscription } from '../data/Subscription';
 import { AddOffer, Offer } from '../data/Offer';
-import { AddNewOrderDto, CheckoutData, EditOrderDto, OrdersListFilters } from '../data/Order';
+import { AddNewOrderDto, CheckoutData, EditOrderDto, OrdersListFilters, UpgrateOrderDto } from '../data/Order';
 
 @Injectable()
 export class SubscriptionService {
@@ -52,6 +52,9 @@ export class SubscriptionService {
     }
     AddNewOrder(data:AddNewOrderDto){
         return this.http.post(this.apiUrl + "Order/AddNewOrder", data)
+    }
+    UpgreateOrder(data:UpgrateOrderDto){
+        return this.http.post(this.apiUrl + "Order/UpgreateOrder", data)
     }
     EditOrder(data:EditOrderDto){
         return this.http.put(this.apiUrl + "Order/EditOrder", data)

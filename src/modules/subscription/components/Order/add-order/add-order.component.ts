@@ -50,7 +50,7 @@ export class AddOrderComponent implements OnInit{
       tenantId: [{ value: this.TenantData.tenantId, disabled: true }, Validators.required],
       Tenantname: [{ value: this.TenantData.tenantName, disabled: true }, Validators.required],
       currentPlanId: [null, Validators.required],
-      numberOfMonth: [null, Validators.compose([Validators.required,Validators.pattern(/^[0-9]*$/)])],
+      numberOfMonth: [null, Validators.compose([Validators.required])],
       checkedAllOption: [true, Validators.required],
       validTo: [{ value: null, disabled: false }, Validators.required],
       orderDetails: this.formBuilder.array([this.createOrderDetails()]),

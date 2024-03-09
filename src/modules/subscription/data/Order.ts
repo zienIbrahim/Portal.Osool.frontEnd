@@ -18,15 +18,18 @@ export interface EditOrderDto{
   orderDetails :AddNewOrderDetailDto[]
 }
 export interface UpgrateOrderDto{
-  tenantId :string
-  subscriptionId :number
-  planId :number
-  oredreId :number
-  offerId :number
-  numberOfMonth :number
-  validTo :string
-  status :number
-  orderDetails :AddNewOrderDetailDto[]
+  tenantId: string
+  subscriptionId: number
+  planId: number
+  offerId: number
+  numberOfMonth: number
+  validTo: string
+  upgreateOrderDetail: UpgreateOrderDetail[]
+}
+
+export interface UpgreateOrderDetail {
+  optionId: number
+  qty: number
 }
 export interface AddNewOrderDetailDto
 {

@@ -61,7 +61,7 @@ export class EditOrderComponent implements OnInit {
       Tenantname: [{ value: null, disabled: true }, Validators.required],
       currentPlanId: [null, Validators.required],
       orderId: [null, Validators.required],
-      numberOfMonth: [null, Validators.compose([Validators.required,Validators.pattern(/^[0-9]*$/)])],
+      numberOfMonth: [null, Validators.compose([Validators.required])],
       status: [{ value: null, disabled: false}, Validators.required],
       checkedAllOption: [true, Validators.required],
       validTo: [{ value: null, disabled: false }, Validators.required],
@@ -120,7 +120,6 @@ export class EditOrderComponent implements OnInit {
       checked: [true, [Validators.required]],
      }));
   }
-
   _checkedAllOptionChange(){
     this.checkedAllOption=Boolean(this.Subscriptionform.value.checkedAllOption)
       this.SelectedPlanData.options.forEach((option:PlanOptions,index:number)=>{
@@ -128,7 +127,6 @@ export class EditOrderComponent implements OnInit {
       });
       this.calcTotalPrice()
   }
-
   onSubmit(){
     if (this.Subscriptionform.invalid) {
       return;
@@ -159,7 +157,6 @@ export class EditOrderComponent implements OnInit {
       },
     });
   }
-
   changeCurrentPlanId(){
    let currentPlanId= this.Subscriptionform.value.currentPlanId;
    this.subscriptionService.GetPlanById(currentPlanId).subscribe((res)=>{
@@ -169,7 +166,6 @@ export class EditOrderComponent implements OnInit {
   
   );
   }
-
   setPlanDetails(){
     this.getorderDetails?.clear();
     this.SelectedPlanData.options.forEach((option:PlanOptions,index:number)=>{
@@ -192,7 +188,6 @@ export class EditOrderComponent implements OnInit {
     });
     this.calcTotalPrice();
   }
-
   changeNumberOfMonth(){
     let numberOfMonth= this.Subscriptionform.value.numberOfMonth;
     let validTo= moment(new Date()).add(numberOfMonth,'month');
