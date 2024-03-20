@@ -1,41 +1,29 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
-import AppUtils from 'src/modules/app-common/models/AppUtils';
 import { NotificationService } from 'src/modules/app-common/services/notification.service';
 import { CheckoutData, OrderById } from 'src/modules/subscription/data/Order';
 import { PayMethodLst, PayMethod } from 'src/modules/subscription/models/Order';
 import { SubscriptionService } from 'src/modules/subscription/services';
-declare var paylib: any; // Declare $ to use jQuery
+
 @Component({
   selector: 'app-order-ckeckout',
   templateUrl: './order-ckeckout.component.html',
   styleUrls: ['./order-ckeckout.component.scss']
 })
 export class OrderCkeckoutComponent implements OnInit {
-  
   @Input() OrderData: OrderById = <OrderById>{}
   PayMethods: PayMethod[] = PayMethodLst;
   Orderform: FormGroup = <FormGroup>{};
+
   constructor(private formBuilder: FormBuilder,
         private subscriptionService: SubscriptionService,
-        public notificationService: NotificationService) {
-    
+        public notificationService: NotificationService,
+
+  ) {
   }
   ngOnInit(): void {
     this.intiForm();
-    var myform=document.getElementById('payform')
-    paylib.inlineForm({
-      'key': 'CRKM9N-HP2B6H-GQPNDM-Q2BPQN',
-      'form': myform,
-      'autoSubmit': true,
-      'callback': function(response :any) {
-       console.log('paylib -> response ->',response);
-        if (response.error) {             
-          paylib.handleError(document.getElementById('paymentErrors'), response); 
-        }
-      }
-    });
   }
   intiForm() {
     this.Orderform = this.formBuilder.group({
@@ -67,25 +55,6 @@ export class OrderCkeckoutComponent implements OnInit {
       },
     });
 
-  }
-  onPaymentSubmit(from: any) {
-     console.log('onPaymentSubmit ->',from)
-     alert(from)
-  }
-  fnpaylib(){
-    var myform=document.getElementById('payform')
-    console.log('paylib ->', paylib);
-    // paylib.inlineForm({
-    //   'key': 'CRKM9N-HP2B6H-GQPNDM-Q2BPQN',
-    //   'form': myform,
-    //   'autoSubmit': true,
-    //   'callback': function(response :any) {
-    //    console.log('response ->',response);
-    //     if (response.error) {             
-    //       paylib.handleError(document.getElementById('paymentErrors'), response); 
-    //     }
-    //   }
-    // });
   }
 
 }

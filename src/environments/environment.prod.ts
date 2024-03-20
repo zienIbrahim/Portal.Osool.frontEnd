@@ -1,5 +1,5 @@
 export const environment = {
     production: true,   
-    apiUrl: "https://localhost:5003/api/",
+     apiUrl: "https://api.osoolsys.com:2703/api/",
 
 };

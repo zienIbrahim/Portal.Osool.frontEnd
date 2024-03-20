@@ -48,33 +48,7 @@
             </mat-grid-list>
         </div>
         <div [fxFlex]="100" class="section-header">Payment information</div>
-        <div id="Checkout" class="inline">
-            <h1>Pay Invoice #2</h1>
-            <div class="card-row">
-                <span class="visa"></span>
-                <span class="mastercard"></span>
-                <span class="amex"></span>
-                <span class="discover"></span>
-            </div>
-            <form id="payform" action="https://localhost:5003/api/Payment/Request" method="post">
-                <span id="paymentErrors"></span>
-                <div class="row">
-                  <label>Card Number</label>
-                  <input type="text" data-paylib="number" size="20">
-                </div>
-                <div class="row">
-                  <label>Expiry Date (MM/YYYY)</label>
-                  <input type="text" data-paylib="expmonth" size="2">
-                  <input type="text" data-paylib="expyear" size="4">
-                </div>
-                <div class="row">
-                  <label>Security Code</label>
-                  <input type="text" data-paylib="cvv" size="4">
-                </div>
-                <input type="submit" value="Place order">
-            </form>
-        </div>
-        <!-- <form [formGroup]="Orderform" (ngSubmit)="onSubmit(btnClose)" fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%">
+        <form [formGroup]="Orderform" (ngSubmit)="onSubmit(btnClose)" fxLayout="row wrap" fxFlex="100%" fxLayoutGap="1%">
             <mat-chip-listbox [fxFlex]="100" aria-label="Fish selection" formControlName="payMethod">
                 <mat-chip-option *ngFor="let item of PayMethods" [value]="item.id">{{item.name}}</mat-chip-option>
             </mat-chip-listbox>
@@ -82,7 +56,7 @@
                 <mat-label>paid Amount</mat-label>
                 <input type="number" matInput placeholder="paid Amount" formControlName="paidAmount">
             </mat-form-field>
-        </form> -->
+        </form>
         <mat-dialog-actions fxLayout="row" [fxFlex]="100" fxLayoutAlign="space-between center">
             <button  (click)="onSubmit(btnClose)" mat-raised-button color="primary" type="submit" class="button">Checkout</button>
        </mat-dialog-actions>
