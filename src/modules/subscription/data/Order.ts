@@ -1,4 +1,7 @@
 
+//  declare var paylib: any;
+
+//  export default { paylib};
 export interface AddNewOrderDto{
      tenantId :string
      planId :number
